@@ -1,0 +1,68 @@
+{
+  "nir": {
+    "n_eval_images": 123,
+    "individual_folds": {
+      "macro_f1_mean": 0.9311459814473396,
+      "macro_f1_std": 0.03092229922002203,
+      "accuracy_mean": 0.9512195121951219,
+      "accuracy_std": 0.02241308740177271,
+      "per_fold_macro_f1": [
+        0.9668663594470046,
+        0.9189593301435407,
+        0.9668663594470046,
+        0.9142667368473821,
+        0.8887711213517665
+      ],
+      "per_fold_accuracy": [
+        0.975609756097561,
+        0.9512195121951219,
+        0.975609756097561,
+        0.9349593495934959,
+        0.9186991869918699
+      ]
+    },
+    "ensemble_soft_vote": {
+      "macro_f1": 0.9686446886446887,
+      "accuracy": 0.975609756097561,
+      "caveat": "mix of ~1 out-of-fold + ~4 in-sample models per image"
+    },
+    "oof_single_model": {
+      "macro_f1": 0.8010860484544695,
+      "accuracy": 0.8780487804878049,
+      "note": "unbiased: exactly the 1 fold model that held out each image"
+    }
+  },
+  "full_SE": {
+    "n_eval_images": 123,
+    "individual_folds": {
+      "macro_f1_mean": 0.8460031168475493,
+      "macro_f1_std": 0.03974710132391521,
+      "accuracy_mean": 0.8991869918699187,
+      "accuracy_std": 0.02749843012241913,
+      "per_fold_macro_f1": [
+        0.8541951664386684,
+        0.7832739156268568,
+        0.9064886830498852,
+        0.8325193325193325,
+        0.8535384866030027
+      ],
+      "per_fold_accuracy": [
+        0.8943089430894309,
+        0.8536585365853658,
+        0.9349593495934959,
+        0.8943089430894309,
+        0.9186991869918699
+      ]
+    },
+    "ensemble_soft_vote": {
+      "macro_f1": 0.9573365231259968,
+      "accuracy": 0.967479674796748,
+      "caveat": "mix of ~1 out-of-fold + ~4 in-sample models per image"
+    },
+    "oof_single_model": {
+      "macro_f1": 0.6593196230293005,
+      "accuracy": 0.7967479674796748,
+      "note": "unbiased: exactly the 1 fold model that held out each image"
+    }
+  }
+}

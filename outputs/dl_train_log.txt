@@ -1,0 +1,143 @@
+
+=== Training visible ===
+  epoch   1 | train loss 1.0261 f1 0.496 | val loss 0.9177 acc 0.699 f1 0.472
+  epoch   2 | train loss 0.8422 f1 0.665 | val loss 0.7394 acc 0.715 f1 0.660
+  epoch   3 | train loss 0.6271 f1 0.762 | val loss 0.5442 acc 0.772 f1 0.711
+  epoch   4 | train loss 0.5753 f1 0.753 | val loss 0.4377 acc 0.854 f1 0.791
+  epoch   5 | train loss 0.4648 f1 0.830 | val loss 0.4073 acc 0.829 f1 0.795
+  epoch   6 | train loss 0.3942 f1 0.845 | val loss 0.4299 acc 0.829 f1 0.775
+  epoch   7 | train loss 0.3208 f1 0.876 | val loss 0.4249 acc 0.846 f1 0.785
+  epoch   8 | train loss 0.2644 f1 0.913 | val loss 0.4476 acc 0.805 f1 0.754
+  epoch   9 | train loss 0.2967 f1 0.896 | val loss 0.4103 acc 0.837 f1 0.783
+  epoch  10 | train loss 0.2507 f1 0.913 | val loss 0.4300 acc 0.837 f1 0.787
+  epoch  11 | train loss 0.2644 f1 0.891 | val loss 0.3582 acc 0.837 f1 0.779
+  epoch  12 | train loss 0.1979 f1 0.928 | val loss 0.4752 acc 0.854 f1 0.811
+  epoch  13 | train loss 0.2125 f1 0.923 | val loss 0.3951 acc 0.862 f1 0.811
+  epoch  14 | train loss 0.1684 f1 0.935 | val loss 0.4057 acc 0.837 f1 0.791
+  epoch  15 | train loss 0.1873 f1 0.942 | val loss 0.4187 acc 0.854 f1 0.789
+  epoch  16 | train loss 0.1517 f1 0.952 | val loss 0.3917 acc 0.854 f1 0.789
+  epoch  17 | train loss 0.1351 f1 0.953 | val loss 0.3723 acc 0.862 f1 0.803
+  epoch  18 | train loss 0.1749 f1 0.936 | val loss 0.3493 acc 0.870 f1 0.818
+  epoch  19 | train loss 0.1153 f1 0.967 | val loss 0.3327 acc 0.878 f1 0.818
+  epoch  20 | train loss 0.1513 f1 0.945 | val loss 0.3580 acc 0.870 f1 0.807
+  epoch  21 | train loss 0.1059 f1 0.963 | val loss 0.3430 acc 0.878 f1 0.822
+  epoch  22 | train loss 0.1285 f1 0.956 | val loss 0.3742 acc 0.870 f1 0.825
+  epoch  23 | train loss 0.1155 f1 0.950 | val loss 0.3330 acc 0.870 f1 0.814
+  epoch  24 | train loss 0.1412 f1 0.960 | val loss 0.3784 acc 0.870 f1 0.818
+  epoch  25 | train loss 0.1123 f1 0.960 | val loss 0.3529 acc 0.878 f1 0.830
+  epoch  26 | train loss 0.1233 f1 0.954 | val loss 0.3369 acc 0.886 f1 0.841
+  epoch  27 | train loss 0.1027 f1 0.966 | val loss 0.3746 acc 0.862 f1 0.807
+  epoch  28 | train loss 0.0903 f1 0.977 | val loss 0.3628 acc 0.886 f1 0.832
+  epoch  29 | train loss 0.1157 f1 0.969 | val loss 0.3315 acc 0.878 f1 0.827
+  epoch  30 | train loss 0.1215 f1 0.954 | val loss 0.3493 acc 0.862 f1 0.794
+  epoch  31 | train loss 0.1296 f1 0.960 | val loss 0.3492 acc 0.886 f1 0.838
+  epoch  32 | train loss 0.0803 f1 0.979 | val loss 0.3563 acc 0.878 f1 0.830
+  epoch  33 | train loss 0.1025 f1 0.965 | val loss 0.3498 acc 0.870 f1 0.819
+  epoch  34 | train loss 0.0954 f1 0.968 | val loss 0.3632 acc 0.870 f1 0.811
+  epoch  35 | train loss 0.0714 f1 0.990 | val loss 0.4243 acc 0.846 f1 0.797
+  epoch  36 | train loss 0.1181 f1 0.966 | val loss 0.3860 acc 0.862 f1 0.815
+  epoch  37 | train loss 0.1112 f1 0.967 | val loss 0.4040 acc 0.854 f1 0.804
+  epoch  38 | train loss 0.0919 f1 0.972 | val loss 0.3918 acc 0.862 f1 0.807
+  epoch  39 | train loss 0.1190 f1 0.963 | val loss 0.3540 acc 0.870 f1 0.815
+  early stopping at epoch 39 (no val-loss improvement for 10 epochs)
+  [visible] TEST macro-F1=0.7111 acc=0.8374 (best val_loss=0.3315, 184s)
+
+=== Training nir ===
+  epoch   1 | train loss 0.9974 f1 0.556 | val loss 1.0789 acc 0.260 f1 0.188
+  epoch   2 | train loss 0.7415 f1 0.729 | val loss 0.6717 acc 0.732 f1 0.687
+  epoch   3 | train loss 0.5660 f1 0.790 | val loss 0.5481 acc 0.805 f1 0.746
+  epoch   4 | train loss 0.4425 f1 0.833 | val loss 0.6417 acc 0.772 f1 0.736
+  epoch   5 | train loss 0.3718 f1 0.867 | val loss 0.4054 acc 0.870 f1 0.820
+  epoch   6 | train loss 0.3512 f1 0.876 | val loss 0.3985 acc 0.870 f1 0.840
+  epoch   7 | train loss 0.2633 f1 0.904 | val loss 0.3779 acc 0.837 f1 0.772
+  epoch   8 | train loss 0.2506 f1 0.920 | val loss 0.4256 acc 0.846 f1 0.826
+  epoch   9 | train loss 0.2231 f1 0.922 | val loss 0.3924 acc 0.846 f1 0.793
+  epoch  10 | train loss 0.2094 f1 0.926 | val loss 0.3949 acc 0.854 f1 0.818
+  epoch  11 | train loss 0.1783 f1 0.940 | val loss 0.3265 acc 0.927 f1 0.896
+  epoch  12 | train loss 0.1569 f1 0.951 | val loss 0.4972 acc 0.854 f1 0.816
+  epoch  13 | train loss 0.2044 f1 0.930 | val loss 0.3546 acc 0.927 f1 0.892
+  epoch  14 | train loss 0.1510 f1 0.944 | val loss 0.4678 acc 0.837 f1 0.792
+  epoch  15 | train loss 0.1859 f1 0.937 | val loss 0.3280 acc 0.927 f1 0.896
+  epoch  16 | train loss 0.1370 f1 0.947 | val loss 0.3560 acc 0.894 f1 0.852
+  epoch  17 | train loss 0.1256 f1 0.962 | val loss 0.3712 acc 0.911 f1 0.881
+  epoch  18 | train loss 0.1097 f1 0.963 | val loss 0.3863 acc 0.902 f1 0.884
+  epoch  19 | train loss 0.0926 f1 0.963 | val loss 0.3283 acc 0.911 f1 0.877
+  epoch  20 | train loss 0.1075 f1 0.967 | val loss 0.3431 acc 0.927 f1 0.906
+  epoch  21 | train loss 0.0736 f1 0.977 | val loss 0.3051 acc 0.935 f1 0.914
+  epoch  22 | train loss 0.0648 f1 0.981 | val loss 0.3665 acc 0.911 f1 0.886
+  epoch  23 | train loss 0.1004 f1 0.972 | val loss 0.3644 acc 0.911 f1 0.886
+  epoch  24 | train loss 0.0974 f1 0.965 | val loss 0.3738 acc 0.902 f1 0.869
+  epoch  25 | train loss 0.0755 f1 0.974 | val loss 0.3135 acc 0.935 f1 0.910
+  epoch  26 | train loss 0.0875 f1 0.974 | val loss 0.3104 acc 0.943 f1 0.923
+  epoch  27 | train loss 0.0564 f1 0.982 | val loss 0.3453 acc 0.927 f1 0.906
+  epoch  28 | train loss 0.0633 f1 0.979 | val loss 0.3565 acc 0.919 f1 0.894
+  epoch  29 | train loss 0.0859 f1 0.976 | val loss 0.3270 acc 0.935 f1 0.914
+  epoch  30 | train loss 0.0842 f1 0.968 | val loss 0.3407 acc 0.943 f1 0.923
+  epoch  31 | train loss 0.0635 f1 0.984 | val loss 0.3587 acc 0.919 f1 0.889
+  early stopping at epoch 31 (no val-loss improvement for 10 epochs)
+  [nir] TEST macro-F1=0.8674 acc=0.9187 (best val_loss=0.3051, 141s)
+
+=== Training full ===
+  epoch   1 | train loss 1.0014 f1 0.511 | val loss 0.9333 acc 0.577 f1 0.526
+  epoch   2 | train loss 0.8352 f1 0.645 | val loss 0.7828 acc 0.683 f1 0.641
+  epoch   3 | train loss 0.6366 f1 0.743 | val loss 0.6207 acc 0.780 f1 0.706
+  epoch   4 | train loss 0.6326 f1 0.732 | val loss 0.5386 acc 0.797 f1 0.734
+  epoch   5 | train loss 0.5164 f1 0.813 | val loss 0.4629 acc 0.789 f1 0.739
+  epoch   6 | train loss 0.4667 f1 0.817 | val loss 0.3480 acc 0.886 f1 0.831
+  epoch   7 | train loss 0.3515 f1 0.857 | val loss 0.3322 acc 0.878 f1 0.816
+  epoch   8 | train loss 0.3137 f1 0.889 | val loss 0.4171 acc 0.829 f1 0.765
+  epoch   9 | train loss 0.2492 f1 0.917 | val loss 0.3424 acc 0.894 f1 0.841
+  epoch  10 | train loss 0.2766 f1 0.896 | val loss 0.3408 acc 0.886 f1 0.835
+  epoch  11 | train loss 0.2322 f1 0.918 | val loss 0.3941 acc 0.846 f1 0.794
+  epoch  12 | train loss 0.1971 f1 0.929 | val loss 0.3089 acc 0.902 f1 0.830
+  epoch  13 | train loss 0.2603 f1 0.909 | val loss 0.3776 acc 0.854 f1 0.796
+  epoch  14 | train loss 0.1728 f1 0.932 | val loss 0.3304 acc 0.902 f1 0.842
+  epoch  15 | train loss 0.1795 f1 0.932 | val loss 0.2999 acc 0.911 f1 0.847
+  epoch  16 | train loss 0.1469 f1 0.956 | val loss 0.3456 acc 0.878 f1 0.816
+  epoch  17 | train loss 0.1675 f1 0.937 | val loss 0.2777 acc 0.911 f1 0.847
+  epoch  18 | train loss 0.1741 f1 0.931 | val loss 0.3490 acc 0.886 f1 0.819
+  epoch  19 | train loss 0.1247 f1 0.955 | val loss 0.3045 acc 0.911 f1 0.857
+  epoch  20 | train loss 0.1600 f1 0.944 | val loss 0.3074 acc 0.919 f1 0.864
+  epoch  21 | train loss 0.1130 f1 0.970 | val loss 0.3246 acc 0.919 f1 0.866
+  epoch  22 | train loss 0.1326 f1 0.954 | val loss 0.3112 acc 0.927 f1 0.874
+  epoch  23 | train loss 0.1246 f1 0.958 | val loss 0.3043 acc 0.911 f1 0.852
+  epoch  24 | train loss 0.1350 f1 0.954 | val loss 0.3085 acc 0.911 f1 0.855
+  epoch  25 | train loss 0.1138 f1 0.957 | val loss 0.3022 acc 0.911 f1 0.855
+  epoch  26 | train loss 0.0950 f1 0.972 | val loss 0.3083 acc 0.919 f1 0.873
+  epoch  27 | train loss 0.0876 f1 0.975 | val loss 0.3094 acc 0.927 f1 0.885
+  early stopping at epoch 27 (no val-loss improvement for 10 epochs)
+  [full] TEST macro-F1=0.7448 acc=0.8455 (best val_loss=0.2777, 128s)
+
+=== Training full_SE ===
+  epoch   1 | train loss 1.0314 f1 0.478 | val loss 1.1136 acc 0.317 f1 0.285
+  epoch   2 | train loss 0.8355 f1 0.670 | val loss 0.8019 acc 0.577 f1 0.547
+  epoch   3 | train loss 0.6673 f1 0.739 | val loss 0.6227 acc 0.756 f1 0.700
+  epoch   4 | train loss 0.6177 f1 0.736 | val loss 0.5730 acc 0.789 f1 0.735
+  epoch   5 | train loss 0.4757 f1 0.811 | val loss 0.4623 acc 0.789 f1 0.701
+  epoch   6 | train loss 0.4339 f1 0.825 | val loss 0.5432 acc 0.780 f1 0.735
+  epoch   7 | train loss 0.3805 f1 0.845 | val loss 0.3736 acc 0.870 f1 0.777
+  epoch   8 | train loss 0.3621 f1 0.880 | val loss 0.3635 acc 0.854 f1 0.754
+  epoch   9 | train loss 0.3131 f1 0.887 | val loss 0.3684 acc 0.878 f1 0.815
+  epoch  10 | train loss 0.2715 f1 0.906 | val loss 0.4229 acc 0.862 f1 0.800
+  epoch  11 | train loss 0.2790 f1 0.905 | val loss 0.4078 acc 0.837 f1 0.760
+  epoch  12 | train loss 0.2050 f1 0.931 | val loss 0.4414 acc 0.837 f1 0.760
+  epoch  13 | train loss 0.2125 f1 0.921 | val loss 0.3370 acc 0.902 f1 0.818
+  epoch  14 | train loss 0.1829 f1 0.930 | val loss 0.3643 acc 0.902 f1 0.829
+  epoch  15 | train loss 0.1819 f1 0.928 | val loss 0.3600 acc 0.878 f1 0.802
+  epoch  16 | train loss 0.1508 f1 0.953 | val loss 0.3471 acc 0.911 f1 0.843
+  epoch  17 | train loss 0.1585 f1 0.939 | val loss 0.3624 acc 0.862 f1 0.777
+  epoch  18 | train loss 0.1416 f1 0.957 | val loss 0.3715 acc 0.870 f1 0.788
+  epoch  19 | train loss 0.0930 f1 0.970 | val loss 0.3645 acc 0.894 f1 0.810
+  epoch  20 | train loss 0.1523 f1 0.956 | val loss 0.3683 acc 0.902 f1 0.855
+  epoch  21 | train loss 0.0999 f1 0.979 | val loss 0.4024 acc 0.878 f1 0.818
+  epoch  22 | train loss 0.1167 f1 0.960 | val loss 0.3699 acc 0.894 f1 0.833
+  epoch  23 | train loss 0.1258 f1 0.961 | val loss 0.3694 acc 0.902 f1 0.831
+  early stopping at epoch 23 (no val-loss improvement for 10 epochs)
+  [full_SE] TEST macro-F1=0.6402 acc=0.7967 (best val_loss=0.3370, 112s)
+  learned channel importance (BL,GR,RE,IR): [0.48265090584754944, 0.5943769216537476, 0.4537241756916046, 0.536689043045044]
+
+=== Summary (test macro-F1) ===
+  visible   : macro-F1=0.7111  acc=0.8374
+  nir       : macro-F1=0.8674  acc=0.9187
+  full      : macro-F1=0.7448  acc=0.8455
+  full_SE   : macro-F1=0.6402  acc=0.7967

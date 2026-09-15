@@ -1,0 +1,20 @@
+# --- proprietary dataset (ULG Gembloux Agro-Bio Tech -- cannot redistribute, see ReadMe.txt) ---
+Processed_Dataset/
+images/
+segmentations/
+outputs/features/
+outputs/dl/gradcam/
+
+# --- large model artifacts (kept in local backups/, not worth versioning) ---
+outputs/dl/*.pt
+outputs/dl/kfold_ckpt/
+outputs/classical/*.joblib
+
+# --- backups (already timestamped copies, no need to double-track) ---
+backups/
+
+# --- environment / tooling ---
+.venv/
+__pycache__/
+*.pyc
+.claude/

@@ -1,0 +1,20 @@
+{
+  "nir": {
+    "per_class_f1": {
+      "Healthy": 0.9550561797752809,
+      "Internal_Defect": 0.8666666666666667,
+      "Surface_Defect": 0.7368421052631579
+    },
+    "worst_gap_vs_internal_defect": 0.0883895131086142,
+    "recommend_focal_loss": false
+  },
+  "full_SE": {
+    "per_class_f1": {
+      "Healthy": 0.9042553191489362,
+      "Internal_Defect": 0.48,
+      "Surface_Defect": 0.5454545454545454
+    },
+    "worst_gap_vs_internal_defect": 0.4242553191489362,
+    "recommend_focal_loss": true
+  }
+}
