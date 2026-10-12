@@ -258,7 +258,7 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 
 1. **NIR-only ชนะทุก fold (5/5) อย่างสม่ำเสมอ** (per-fold F1: 0.845, 0.843, 0.873, 0.803, 0.852) — ยืนยันว่าผลจาก single-split run ก่อนหน้าไม่ใช่เรื่องบังเอิญ เป็นข้อสรุปที่มั่นคง
 2. **Full+SE กลับดีกว่า Full ธรรมดาเล็กน้อยใน k-fold** (0.734 vs 0.724) — สวนทางกับผลรอบเดียวเดิมที่บอกว่า SE แย่กว่า (0.640 vs 0.745) ชี้ว่าความต่างจาก single-split run เป็น noise จาก random split เป็นหลัก ไม่ใช่ผลจริงของ SE block ต่อ performance — **ต้องแก้ข้อสรุปเดิมในหัวข้อ "ข้อค้นพบสำคัญที่ต้องอภิปรายตอน defense" ด้านบน** เวลาเขียนเล่ม (ข้อ 2 เดิมที่บอกว่า "SE block ทำให้ผลแย่ลง" ไม่ robust ข้าม fold)
-3. **SE channel importance สม่ำเสมอทุก fold**: BL≈0.487, GR≈0.599, RE≈0.458, IR≈0.540 — GR และ IR สูงสุดเสมอทุก fold ตรงกับผล single-split เดิม (GR, IR สูงสุด) → ข้อสรุปเรื่อง channel importance นี้ robust ไม่เปลี่ยนตาม fold
+3. **SE channel importance สม่ำเสมอทุก fold**: BL≈0.487, GR≈0.599, RE≈0.458, IR≈0.540 — GR และ IR สูงสุดเสมอทุก fold ตรงกับผล single-split เดิม (GR, IR สูงสุด) → ~~ข้อสรุปเรื่อง channel importance นี้ robust ไม่เปลี่ยนตาม fold~~ **[แก้ 2026-10-13: ความ "นิ่ง" ของ weight ไม่ใช่หลักฐานว่าแบนด์นั้นสำคัญ — การทดสอบแบนด์เดี่ยวใน NIR พบว่า weight ที่ต่างกัน (RE 0.56 vs IR 0.38) ไม่สะท้อนความต่างของ performance จริง จึงอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (รวมถึงผล full_SE นี้ด้วย)]**
 4. Visible-only มี std ต่ำสุด (±2.2% acc) แต่ full/full_SE มี std สูงกว่า (±2.7%, จุด full ที่ ±5.4% F1) แสดงว่าเป็น variant ที่ผลแปรปรวนง่ายกว่า NIR-only และ visible-only
 
 ## Ensembling จาก K-Fold Models + เช็ค Per-Class F1 — เสร็จแล้ว
@@ -345,7 +345,7 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 
 **ข้อสรุป**: SE block บน NIR-only ช่วยดันขึ้นจริง +0.019 F1 — **nir_SE คือโมเดลสุดท้ายที่ควรใช้เป็นผลหลักของธีสิส** (F1 0.862±0.025, Accuracy 91.7%±2.1%)
 
-**SE channel importance (RE, IR)** — สม่ำเสมอมากทุก fold: RE ≈ 0.558-0.565, IR ≈ 0.375-0.379 → **ภายใน NIR เอง Red Edge สำคัญกว่า Infrared เกือบเท่าตัว** — ข้อค้นพบระดับละเอียดขึ้นสำหรับ objective 3.1 (ไม่ใช่แค่ "NIR สำคัญกว่า visible" แต่ระบุได้ถึง "ใน NIR เอง RE สำคัญกว่า IR") น่าสังเกตว่าต่างจากผล full_SE (4-channel) ที่ IR ได้น้ำหนักสูงกว่า RE — เป็นประเด็นอภิปรายที่น่าสนใจในเล่ม
+**SE channel importance (RE, IR)** — สม่ำเสมอมากทุก fold: RE ≈ 0.558-0.565, IR ≈ 0.375-0.379 ~~→ ภายใน NIR เอง Red Edge สำคัญกว่า Infrared เกือบเท่าตัว~~ **[ถูกหักล้างแล้ว 2026-10-13 โดยการเทรนแบนด์เดี่ยว (หัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง"): RE-only ≈ IR-only ≈ RE+IR ไม่ต่างกัน — ห้ามใช้ข้อสรุปนี้ในเล่ม; ค่า SE weight ที่นิ่งเกือบเท่ากันทุก fold/ทุกแหล่งภาพน่าจะสะท้อนการ initialize + scale ของ input มากกว่าความสำคัญของแบนด์]**
 
 **ข้อควรระวังตอนรายงานผล**: fold ที่ดีที่สุดได้ถึง 0.892 F1 / 93.9% acc แต่**ห้ามหยิบตัวเลข fold เดียวไปรายงาน** (cherry-picking) — ใช้ mean±std เสมอ
 
@@ -537,6 +537,34 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 .venv\Scripts\python.exe -m src.train_dl_kfold --variant ir_only
 ```
 
+#### สถานะงานที่ 4: [x] เสร็จแล้ว 2026-10-13 — **ผล: RE-only ≈ IR-only ≈ RE+IR → ต้องตัดข้อสรุป "RE สำคัญกว่า IR" ออก**
+
+โค้ด: `config.py` เพิ่ม channel group `re`/`ir`; `train_dl_kfold.py` เพิ่ม `re_only`/`ir_only` (และเก็บ per-class F1 + confusion matrix + prediction ต่อ fold ไว้ใน `kfold_results.json` สำหรับ variant ใหม่ๆ); `src/band_ablation_report.py` สร้างตารางเปรียบเทียบ → `outputs/dl/band_ablation.json` (รัน: `.venv\Scripts\python.exe -m src.band_ablation_report`) ทดสอบ `build_model` ที่ in_channels=1 ผ่าน, fold ตรงกับ `nir` ทุกลูก (ใช้ `build_pool("raw")` + StratifiedKFold n=5 seed 42 เหมือนเดิม) เวลารันจริง ~8.5 + 9.2 นาที
+
+| Variant | Macro F1 | Accuracy | per-fold F1 (fold 0-4) |
+|---|---|---|---|
+| RE only | 0.839 ± 0.034 | 90.4% ± 2.8% | 0.880, 0.820, 0.859, 0.782, 0.852 |
+| IR only | 0.844 ± 0.049 | 90.1% ± 3.2% | 0.864, 0.844, 0.915, 0.764, 0.835 |
+| RE+IR (`nir`) | 0.843 ± 0.023 | 89.9% ± 2.0% | 0.845, 0.843, 0.873, 0.803, 0.852 |
+
+ผลต่างรายคู่ fold (แอปเปิลชุดเดียวกันในแต่ละ fold): RE − IR เฉลี่ย **−0.006** (sd 0.033; RE ชนะ 3/5 fold; diffs = +0.016, −0.024, −0.056, +0.018, +0.017); RE+IR − RE เฉลี่ย +0.005 (4/5 fold, แต่ fold 0 = −0.035); RE+IR − IR เฉลี่ย −0.001 (2/5 fold) — paired-t p = 0.72 / 0.69 / 0.94 (n=5 บอกได้แค่แนวโน้ม) McNemar บน prediction out-of-fold รวม 819 ภาพ: RE vs IR p=0.90 (RE ถูกอย่างเดียว 34, IR ถูกอย่างเดียว 32); RE+IR vs RE p=0.79; RE+IR vs IR p=0.64
+
+Per-class F1 (pooled out-of-fold ทั้ง 819 ภาพ):
+
+| Variant | Healthy | Internal_Defect | Surface_Defect |
+|---|---|---|---|
+| RE only | 0.955 | 0.792 | 0.769 |
+| IR only | 0.945 | 0.821 | 0.770 |
+| RE+IR (`nir`)* | 0.951 | 0.808 | 0.800 |
+
+\* **แถว `nir` และ McNemar ที่เกี่ยวกับ `nir` มาจากการเทรนอีกรอบ** (checkpoint 5 fold จากตอนทำ ensembling — recipe/fold เดียวกัน แต่ไม่ใช่รอบเดียวกับตัวเลข 0.843±0.023 ในตารางแรก เพราะตอนนั้นไม่ได้เก็บ prediction) F1 ต่อ fold ของ 2 รอบนี้ต่างกัน: รอบ `kfold_results.json` = 0.845, 0.843, 0.873, 0.803, 0.852 vs รอบ checkpoint = 0.909, 0.885, 0.854, 0.801, 0.817 (**ต่างสูงสุด 0.065 ใน fold เดียว** ทั้งที่ recipe เหมือนกัน ที่มา: GPU kernel ที่ไม่ deterministic และ augmentation ใช้ `random` ของ Python ที่ไม่ได้ seed) ความแปรปรวนจากการรันซ้ำนี้ใหญ่กว่าความต่าง RE vs IR (−0.006) กว่า 10 เท่า — ข้อความ "matches kfold_results.json" ที่เคยพิมพ์ใน log ของ `ensemble_kfold.py` ไม่เป็นจริง (แก้ข้อความแล้ว)
+
+**ข้อสรุป (ตามเกณฑ์วิธีอ่านผลที่วางไว้)**
+1. **ไม่มีหลักฐานว่า RE สำคัญกว่า IR** — ต่างกันเพียง −0.006 F1 (เล็กกว่า std 0.034/0.049 มาก), ผลต่างรายคู่ fold กลับเครื่องหมาย, McNemar p=0.90 → **ตัดข้อสรุป "RE สำคัญกว่า IR" ออกจากเล่มและ defense** และ **เลิกใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์** (weight RE 0.56 vs IR 0.38 ที่นิ่งทุก fold ไม่สะท้อนความต่างของ performance จริง) ข้อสรุปเรื่อง objective 3.1 ระดับ "ภายใน NIR" ที่ตอบได้จริงคือ: แต่ละแบนด์ NIR เดี่ยวๆ ให้ผลระดับเดียวกัน
+2. **RE+IR ไม่ได้ดีกว่าแบนด์เดียว** (0.843 vs 0.839/0.844 — ผลต่างอยู่ในระดับ noise) จึง **สรุปไม่ได้ว่า 2 แบนด์ NIR "เสริมกัน"** มีเพียงข้อสังเกตอ่อนๆ ว่า RE+IR std ต่ำสุด (0.023 vs 0.034/0.049) และ Surface F1 สูงกว่าเล็กน้อย (0.800 vs 0.77 — แต่มาจากรอบเทรนที่ 2 และต่างกันระดับ noise) อย่านำไปอ้างเป็นผล
+3. สิ่งที่ยังยืนอยู่: NIR (ไม่ว่า RE, IR หรือทั้งคู่ ≈0.84) ดีกว่า visible-only (0.666±0.027) ชัดเจนในระดับเกิน std — ใช้ตอบ objective หลักได้ แต่การทดสอบนี้ **ไม่ได้ทดสอบแบนด์เดี่ยวของ visible (BL, GR)** จึงยังบอกไม่ได้ว่า visible ตัวไหนด้อยกว่า
+4. ข้อจำกัด: 5 fold, 1 รอบเทรนต่อ variant (ยกเว้น `nir` 2 รอบ) และความแปรปรวนจากการรันซ้ำต่อ fold ใหญ่ถึง ~0.06 — ความต่างระดับ ±0.02 จึงแยกจาก noise ไม่ได้ ถ้าจะสรุปความต่างเล็กๆ ระหว่างแบนด์ต้องรันหลาย seed และ seed `random` ของ augmentation ให้ครบก่อน (ยังไม่ได้ทำ)
+
 ### งานที่ 5 — Commit + push ขึ้น GitHub (ค้าง 2 ชุด + ชุดนี้)
 
 ทำ**หลัง**งานที่ 4 เสร็จ ตาม workflow หัวข้อ Version Control:
@@ -556,10 +584,10 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 - [x] Backup ผลลัพธ์ปัจจุบันไว้ที่ `backups/best_results_20260915_181726/` ก่อนรัน experiment ใหม่ + ตั้ง git repo push ขึ้น [github.com/Chinnawan/project_nir](https://github.com/Chinnawan/project_nir) (โค้ด+ผลตัวเลขเท่านั้น ไม่มี dataset — ดูหัวข้อ "Version Control + Backup" ด้านบน)
 - [x] รอบสุดท้าย — ทดลอง NIR-only + SE Block (`nir_SE`) ประเมินด้วย K-Fold — **ได้ผลดีที่สุดของโปรเจก: F1 0.862±0.025, acc 91.7%±2.1%** (ดูหัวข้อ "ผลลัพธ์ nir_SE" ด้านบน)
 - [x] Ablation test — แยกผลของ K-Fold ออกจาก Augmentation (`nir_no_aug`) — **สรุป: augmentation ช่วยจริง (+0.026 F1), ตัวเลขรอบ 1-2 เป็นโชคจาก single-split** (ดูตาราง ablation ด้านบน)
-- [ ] Commit + push ผลใหม่ (`nir_SE`, `nir_no_aug` ใน `kfold_results.json`) ขึ้น GitHub ตาม workflow ในหัวข้อ Version Control (ระวังอย่า `git add -A` แบบไม่เช็ค)
+- [x] Commit + push ผลใหม่ (`nir_SE`, `nir_no_aug` ใน `kfold_results.json`) — **อยู่ใน commit แรก `74afa45` อยู่แล้ว** (ตรวจแล้วด้วย `git show 74afa45:outputs/dl/kfold_results.json`)
 - [x] งานที่ 1 — เทรน `nir_SE_ss` ด้วยภาพ SingleSpectra (flat-field corrected) — **F1 0.859±0.024, acc 90.9%±1.7% ไม่ต่างจาก `nir_SE` raw (0.862±0.025)** mapping ตรวจด้วยเนื้อภาพ 819/819 (ดูหัวข้อ "ใช้ข้อมูลใน CAPA ที่ยังไม่เคยใช้")
 - [x] งานที่ 2 — ตรวจ Grad-CAM เชิงปริมาณกับ mask ตำหนิ (Pointing Game + IoU) — **Surface ไม่ดีกว่าสุ่ม, Internal ดีกว่า null ~+14 จุด (Bruise/Flesh_damage) แต่ Rot ไม่ดีกว่า — ต้องแก้ narrative เรื่อง Grad-CAM ในเล่ม**
-- [ ] Commit + push งานชุดนี้ (`src/preprocess_ss.py`, `src/gradcam_mask_eval.py`, แก้ `train_dl_kfold.py`/`dataset.py`/`.gitignore`/`PROJECT_PLAN.md`, `outputs/ss_mapping*.json`, `kfold_results.json`, `gradcam_mask_eval.json`) — ยังไม่ได้ commit รอผู้ใช้สั่ง
-- [ ] งานที่ 4 — Single-band ablation (`re_only`, `ir_only`) เพื่อพิสูจน์ "RE สำคัญกว่า IR" แบบตรง — ดูหัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง"
-- [ ] งานที่ 5 — Commit + push ทุกชุดที่ค้าง (ทำหลังงานที่ 4)
-- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว (nir_SE 0.862±0.025) แต่ต้องปรับ narrative 2 จุดก่อน: Grad-CAM (ดูงานที่ 2) และ SE weight / RE vs IR (รอผลงานที่ 4)**
+- [x] Commit + push งานชุด SingleSpectra + Grad-CAM mask eval (commit `7dca196`) — push พร้อมงานที่ 5 (2026-10-13)
+- [x] งานที่ 4 — Single-band ablation (`re_only`, `ir_only`) — **RE-only 0.839±0.034 ≈ IR-only 0.844±0.049 ≈ RE+IR 0.843±0.023 → ไม่มีหลักฐานว่า RE สำคัญกว่า IR ต้องตัดข้อสรุปนี้ออก และเลิกใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์** (ดูหัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง")
+- [x] งานที่ 5 — Commit + push ทุกชุดที่ค้างขึ้น GitHub (2026-10-13, ดู `git log`)
+- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว (nir_SE 0.862±0.025) แต่ต้องปรับ narrative 2 จุดก่อน: (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**

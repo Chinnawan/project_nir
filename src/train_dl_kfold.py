@@ -63,6 +63,9 @@ VARIANT_SPECS = {
     "nir_SE": ("nir", True, True, "raw", False),         # NIR-only + SE block
     "nir_no_aug": ("nir", False, False, "raw", False),   # NIR-only, augmentation OFF (ablation)
     "nir_SE_ss": ("nir", True, True, "ss", True),        # nir_SE on SingleSpectra images; ckpts feed gradcam_mask_eval
+    # single-band ablation: identical recipe to `nir` (no SE: SE on 1 channel is meaningless)
+    "re_only": ("re", False, True, "raw", False),
+    "ir_only": ("ir", False, True, "raw", False),
 }
 
 
@@ -125,6 +128,10 @@ def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_grou
         "test_macro_f1": result["test_macro_f1"],
         "epochs_trained": result["epochs_trained"],
         "channel_weights": result["channel_weights"],
+        "per_class_f1": [result["test_report"][c]["f1-score"] for c in CLASSES],
+        "confusion_matrix": result["confusion_matrix"],
+        "test_predictions": result["test_predictions"],  # same order as the fold's test_idx
+        "test_labels": result["test_labels"],
     }
 
 

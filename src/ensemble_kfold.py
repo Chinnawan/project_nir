@@ -83,7 +83,7 @@ def train_fold(variant, fold_idx):
         channel_group=channel_group,
     )
     print(f"[{variant} fold {fold_idx}] this fold's own test macro-F1={result['test_macro_f1']:.4f} "
-          f"(matches kfold_results.json)")
+          f"(separate run from kfold_results.json -- same recipe, not identical)")
 
     os.makedirs(CKPT_DIR, exist_ok=True)
     torch.save({"state_dict": model.state_dict(), "mean": mean.tolist(), "std": std.tolist()}, ckpt_path)
