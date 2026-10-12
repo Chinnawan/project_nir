@@ -1,0 +1,5735 @@
+{
+ "1": {
+  "ss_name": "Defect0001",
+  "tissue": "Russet",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 1
+ },
+ "2": {
+  "ss_name": "Healthy001",
+  "tissue": "Healthy",
+  "tissue_no": 1,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "3": {
+  "ss_name": "Defect0002",
+  "tissue": "Other",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 2
+ },
+ "4": {
+  "ss_name": "Defect0003",
+  "tissue": "Bruise",
+  "tissue_no": 1,
+  "cls": "Internal_Defect",
+  "defect_no": 3
+ },
+ "5": {
+  "ss_name": "Defect0004",
+  "tissue": "Hail_damage",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 4
+ },
+ "6": {
+  "ss_name": "Defect0005",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 5
+ },
+ "7": {
+  "ss_name": "Healthy002",
+  "tissue": "Healthy",
+  "tissue_no": 2,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "8": {
+  "ss_name": "Healthy003",
+  "tissue": "Healthy",
+  "tissue_no": 3,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "9": {
+  "ss_name": "Stem001",
+  "tissue": "Stem",
+  "tissue_no": 1,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "10": {
+  "ss_name": "Stem002",
+  "tissue": "Stem",
+  "tissue_no": 2,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "11": {
+  "ss_name": "Calix001",
+  "tissue": "Calix",
+  "tissue_no": 1,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "12": {
+  "ss_name": "Defect0006",
+  "tissue": "Hail_damage",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 6
+ },
+ "13": {
+  "ss_name": "Healthy004",
+  "tissue": "Healthy",
+  "tissue_no": 4,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "14": {
+  "ss_name": "Stem003",
+  "tissue": "Stem",
+  "tissue_no": 3,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "15": {
+  "ss_name": "Stem004",
+  "tissue": "Stem",
+  "tissue_no": 4,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "16": {
+  "ss_name": "Calix002",
+  "tissue": "Calix",
+  "tissue_no": 2,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "17": {
+  "ss_name": "Calix003",
+  "tissue": "Calix",
+  "tissue_no": 3,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "18": {
+  "ss_name": "Calix004",
+  "tissue": "Calix",
+  "tissue_no": 4,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "19": {
+  "ss_name": "Defect0007",
+  "tissue": "Russet",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 7
+ },
+ "20": {
+  "ss_name": "Healthy005",
+  "tissue": "Healthy",
+  "tissue_no": 5,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "21": {
+  "ss_name": "Healthy006",
+  "tissue": "Healthy",
+  "tissue_no": 6,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "22": {
+  "ss_name": "Healthy007",
+  "tissue": "Healthy",
+  "tissue_no": 7,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "23": {
+  "ss_name": "Stem005",
+  "tissue": "Stem",
+  "tissue_no": 5,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "24": {
+  "ss_name": "Stem006",
+  "tissue": "Stem",
+  "tissue_no": 6,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "25": {
+  "ss_name": "Calix005",
+  "tissue": "Calix",
+  "tissue_no": 5,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "26": {
+  "ss_name": "Calix006",
+  "tissue": "Calix",
+  "tissue_no": 6,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "27": {
+  "ss_name": "Defect0008",
+  "tissue": "Other",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 8
+ },
+ "28": {
+  "ss_name": "Defect0009",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 9
+ },
+ "29": {
+  "ss_name": "Stem007",
+  "tissue": "Stem",
+  "tissue_no": 7,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "30": {
+  "ss_name": "Defect0010",
+  "tissue": "Russet",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 10
+ },
+ "31": {
+  "ss_name": "Defect0011",
+  "tissue": "Scald",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 11
+ },
+ "32": {
+  "ss_name": "Healthy008",
+  "tissue": "Healthy",
+  "tissue_no": 8,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "33": {
+  "ss_name": "Healthy009",
+  "tissue": "Healthy",
+  "tissue_no": 9,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "34": {
+  "ss_name": "Stem008",
+  "tissue": "Stem",
+  "tissue_no": 8,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "35": {
+  "ss_name": "Calix007",
+  "tissue": "Calix",
+  "tissue_no": 7,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "36": {
+  "ss_name": "Calix008",
+  "tissue": "Calix",
+  "tissue_no": 8,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "37": {
+  "ss_name": "Defect0012",
+  "tissue": "Limb_rub",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 12
+ },
+ "38": {
+  "ss_name": "Healthy010",
+  "tissue": "Healthy",
+  "tissue_no": 10,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "39": {
+  "ss_name": "Defect0013",
+  "tissue": "Russet",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 13
+ },
+ "40": {
+  "ss_name": "Defect0014",
+  "tissue": "Russet",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 14
+ },
+ "41": {
+  "ss_name": "Defect0015",
+  "tissue": "Frost_damage",
+  "tissue_no": 1,
+  "cls": "Surface_Defect",
+  "defect_no": 15
+ },
+ "42": {
+  "ss_name": "Defect0016",
+  "tissue": "Scald",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 16
+ },
+ "43": {
+  "ss_name": "Healthy011",
+  "tissue": "Healthy",
+  "tissue_no": 11,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "44": {
+  "ss_name": "Stem009",
+  "tissue": "Stem",
+  "tissue_no": 9,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "45": {
+  "ss_name": "Stem010",
+  "tissue": "Stem",
+  "tissue_no": 10,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "46": {
+  "ss_name": "Calix009",
+  "tissue": "Calix",
+  "tissue_no": 9,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "47": {
+  "ss_name": "Calix010",
+  "tissue": "Calix",
+  "tissue_no": 10,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "48": {
+  "ss_name": "Defect0017",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 17
+ },
+ "49": {
+  "ss_name": "Defect0018",
+  "tissue": "Hail_damage",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 18
+ },
+ "50": {
+  "ss_name": "Healthy012",
+  "tissue": "Healthy",
+  "tissue_no": 12,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "51": {
+  "ss_name": "Calix011",
+  "tissue": "Calix",
+  "tissue_no": 11,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "52": {
+  "ss_name": "Defect0019",
+  "tissue": "Scald",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 19
+ },
+ "53": {
+  "ss_name": "Healthy013",
+  "tissue": "Healthy",
+  "tissue_no": 13,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "54": {
+  "ss_name": "Stem011",
+  "tissue": "Stem",
+  "tissue_no": 11,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "55": {
+  "ss_name": "Stem012",
+  "tissue": "Stem",
+  "tissue_no": 12,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "56": {
+  "ss_name": "Calix012",
+  "tissue": "Calix",
+  "tissue_no": 12,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "57": {
+  "ss_name": "Healthy014",
+  "tissue": "Healthy",
+  "tissue_no": 14,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "58": {
+  "ss_name": "Defect0020",
+  "tissue": "Hail_damage",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 20
+ },
+ "59": {
+  "ss_name": "Stem013",
+  "tissue": "Stem",
+  "tissue_no": 13,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "60": {
+  "ss_name": "Calix013",
+  "tissue": "Calix",
+  "tissue_no": 13,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "61": {
+  "ss_name": "Defect0021",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 21
+ },
+ "62": {
+  "ss_name": "Defect0022",
+  "tissue": "Scald",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 22
+ },
+ "63": {
+  "ss_name": "Healthy015",
+  "tissue": "Healthy",
+  "tissue_no": 15,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "64": {
+  "ss_name": "Calix014",
+  "tissue": "Calix",
+  "tissue_no": 14,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "65": {
+  "ss_name": "Defect0023",
+  "tissue": "Limb_rub",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 23
+ },
+ "66": {
+  "ss_name": "Defect0024",
+  "tissue": "Other",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 24
+ },
+ "67": {
+  "ss_name": "Defect0025",
+  "tissue": "Scald",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 25
+ },
+ "68": {
+  "ss_name": "Defect0026",
+  "tissue": "Other",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 26
+ },
+ "69": {
+  "ss_name": "Defect0027",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 27
+ },
+ "70": {
+  "ss_name": "Healthy016",
+  "tissue": "Healthy",
+  "tissue_no": 16,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "71": {
+  "ss_name": "Calix015",
+  "tissue": "Calix",
+  "tissue_no": 15,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "72": {
+  "ss_name": "Calix016",
+  "tissue": "Calix",
+  "tissue_no": 16,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "73": {
+  "ss_name": "Healthy017",
+  "tissue": "Healthy",
+  "tissue_no": 17,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "74": {
+  "ss_name": "Defect0028",
+  "tissue": "Limb_rub",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 28
+ },
+ "75": {
+  "ss_name": "Defect0029",
+  "tissue": "Russet",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 29
+ },
+ "76": {
+  "ss_name": "Defect0030",
+  "tissue": "Hail_damage",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 30
+ },
+ "77": {
+  "ss_name": "Healthy018",
+  "tissue": "Healthy",
+  "tissue_no": 18,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "78": {
+  "ss_name": "Stem014",
+  "tissue": "Stem",
+  "tissue_no": 14,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "79": {
+  "ss_name": "Calix017",
+  "tissue": "Calix",
+  "tissue_no": 17,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "80": {
+  "ss_name": "Defect0031",
+  "tissue": "Russet",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 31
+ },
+ "81": {
+  "ss_name": "Defect0032",
+  "tissue": "Scald",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 32
+ },
+ "82": {
+  "ss_name": "Stem015",
+  "tissue": "Stem",
+  "tissue_no": 15,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "83": {
+  "ss_name": "Calix018",
+  "tissue": "Calix",
+  "tissue_no": 18,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "84": {
+  "ss_name": "Defect0033",
+  "tissue": "Hail_damage",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 33
+ },
+ "85": {
+  "ss_name": "Healthy019",
+  "tissue": "Healthy",
+  "tissue_no": 19,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "86": {
+  "ss_name": "Stem016",
+  "tissue": "Stem",
+  "tissue_no": 16,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "87": {
+  "ss_name": "Calix019",
+  "tissue": "Calix",
+  "tissue_no": 19,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "88": {
+  "ss_name": "Defect0034",
+  "tissue": "Hail_damage",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 34
+ },
+ "89": {
+  "ss_name": "Defect0035",
+  "tissue": "Limb_rub",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 35
+ },
+ "90": {
+  "ss_name": "Healthy020",
+  "tissue": "Healthy",
+  "tissue_no": 20,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "91": {
+  "ss_name": "Defect0036",
+  "tissue": "Other",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 36
+ },
+ "92": {
+  "ss_name": "Calix020",
+  "tissue": "Calix",
+  "tissue_no": 20,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "93": {
+  "ss_name": "Defect0037",
+  "tissue": "Other",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 37
+ },
+ "94": {
+  "ss_name": "Healthy021",
+  "tissue": "Healthy",
+  "tissue_no": 21,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "95": {
+  "ss_name": "Stem017",
+  "tissue": "Stem",
+  "tissue_no": 17,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "96": {
+  "ss_name": "Defect0038",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 38
+ },
+ "97": {
+  "ss_name": "Healthy022",
+  "tissue": "Healthy",
+  "tissue_no": 22,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "98": {
+  "ss_name": "Stem018",
+  "tissue": "Stem",
+  "tissue_no": 18,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "99": {
+  "ss_name": "Calix021",
+  "tissue": "Calix",
+  "tissue_no": 21,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "100": {
+  "ss_name": "Defect0039",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 39
+ },
+ "101": {
+  "ss_name": "Calix022",
+  "tissue": "Calix",
+  "tissue_no": 22,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "102": {
+  "ss_name": "Defect0040",
+  "tissue": "Frost_damage",
+  "tissue_no": 2,
+  "cls": "Surface_Defect",
+  "defect_no": 40
+ },
+ "103": {
+  "ss_name": "Healthy023",
+  "tissue": "Healthy",
+  "tissue_no": 23,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "104": {
+  "ss_name": "Defect0041",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 41
+ },
+ "105": {
+  "ss_name": "Healthy024",
+  "tissue": "Healthy",
+  "tissue_no": 24,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "106": {
+  "ss_name": "Calix023",
+  "tissue": "Calix",
+  "tissue_no": 23,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "107": {
+  "ss_name": "Defect0042",
+  "tissue": "Russet",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 42
+ },
+ "108": {
+  "ss_name": "Defect0043",
+  "tissue": "Russet",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 43
+ },
+ "109": {
+  "ss_name": "Calix024",
+  "tissue": "Calix",
+  "tissue_no": 24,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "110": {
+  "ss_name": "Defect0044",
+  "tissue": "Frost_damage",
+  "tissue_no": 3,
+  "cls": "Surface_Defect",
+  "defect_no": 44
+ },
+ "111": {
+  "ss_name": "Defect0045",
+  "tissue": "Frost_damage",
+  "tissue_no": 4,
+  "cls": "Surface_Defect",
+  "defect_no": 45
+ },
+ "112": {
+  "ss_name": "Defect0046",
+  "tissue": "Rot",
+  "tissue_no": 1,
+  "cls": "Internal_Defect",
+  "defect_no": 46
+ },
+ "113": {
+  "ss_name": "Defect0047",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 47
+ },
+ "114": {
+  "ss_name": "Calix025",
+  "tissue": "Calix",
+  "tissue_no": 25,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "115": {
+  "ss_name": "Defect0048",
+  "tissue": "Rot",
+  "tissue_no": 2,
+  "cls": "Internal_Defect",
+  "defect_no": 48
+ },
+ "116": {
+  "ss_name": "Defect0049",
+  "tissue": "Other",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 49
+ },
+ "117": {
+  "ss_name": "Defect0050",
+  "tissue": "Other",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 50
+ },
+ "118": {
+  "ss_name": "Stem019",
+  "tissue": "Stem",
+  "tissue_no": 19,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "119": {
+  "ss_name": "Healthy025",
+  "tissue": "Healthy",
+  "tissue_no": 25,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "120": {
+  "ss_name": "Defect0051",
+  "tissue": "Russet",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 51
+ },
+ "121": {
+  "ss_name": "Healthy026",
+  "tissue": "Healthy",
+  "tissue_no": 26,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "122": {
+  "ss_name": "Defect0052",
+  "tissue": "Russet",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 52
+ },
+ "123": {
+  "ss_name": "Defect0053",
+  "tissue": "Other",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 53
+ },
+ "124": {
+  "ss_name": "Healthy027",
+  "tissue": "Healthy",
+  "tissue_no": 27,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "125": {
+  "ss_name": "Stem020",
+  "tissue": "Stem",
+  "tissue_no": 20,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "126": {
+  "ss_name": "Defect0054",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 54
+ },
+ "127": {
+  "ss_name": "Healthy028",
+  "tissue": "Healthy",
+  "tissue_no": 28,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "128": {
+  "ss_name": "Healthy029",
+  "tissue": "Healthy",
+  "tissue_no": 29,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "129": {
+  "ss_name": "Calix026",
+  "tissue": "Calix",
+  "tissue_no": 26,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "130": {
+  "ss_name": "Defect0055",
+  "tissue": "Scald",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 55
+ },
+ "131": {
+  "ss_name": "Defect0056",
+  "tissue": "Other",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 56
+ },
+ "132": {
+  "ss_name": "Healthy030",
+  "tissue": "Healthy",
+  "tissue_no": 30,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "133": {
+  "ss_name": "Calix027",
+  "tissue": "Calix",
+  "tissue_no": 27,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "134": {
+  "ss_name": "Defect0057",
+  "tissue": "Scald",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 57
+ },
+ "135": {
+  "ss_name": "Defect0058",
+  "tissue": "Frost_damage",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 58
+ },
+ "136": {
+  "ss_name": "Defect0059",
+  "tissue": "Frost_damage",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 59
+ },
+ "137": {
+  "ss_name": "Defect0060",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 60
+ },
+ "138": {
+  "ss_name": "Healthy031",
+  "tissue": "Healthy",
+  "tissue_no": 31,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "139": {
+  "ss_name": "Defect0061",
+  "tissue": "Russet",
+  "tissue_no": 12,
+  "cls": "Surface_Defect",
+  "defect_no": 61
+ },
+ "140": {
+  "ss_name": "Defect0062",
+  "tissue": "Other",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 62
+ },
+ "141": {
+  "ss_name": "Defect0063",
+  "tissue": "Rot",
+  "tissue_no": 3,
+  "cls": "Internal_Defect",
+  "defect_no": 63
+ },
+ "142": {
+  "ss_name": "Healthy032",
+  "tissue": "Healthy",
+  "tissue_no": 32,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "143": {
+  "ss_name": "Stem021",
+  "tissue": "Stem",
+  "tissue_no": 21,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "144": {
+  "ss_name": "Calix028",
+  "tissue": "Calix",
+  "tissue_no": 28,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "145": {
+  "ss_name": "Defect0064",
+  "tissue": "Rot",
+  "tissue_no": 4,
+  "cls": "Internal_Defect",
+  "defect_no": 64
+ },
+ "146": {
+  "ss_name": "Defect0065",
+  "tissue": "Rot",
+  "tissue_no": 5,
+  "cls": "Internal_Defect",
+  "defect_no": 65
+ },
+ "147": {
+  "ss_name": "Defect0066",
+  "tissue": "Rot",
+  "tissue_no": 6,
+  "cls": "Internal_Defect",
+  "defect_no": 66
+ },
+ "148": {
+  "ss_name": "Defect0067",
+  "tissue": "Frost_damage",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 67
+ },
+ "149": {
+  "ss_name": "Defect0068",
+  "tissue": "Limb_rub",
+  "tissue_no": 5,
+  "cls": "Surface_Defect",
+  "defect_no": 68
+ },
+ "150": {
+  "ss_name": "Healthy033",
+  "tissue": "Healthy",
+  "tissue_no": 33,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "151": {
+  "ss_name": "Defect0069",
+  "tissue": "Hail_damage",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 69
+ },
+ "152": {
+  "ss_name": "Healthy034",
+  "tissue": "Healthy",
+  "tissue_no": 34,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "153": {
+  "ss_name": "Defect0070",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 12,
+  "cls": "Surface_Defect",
+  "defect_no": 70
+ },
+ "154": {
+  "ss_name": "Healthy035",
+  "tissue": "Healthy",
+  "tissue_no": 35,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "155": {
+  "ss_name": "Calix029",
+  "tissue": "Calix",
+  "tissue_no": 29,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "156": {
+  "ss_name": "Defect0071",
+  "tissue": "Russet",
+  "tissue_no": 13,
+  "cls": "Surface_Defect",
+  "defect_no": 71
+ },
+ "157": {
+  "ss_name": "Stem022",
+  "tissue": "Stem",
+  "tissue_no": 22,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "158": {
+  "ss_name": "Defect0072",
+  "tissue": "Russet",
+  "tissue_no": 14,
+  "cls": "Surface_Defect",
+  "defect_no": 72
+ },
+ "159": {
+  "ss_name": "Healthy036",
+  "tissue": "Healthy",
+  "tissue_no": 36,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "160": {
+  "ss_name": "Calix030",
+  "tissue": "Calix",
+  "tissue_no": 30,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "161": {
+  "ss_name": "Stem023",
+  "tissue": "Stem",
+  "tissue_no": 23,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "162": {
+  "ss_name": "Defect0073",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 13,
+  "cls": "Surface_Defect",
+  "defect_no": 73
+ },
+ "163": {
+  "ss_name": "Healthy037",
+  "tissue": "Healthy",
+  "tissue_no": 37,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "164": {
+  "ss_name": "Stem024",
+  "tissue": "Stem",
+  "tissue_no": 24,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "165": {
+  "ss_name": "Defect0074",
+  "tissue": "Other",
+  "tissue_no": 12,
+  "cls": "Surface_Defect",
+  "defect_no": 74
+ },
+ "166": {
+  "ss_name": "Healthy038",
+  "tissue": "Healthy",
+  "tissue_no": 38,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "167": {
+  "ss_name": "Stem025",
+  "tissue": "Stem",
+  "tissue_no": 25,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "168": {
+  "ss_name": "Defect0075",
+  "tissue": "Rot",
+  "tissue_no": 7,
+  "cls": "Internal_Defect",
+  "defect_no": 75
+ },
+ "169": {
+  "ss_name": "Defect0076",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 14,
+  "cls": "Surface_Defect",
+  "defect_no": 76
+ },
+ "170": {
+  "ss_name": "Stem026",
+  "tissue": "Stem",
+  "tissue_no": 26,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "171": {
+  "ss_name": "Healthy039",
+  "tissue": "Healthy",
+  "tissue_no": 39,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "172": {
+  "ss_name": "Defect0077",
+  "tissue": "Scald",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 77
+ },
+ "173": {
+  "ss_name": "Defect0078",
+  "tissue": "Hail_damage",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 78
+ },
+ "174": {
+  "ss_name": "Defect0079",
+  "tissue": "Hail_damage",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 79
+ },
+ "175": {
+  "ss_name": "Stem027",
+  "tissue": "Stem",
+  "tissue_no": 27,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "176": {
+  "ss_name": "Calix031",
+  "tissue": "Calix",
+  "tissue_no": 31,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "177": {
+  "ss_name": "Healthy040",
+  "tissue": "Healthy",
+  "tissue_no": 40,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "178": {
+  "ss_name": "Healthy041",
+  "tissue": "Healthy",
+  "tissue_no": 41,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "179": {
+  "ss_name": "Defect0080",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 15,
+  "cls": "Surface_Defect",
+  "defect_no": 80
+ },
+ "180": {
+  "ss_name": "Defect0081",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 16,
+  "cls": "Surface_Defect",
+  "defect_no": 81
+ },
+ "181": {
+  "ss_name": "Healthy042",
+  "tissue": "Healthy",
+  "tissue_no": 42,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "182": {
+  "ss_name": "Stem028",
+  "tissue": "Stem",
+  "tissue_no": 28,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "183": {
+  "ss_name": "Calix032",
+  "tissue": "Calix",
+  "tissue_no": 32,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "184": {
+  "ss_name": "Defect0082",
+  "tissue": "Scald",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 82
+ },
+ "185": {
+  "ss_name": "Healthy043",
+  "tissue": "Healthy",
+  "tissue_no": 43,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "186": {
+  "ss_name": "Stem029",
+  "tissue": "Stem",
+  "tissue_no": 29,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "187": {
+  "ss_name": "Calix033",
+  "tissue": "Calix",
+  "tissue_no": 33,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "188": {
+  "ss_name": "Defect0083",
+  "tissue": "Frost_damage",
+  "tissue_no": 8,
+  "cls": "Surface_Defect",
+  "defect_no": 83
+ },
+ "189": {
+  "ss_name": "Defect0084",
+  "tissue": "Frost_damage",
+  "tissue_no": 9,
+  "cls": "Surface_Defect",
+  "defect_no": 84
+ },
+ "190": {
+  "ss_name": "Defect0085",
+  "tissue": "Frost_damage",
+  "tissue_no": 10,
+  "cls": "Surface_Defect",
+  "defect_no": 85
+ },
+ "191": {
+  "ss_name": "Defect0086",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 17,
+  "cls": "Surface_Defect",
+  "defect_no": 86
+ },
+ "192": {
+  "ss_name": "Defect0087",
+  "tissue": "Other",
+  "tissue_no": 13,
+  "cls": "Surface_Defect",
+  "defect_no": 87
+ },
+ "193": {
+  "ss_name": "Defect0088",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 18,
+  "cls": "Surface_Defect",
+  "defect_no": 88
+ },
+ "194": {
+  "ss_name": "Defect0089",
+  "tissue": "Hail_damage",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 89
+ },
+ "195": {
+  "ss_name": "Stem030",
+  "tissue": "Stem",
+  "tissue_no": 30,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "196": {
+  "ss_name": "Calix034",
+  "tissue": "Calix",
+  "tissue_no": 34,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "197": {
+  "ss_name": "Healthy044",
+  "tissue": "Healthy",
+  "tissue_no": 44,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "198": {
+  "ss_name": "Defect0090",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 19,
+  "cls": "Surface_Defect",
+  "defect_no": 90
+ },
+ "199": {
+  "ss_name": "Healthy045",
+  "tissue": "Healthy",
+  "tissue_no": 45,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "200": {
+  "ss_name": "Defect0091",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 20,
+  "cls": "Surface_Defect",
+  "defect_no": 91
+ },
+ "201": {
+  "ss_name": "Calix035",
+  "tissue": "Calix",
+  "tissue_no": 35,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "202": {
+  "ss_name": "Healthy046",
+  "tissue": "Healthy",
+  "tissue_no": 46,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "203": {
+  "ss_name": "Defect0092",
+  "tissue": "Rot",
+  "tissue_no": 8,
+  "cls": "Internal_Defect",
+  "defect_no": 92
+ },
+ "204": {
+  "ss_name": "Healthy047",
+  "tissue": "Healthy",
+  "tissue_no": 47,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "205": {
+  "ss_name": "Calix036",
+  "tissue": "Calix",
+  "tissue_no": 36,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "206": {
+  "ss_name": "Defect0093",
+  "tissue": "Scald",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 93
+ },
+ "207": {
+  "ss_name": "Defect0094",
+  "tissue": "Scald",
+  "tissue_no": 12,
+  "cls": "Surface_Defect",
+  "defect_no": 94
+ },
+ "208": {
+  "ss_name": "Healthy048",
+  "tissue": "Healthy",
+  "tissue_no": 48,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "209": {
+  "ss_name": "Calix037",
+  "tissue": "Calix",
+  "tissue_no": 37,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "210": {
+  "ss_name": "Defect0095",
+  "tissue": "Russet",
+  "tissue_no": 15,
+  "cls": "Surface_Defect",
+  "defect_no": 95
+ },
+ "211": {
+  "ss_name": "Healthy049",
+  "tissue": "Healthy",
+  "tissue_no": 49,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "212": {
+  "ss_name": "Stem031",
+  "tissue": "Stem",
+  "tissue_no": 31,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "213": {
+  "ss_name": "Defect0096",
+  "tissue": "Russet",
+  "tissue_no": 16,
+  "cls": "Surface_Defect",
+  "defect_no": 96
+ },
+ "214": {
+  "ss_name": "Healthy050",
+  "tissue": "Healthy",
+  "tissue_no": 50,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "215": {
+  "ss_name": "Calix038",
+  "tissue": "Calix",
+  "tissue_no": 38,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "216": {
+  "ss_name": "Defect0097",
+  "tissue": "Russet",
+  "tissue_no": 17,
+  "cls": "Surface_Defect",
+  "defect_no": 97
+ },
+ "217": {
+  "ss_name": "Healthy051",
+  "tissue": "Healthy",
+  "tissue_no": 51,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "218": {
+  "ss_name": "Calix039",
+  "tissue": "Calix",
+  "tissue_no": 39,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "219": {
+  "ss_name": "Defect0098",
+  "tissue": "Hail_damage",
+  "tissue_no": 12,
+  "cls": "Surface_Defect",
+  "defect_no": 98
+ },
+ "220": {
+  "ss_name": "Healthy052",
+  "tissue": "Healthy",
+  "tissue_no": 52,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "221": {
+  "ss_name": "Calix040",
+  "tissue": "Calix",
+  "tissue_no": 40,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "222": {
+  "ss_name": "Healthy053",
+  "tissue": "Healthy",
+  "tissue_no": 53,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "223": {
+  "ss_name": "Defect0099",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 21,
+  "cls": "Surface_Defect",
+  "defect_no": 99
+ },
+ "224": {
+  "ss_name": "Defect0100",
+  "tissue": "Bruise",
+  "tissue_no": 2,
+  "cls": "Internal_Defect",
+  "defect_no": 100
+ },
+ "225": {
+  "ss_name": "Calix041",
+  "tissue": "Calix",
+  "tissue_no": 41,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "226": {
+  "ss_name": "Defect0101",
+  "tissue": "Other",
+  "tissue_no": 14,
+  "cls": "Surface_Defect",
+  "defect_no": 101
+ },
+ "227": {
+  "ss_name": "Defect0102",
+  "tissue": "Russet",
+  "tissue_no": 18,
+  "cls": "Surface_Defect",
+  "defect_no": 102
+ },
+ "228": {
+  "ss_name": "Defect0103",
+  "tissue": "Russet",
+  "tissue_no": 19,
+  "cls": "Surface_Defect",
+  "defect_no": 103
+ },
+ "229": {
+  "ss_name": "Calix042",
+  "tissue": "Calix",
+  "tissue_no": 42,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "230": {
+  "ss_name": "Healthy054",
+  "tissue": "Healthy",
+  "tissue_no": 54,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "231": {
+  "ss_name": "Healthy055",
+  "tissue": "Healthy",
+  "tissue_no": 55,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "232": {
+  "ss_name": "Defect0104",
+  "tissue": "Russet",
+  "tissue_no": 20,
+  "cls": "Surface_Defect",
+  "defect_no": 104
+ },
+ "233": {
+  "ss_name": "Healthy056",
+  "tissue": "Healthy",
+  "tissue_no": 56,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "234": {
+  "ss_name": "Stem032",
+  "tissue": "Stem",
+  "tissue_no": 32,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "235": {
+  "ss_name": "Calix043",
+  "tissue": "Calix",
+  "tissue_no": 43,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "236": {
+  "ss_name": "Defect0105",
+  "tissue": "Russet",
+  "tissue_no": 21,
+  "cls": "Surface_Defect",
+  "defect_no": 105
+ },
+ "237": {
+  "ss_name": "Healthy057",
+  "tissue": "Healthy",
+  "tissue_no": 57,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "238": {
+  "ss_name": "Healthy058",
+  "tissue": "Healthy",
+  "tissue_no": 58,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "239": {
+  "ss_name": "Stem033",
+  "tissue": "Stem",
+  "tissue_no": 33,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "240": {
+  "ss_name": "Calix044",
+  "tissue": "Calix",
+  "tissue_no": 44,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "241": {
+  "ss_name": "Defect0106",
+  "tissue": "Other",
+  "tissue_no": 15,
+  "cls": "Surface_Defect",
+  "defect_no": 106
+ },
+ "242": {
+  "ss_name": "Defect0107",
+  "tissue": "Other",
+  "tissue_no": 16,
+  "cls": "Surface_Defect",
+  "defect_no": 107
+ },
+ "243": {
+  "ss_name": "Defect0108",
+  "tissue": "Bruise",
+  "tissue_no": 3,
+  "cls": "Internal_Defect",
+  "defect_no": 108
+ },
+ "244": {
+  "ss_name": "Healthy059",
+  "tissue": "Healthy",
+  "tissue_no": 59,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "245": {
+  "ss_name": "Calix045",
+  "tissue": "Calix",
+  "tissue_no": 45,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "246": {
+  "ss_name": "Defect0109",
+  "tissue": "Russet",
+  "tissue_no": 22,
+  "cls": "Surface_Defect",
+  "defect_no": 109
+ },
+ "247": {
+  "ss_name": "Defect0110",
+  "tissue": "Russet",
+  "tissue_no": 23,
+  "cls": "Surface_Defect",
+  "defect_no": 110
+ },
+ "248": {
+  "ss_name": "Defect0111",
+  "tissue": "Russet",
+  "tissue_no": 24,
+  "cls": "Surface_Defect",
+  "defect_no": 111
+ },
+ "249": {
+  "ss_name": "Defect0112",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 22,
+  "cls": "Surface_Defect",
+  "defect_no": 112
+ },
+ "250": {
+  "ss_name": "Stem034",
+  "tissue": "Stem",
+  "tissue_no": 34,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "251": {
+  "ss_name": "Defect0113",
+  "tissue": "Scald",
+  "tissue_no": 13,
+  "cls": "Surface_Defect",
+  "defect_no": 113
+ },
+ "252": {
+  "ss_name": "Healthy060",
+  "tissue": "Healthy",
+  "tissue_no": 60,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "253": {
+  "ss_name": "Healthy061",
+  "tissue": "Healthy",
+  "tissue_no": 61,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "254": {
+  "ss_name": "Stem035",
+  "tissue": "Stem",
+  "tissue_no": 35,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "255": {
+  "ss_name": "Defect0114",
+  "tissue": "Hail_damage",
+  "tissue_no": 13,
+  "cls": "Surface_Defect",
+  "defect_no": 114
+ },
+ "256": {
+  "ss_name": "Healthy062",
+  "tissue": "Healthy",
+  "tissue_no": 62,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "257": {
+  "ss_name": "Defect0115",
+  "tissue": "Rot",
+  "tissue_no": 9,
+  "cls": "Internal_Defect",
+  "defect_no": 115
+ },
+ "258": {
+  "ss_name": "Defect0116",
+  "tissue": "Hail_damage",
+  "tissue_no": 14,
+  "cls": "Surface_Defect",
+  "defect_no": 116
+ },
+ "259": {
+  "ss_name": "Healthy063",
+  "tissue": "Healthy",
+  "tissue_no": 63,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "260": {
+  "ss_name": "Stem036",
+  "tissue": "Stem",
+  "tissue_no": 36,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "261": {
+  "ss_name": "Calix046",
+  "tissue": "Calix",
+  "tissue_no": 46,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "262": {
+  "ss_name": "Healthy064",
+  "tissue": "Healthy",
+  "tissue_no": 64,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "263": {
+  "ss_name": "Stem037",
+  "tissue": "Stem",
+  "tissue_no": 37,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "264": {
+  "ss_name": "Calix047",
+  "tissue": "Calix",
+  "tissue_no": 47,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "265": {
+  "ss_name": "Defect0117",
+  "tissue": "Russet",
+  "tissue_no": 25,
+  "cls": "Surface_Defect",
+  "defect_no": 117
+ },
+ "266": {
+  "ss_name": "Healthy065",
+  "tissue": "Healthy",
+  "tissue_no": 65,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "267": {
+  "ss_name": "Defect0118",
+  "tissue": "Russet",
+  "tissue_no": 26,
+  "cls": "Surface_Defect",
+  "defect_no": 118
+ },
+ "268": {
+  "ss_name": "Stem038",
+  "tissue": "Stem",
+  "tissue_no": 38,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "269": {
+  "ss_name": "Defect0119",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 23,
+  "cls": "Surface_Defect",
+  "defect_no": 119
+ },
+ "270": {
+  "ss_name": "Calix048",
+  "tissue": "Calix",
+  "tissue_no": 48,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "271": {
+  "ss_name": "Defect0120",
+  "tissue": "Rot",
+  "tissue_no": 10,
+  "cls": "Internal_Defect",
+  "defect_no": 120
+ },
+ "272": {
+  "ss_name": "Defect0121",
+  "tissue": "Scald",
+  "tissue_no": 14,
+  "cls": "Surface_Defect",
+  "defect_no": 121
+ },
+ "273": {
+  "ss_name": "Healthy066",
+  "tissue": "Healthy",
+  "tissue_no": 66,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "274": {
+  "ss_name": "Healthy067",
+  "tissue": "Healthy",
+  "tissue_no": 67,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "275": {
+  "ss_name": "Stem039",
+  "tissue": "Stem",
+  "tissue_no": 39,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "276": {
+  "ss_name": "Defect0122",
+  "tissue": "Russet",
+  "tissue_no": 27,
+  "cls": "Surface_Defect",
+  "defect_no": 122
+ },
+ "277": {
+  "ss_name": "Healthy068",
+  "tissue": "Healthy",
+  "tissue_no": 68,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "278": {
+  "ss_name": "Healthy069",
+  "tissue": "Healthy",
+  "tissue_no": 69,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "279": {
+  "ss_name": "Calix049",
+  "tissue": "Calix",
+  "tissue_no": 49,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "280": {
+  "ss_name": "Stem040",
+  "tissue": "Stem",
+  "tissue_no": 40,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "281": {
+  "ss_name": "Healthy070",
+  "tissue": "Healthy",
+  "tissue_no": 70,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "282": {
+  "ss_name": "Healthy071",
+  "tissue": "Healthy",
+  "tissue_no": 71,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "283": {
+  "ss_name": "Stem041",
+  "tissue": "Stem",
+  "tissue_no": 41,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "284": {
+  "ss_name": "Calix050",
+  "tissue": "Calix",
+  "tissue_no": 50,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "285": {
+  "ss_name": "Healthy072",
+  "tissue": "Healthy",
+  "tissue_no": 72,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "286": {
+  "ss_name": "Healthy073",
+  "tissue": "Healthy",
+  "tissue_no": 73,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "287": {
+  "ss_name": "Stem042",
+  "tissue": "Stem",
+  "tissue_no": 42,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "288": {
+  "ss_name": "Defect0123",
+  "tissue": "Russet",
+  "tissue_no": 28,
+  "cls": "Surface_Defect",
+  "defect_no": 123
+ },
+ "289": {
+  "ss_name": "Healthy074",
+  "tissue": "Healthy",
+  "tissue_no": 74,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "290": {
+  "ss_name": "Calix051",
+  "tissue": "Calix",
+  "tissue_no": 51,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "291": {
+  "ss_name": "Defect0124",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 24,
+  "cls": "Surface_Defect",
+  "defect_no": 124
+ },
+ "292": {
+  "ss_name": "Healthy075",
+  "tissue": "Healthy",
+  "tissue_no": 75,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "293": {
+  "ss_name": "Healthy076",
+  "tissue": "Healthy",
+  "tissue_no": 76,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "294": {
+  "ss_name": "Stem043",
+  "tissue": "Stem",
+  "tissue_no": 43,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "295": {
+  "ss_name": "Calix052",
+  "tissue": "Calix",
+  "tissue_no": 52,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "296": {
+  "ss_name": "Defect0125",
+  "tissue": "Other",
+  "tissue_no": 17,
+  "cls": "Surface_Defect",
+  "defect_no": 125
+ },
+ "297": {
+  "ss_name": "Healthy077",
+  "tissue": "Healthy",
+  "tissue_no": 77,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "298": {
+  "ss_name": "Healthy078",
+  "tissue": "Healthy",
+  "tissue_no": 78,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "299": {
+  "ss_name": "Stem044",
+  "tissue": "Stem",
+  "tissue_no": 44,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "300": {
+  "ss_name": "Defect0126",
+  "tissue": "Rot",
+  "tissue_no": 11,
+  "cls": "Internal_Defect",
+  "defect_no": 126
+ },
+ "301": {
+  "ss_name": "Healthy079",
+  "tissue": "Healthy",
+  "tissue_no": 79,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "302": {
+  "ss_name": "Healthy080",
+  "tissue": "Healthy",
+  "tissue_no": 80,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "303": {
+  "ss_name": "Stem045",
+  "tissue": "Stem",
+  "tissue_no": 45,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "304": {
+  "ss_name": "Calix053",
+  "tissue": "Calix",
+  "tissue_no": 53,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "305": {
+  "ss_name": "Defect0127",
+  "tissue": "Russet",
+  "tissue_no": 29,
+  "cls": "Surface_Defect",
+  "defect_no": 127
+ },
+ "306": {
+  "ss_name": "Healthy081",
+  "tissue": "Healthy",
+  "tissue_no": 81,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "307": {
+  "ss_name": "Healthy082",
+  "tissue": "Healthy",
+  "tissue_no": 82,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "308": {
+  "ss_name": "Stem046",
+  "tissue": "Stem",
+  "tissue_no": 46,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "309": {
+  "ss_name": "Calix054",
+  "tissue": "Calix",
+  "tissue_no": 54,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "310": {
+  "ss_name": "Defect0128",
+  "tissue": "Russet",
+  "tissue_no": 30,
+  "cls": "Surface_Defect",
+  "defect_no": 128
+ },
+ "311": {
+  "ss_name": "Healthy083",
+  "tissue": "Healthy",
+  "tissue_no": 83,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "312": {
+  "ss_name": "Stem047",
+  "tissue": "Stem",
+  "tissue_no": 47,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "313": {
+  "ss_name": "Calix055",
+  "tissue": "Calix",
+  "tissue_no": 55,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "314": {
+  "ss_name": "Healthy084",
+  "tissue": "Healthy",
+  "tissue_no": 84,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "315": {
+  "ss_name": "Defect0129",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 25,
+  "cls": "Surface_Defect",
+  "defect_no": 129
+ },
+ "316": {
+  "ss_name": "Healthy085",
+  "tissue": "Healthy",
+  "tissue_no": 85,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "317": {
+  "ss_name": "Stem048",
+  "tissue": "Stem",
+  "tissue_no": 48,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "318": {
+  "ss_name": "Calix056",
+  "tissue": "Calix",
+  "tissue_no": 56,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "319": {
+  "ss_name": "Defect0130",
+  "tissue": "Limb_rub",
+  "tissue_no": 6,
+  "cls": "Surface_Defect",
+  "defect_no": 130
+ },
+ "320": {
+  "ss_name": "Defect0131",
+  "tissue": "Russet",
+  "tissue_no": 31,
+  "cls": "Surface_Defect",
+  "defect_no": 131
+ },
+ "321": {
+  "ss_name": "Healthy086",
+  "tissue": "Healthy",
+  "tissue_no": 86,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "322": {
+  "ss_name": "Defect0132",
+  "tissue": "Bruise",
+  "tissue_no": 4,
+  "cls": "Internal_Defect",
+  "defect_no": 132
+ },
+ "323": {
+  "ss_name": "Calix057",
+  "tissue": "Calix",
+  "tissue_no": 57,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "324": {
+  "ss_name": "Healthy087",
+  "tissue": "Healthy",
+  "tissue_no": 87,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "325": {
+  "ss_name": "Defect0133",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 26,
+  "cls": "Surface_Defect",
+  "defect_no": 133
+ },
+ "326": {
+  "ss_name": "Defect0134",
+  "tissue": "Russet",
+  "tissue_no": 32,
+  "cls": "Surface_Defect",
+  "defect_no": 134
+ },
+ "327": {
+  "ss_name": "Healthy088",
+  "tissue": "Healthy",
+  "tissue_no": 88,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "328": {
+  "ss_name": "Healthy089",
+  "tissue": "Healthy",
+  "tissue_no": 89,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "329": {
+  "ss_name": "Stem049",
+  "tissue": "Stem",
+  "tissue_no": 49,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "330": {
+  "ss_name": "Calix058",
+  "tissue": "Calix",
+  "tissue_no": 58,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "331": {
+  "ss_name": "Defect0135",
+  "tissue": "Russet",
+  "tissue_no": 33,
+  "cls": "Surface_Defect",
+  "defect_no": 135
+ },
+ "332": {
+  "ss_name": "Defect0136",
+  "tissue": "Rot",
+  "tissue_no": 12,
+  "cls": "Internal_Defect",
+  "defect_no": 136
+ },
+ "333": {
+  "ss_name": "Healthy090",
+  "tissue": "Healthy",
+  "tissue_no": 90,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "334": {
+  "ss_name": "Calix059",
+  "tissue": "Calix",
+  "tissue_no": 59,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "335": {
+  "ss_name": "Defect0137",
+  "tissue": "Russet",
+  "tissue_no": 34,
+  "cls": "Surface_Defect",
+  "defect_no": 137
+ },
+ "336": {
+  "ss_name": "Healthy091",
+  "tissue": "Healthy",
+  "tissue_no": 91,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "337": {
+  "ss_name": "Healthy092",
+  "tissue": "Healthy",
+  "tissue_no": 92,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "338": {
+  "ss_name": "Stem050",
+  "tissue": "Stem",
+  "tissue_no": 50,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "339": {
+  "ss_name": "Calix060",
+  "tissue": "Calix",
+  "tissue_no": 60,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "340": {
+  "ss_name": "Stem051",
+  "tissue": "Stem",
+  "tissue_no": 51,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "341": {
+  "ss_name": "Defect0138",
+  "tissue": "Rot",
+  "tissue_no": 13,
+  "cls": "Internal_Defect",
+  "defect_no": 138
+ },
+ "342": {
+  "ss_name": "Healthy093",
+  "tissue": "Healthy",
+  "tissue_no": 93,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "343": {
+  "ss_name": "Healthy094",
+  "tissue": "Healthy",
+  "tissue_no": 94,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "344": {
+  "ss_name": "Stem052",
+  "tissue": "Stem",
+  "tissue_no": 52,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "345": {
+  "ss_name": "Calix061",
+  "tissue": "Calix",
+  "tissue_no": 61,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "346": {
+  "ss_name": "Defect0139",
+  "tissue": "Bruise",
+  "tissue_no": 5,
+  "cls": "Internal_Defect",
+  "defect_no": 139
+ },
+ "347": {
+  "ss_name": "Healthy095",
+  "tissue": "Healthy",
+  "tissue_no": 95,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "348": {
+  "ss_name": "Stem053",
+  "tissue": "Stem",
+  "tissue_no": 53,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "349": {
+  "ss_name": "Calix062",
+  "tissue": "Calix",
+  "tissue_no": 62,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "350": {
+  "ss_name": "Defect0140",
+  "tissue": "Rot",
+  "tissue_no": 14,
+  "cls": "Internal_Defect",
+  "defect_no": 140
+ },
+ "351": {
+  "ss_name": "Healthy096",
+  "tissue": "Healthy",
+  "tissue_no": 96,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "352": {
+  "ss_name": "Defect0141",
+  "tissue": "Bruise",
+  "tissue_no": 6,
+  "cls": "Internal_Defect",
+  "defect_no": 141
+ },
+ "353": {
+  "ss_name": "Healthy097",
+  "tissue": "Healthy",
+  "tissue_no": 97,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "354": {
+  "ss_name": "Calix063",
+  "tissue": "Calix",
+  "tissue_no": 63,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "355": {
+  "ss_name": "Stem054",
+  "tissue": "Stem",
+  "tissue_no": 54,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "356": {
+  "ss_name": "Defect0142",
+  "tissue": "Rot",
+  "tissue_no": 15,
+  "cls": "Internal_Defect",
+  "defect_no": 142
+ },
+ "357": {
+  "ss_name": "Healthy098",
+  "tissue": "Healthy",
+  "tissue_no": 98,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "358": {
+  "ss_name": "Stem055",
+  "tissue": "Stem",
+  "tissue_no": 55,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "359": {
+  "ss_name": "Calix064",
+  "tissue": "Calix",
+  "tissue_no": 64,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "360": {
+  "ss_name": "Healthy099",
+  "tissue": "Healthy",
+  "tissue_no": 99,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "361": {
+  "ss_name": "Healthy100",
+  "tissue": "Healthy",
+  "tissue_no": 100,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "362": {
+  "ss_name": "Healthy101",
+  "tissue": "Healthy",
+  "tissue_no": 101,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "363": {
+  "ss_name": "Stem056",
+  "tissue": "Stem",
+  "tissue_no": 56,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "364": {
+  "ss_name": "Stem057",
+  "tissue": "Stem",
+  "tissue_no": 57,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "365": {
+  "ss_name": "Calix065",
+  "tissue": "Calix",
+  "tissue_no": 65,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "366": {
+  "ss_name": "Healthy102",
+  "tissue": "Healthy",
+  "tissue_no": 102,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "367": {
+  "ss_name": "Defect0143",
+  "tissue": "Hail_damage",
+  "tissue_no": 15,
+  "cls": "Surface_Defect",
+  "defect_no": 143
+ },
+ "368": {
+  "ss_name": "Stem058",
+  "tissue": "Stem",
+  "tissue_no": 58,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "369": {
+  "ss_name": "Healthy103",
+  "tissue": "Healthy",
+  "tissue_no": 103,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "370": {
+  "ss_name": "Healthy104",
+  "tissue": "Healthy",
+  "tissue_no": 104,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "371": {
+  "ss_name": "Stem059",
+  "tissue": "Stem",
+  "tissue_no": 59,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "372": {
+  "ss_name": "Stem060",
+  "tissue": "Stem",
+  "tissue_no": 60,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "373": {
+  "ss_name": "Calix066",
+  "tissue": "Calix",
+  "tissue_no": 66,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "374": {
+  "ss_name": "Defect0144",
+  "tissue": "Other",
+  "tissue_no": 18,
+  "cls": "Surface_Defect",
+  "defect_no": 144
+ },
+ "375": {
+  "ss_name": "Healthy105",
+  "tissue": "Healthy",
+  "tissue_no": 105,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "376": {
+  "ss_name": "Calix067",
+  "tissue": "Calix",
+  "tissue_no": 67,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "377": {
+  "ss_name": "Healthy106",
+  "tissue": "Healthy",
+  "tissue_no": 106,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "378": {
+  "ss_name": "Defect0145",
+  "tissue": "Russet",
+  "tissue_no": 35,
+  "cls": "Surface_Defect",
+  "defect_no": 145
+ },
+ "379": {
+  "ss_name": "Stem061",
+  "tissue": "Stem",
+  "tissue_no": 61,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "380": {
+  "ss_name": "Calix068",
+  "tissue": "Calix",
+  "tissue_no": 68,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "381": {
+  "ss_name": "Healthy107",
+  "tissue": "Healthy",
+  "tissue_no": 107,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "382": {
+  "ss_name": "Stem062",
+  "tissue": "Stem",
+  "tissue_no": 62,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "383": {
+  "ss_name": "Calix069",
+  "tissue": "Calix",
+  "tissue_no": 69,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "384": {
+  "ss_name": "Healthy108",
+  "tissue": "Healthy",
+  "tissue_no": 108,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "385": {
+  "ss_name": "Healthy109",
+  "tissue": "Healthy",
+  "tissue_no": 109,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "386": {
+  "ss_name": "Calix070",
+  "tissue": "Calix",
+  "tissue_no": 70,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "387": {
+  "ss_name": "Stem063",
+  "tissue": "Stem",
+  "tissue_no": 63,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "388": {
+  "ss_name": "Defect0146",
+  "tissue": "Rot",
+  "tissue_no": 16,
+  "cls": "Internal_Defect",
+  "defect_no": 146
+ },
+ "389": {
+  "ss_name": "Defect0147",
+  "tissue": "Rot",
+  "tissue_no": 17,
+  "cls": "Internal_Defect",
+  "defect_no": 147
+ },
+ "390": {
+  "ss_name": "Defect0148",
+  "tissue": "Rot",
+  "tissue_no": 18,
+  "cls": "Internal_Defect",
+  "defect_no": 148
+ },
+ "391": {
+  "ss_name": "Defect0149",
+  "tissue": "Russet",
+  "tissue_no": 36,
+  "cls": "Surface_Defect",
+  "defect_no": 149
+ },
+ "392": {
+  "ss_name": "Stem064",
+  "tissue": "Stem",
+  "tissue_no": 64,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "393": {
+  "ss_name": "Healthy110",
+  "tissue": "Healthy",
+  "tissue_no": 110,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "394": {
+  "ss_name": "Calix071",
+  "tissue": "Calix",
+  "tissue_no": 71,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "395": {
+  "ss_name": "Defect0150",
+  "tissue": "Rot",
+  "tissue_no": 19,
+  "cls": "Internal_Defect",
+  "defect_no": 150
+ },
+ "396": {
+  "ss_name": "Healthy111",
+  "tissue": "Healthy",
+  "tissue_no": 111,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "397": {
+  "ss_name": "Healthy112",
+  "tissue": "Healthy",
+  "tissue_no": 112,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "398": {
+  "ss_name": "Stem065",
+  "tissue": "Stem",
+  "tissue_no": 65,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "399": {
+  "ss_name": "Calix072",
+  "tissue": "Calix",
+  "tissue_no": 72,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "400": {
+  "ss_name": "Healthy113",
+  "tissue": "Healthy",
+  "tissue_no": 113,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "401": {
+  "ss_name": "Healthy114",
+  "tissue": "Healthy",
+  "tissue_no": 114,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "402": {
+  "ss_name": "Calix073",
+  "tissue": "Calix",
+  "tissue_no": 73,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "403": {
+  "ss_name": "Stem066",
+  "tissue": "Stem",
+  "tissue_no": 66,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "404": {
+  "ss_name": "Healthy115",
+  "tissue": "Healthy",
+  "tissue_no": 115,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "405": {
+  "ss_name": "Healthy116",
+  "tissue": "Healthy",
+  "tissue_no": 116,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "406": {
+  "ss_name": "Stem067",
+  "tissue": "Stem",
+  "tissue_no": 67,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "407": {
+  "ss_name": "Calix074",
+  "tissue": "Calix",
+  "tissue_no": 74,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "408": {
+  "ss_name": "Healthy117",
+  "tissue": "Healthy",
+  "tissue_no": 117,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "409": {
+  "ss_name": "Defect0151",
+  "tissue": "Russet",
+  "tissue_no": 37,
+  "cls": "Surface_Defect",
+  "defect_no": 151
+ },
+ "410": {
+  "ss_name": "Defect0152",
+  "tissue": "Russet",
+  "tissue_no": 38,
+  "cls": "Surface_Defect",
+  "defect_no": 152
+ },
+ "411": {
+  "ss_name": "Calix075",
+  "tissue": "Calix",
+  "tissue_no": 75,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "412": {
+  "ss_name": "Healthy118",
+  "tissue": "Healthy",
+  "tissue_no": 118,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "413": {
+  "ss_name": "Healthy119",
+  "tissue": "Healthy",
+  "tissue_no": 119,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "414": {
+  "ss_name": "Healthy120",
+  "tissue": "Healthy",
+  "tissue_no": 120,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "415": {
+  "ss_name": "Calix076",
+  "tissue": "Calix",
+  "tissue_no": 76,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "416": {
+  "ss_name": "Healthy121",
+  "tissue": "Healthy",
+  "tissue_no": 121,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "417": {
+  "ss_name": "Calix077",
+  "tissue": "Calix",
+  "tissue_no": 77,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "418": {
+  "ss_name": "Healthy122",
+  "tissue": "Healthy",
+  "tissue_no": 122,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "419": {
+  "ss_name": "Defect0153",
+  "tissue": "Rot",
+  "tissue_no": 20,
+  "cls": "Internal_Defect",
+  "defect_no": 153
+ },
+ "420": {
+  "ss_name": "Stem068",
+  "tissue": "Stem",
+  "tissue_no": 68,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "421": {
+  "ss_name": "Healthy123",
+  "tissue": "Healthy",
+  "tissue_no": 123,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "422": {
+  "ss_name": "Calix078",
+  "tissue": "Calix",
+  "tissue_no": 78,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "423": {
+  "ss_name": "Healthy124",
+  "tissue": "Healthy",
+  "tissue_no": 124,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "424": {
+  "ss_name": "Stem069",
+  "tissue": "Stem",
+  "tissue_no": 69,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "425": {
+  "ss_name": "Calix079",
+  "tissue": "Calix",
+  "tissue_no": 79,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "426": {
+  "ss_name": "Healthy125",
+  "tissue": "Healthy",
+  "tissue_no": 125,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "427": {
+  "ss_name": "Stem070",
+  "tissue": "Stem",
+  "tissue_no": 70,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "428": {
+  "ss_name": "Defect0154",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 27,
+  "cls": "Surface_Defect",
+  "defect_no": 154
+ },
+ "429": {
+  "ss_name": "Calix080",
+  "tissue": "Calix",
+  "tissue_no": 80,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "430": {
+  "ss_name": "Defect0155",
+  "tissue": "Frost_damage",
+  "tissue_no": 11,
+  "cls": "Surface_Defect",
+  "defect_no": 155
+ },
+ "431": {
+  "ss_name": "Healthy126",
+  "tissue": "Healthy",
+  "tissue_no": 126,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "432": {
+  "ss_name": "Healthy127",
+  "tissue": "Healthy",
+  "tissue_no": 127,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "433": {
+  "ss_name": "Stem071",
+  "tissue": "Stem",
+  "tissue_no": 71,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "434": {
+  "ss_name": "Calix081",
+  "tissue": "Calix",
+  "tissue_no": 81,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "435": {
+  "ss_name": "Defect0156",
+  "tissue": "Russet",
+  "tissue_no": 39,
+  "cls": "Surface_Defect",
+  "defect_no": 156
+ },
+ "436": {
+  "ss_name": "Defect0157",
+  "tissue": "Scald",
+  "tissue_no": 15,
+  "cls": "Surface_Defect",
+  "defect_no": 157
+ },
+ "437": {
+  "ss_name": "Stem072",
+  "tissue": "Stem",
+  "tissue_no": 72,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "438": {
+  "ss_name": "Calix082",
+  "tissue": "Calix",
+  "tissue_no": 82,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "439": {
+  "ss_name": "Defect0158",
+  "tissue": "Scald",
+  "tissue_no": 16,
+  "cls": "Surface_Defect",
+  "defect_no": 158
+ },
+ "440": {
+  "ss_name": "Stem073",
+  "tissue": "Stem",
+  "tissue_no": 73,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "441": {
+  "ss_name": "Healthy128",
+  "tissue": "Healthy",
+  "tissue_no": 128,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "442": {
+  "ss_name": "Defect0159",
+  "tissue": "Flesh_damage",
+  "tissue_no": 1,
+  "cls": "Internal_Defect",
+  "defect_no": 159
+ },
+ "443": {
+  "ss_name": "Defect0160",
+  "tissue": "Hail_damage",
+  "tissue_no": 16,
+  "cls": "Surface_Defect",
+  "defect_no": 160
+ },
+ "444": {
+  "ss_name": "Healthy129",
+  "tissue": "Healthy",
+  "tissue_no": 129,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "445": {
+  "ss_name": "Stem074",
+  "tissue": "Stem",
+  "tissue_no": 74,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "446": {
+  "ss_name": "Calix083",
+  "tissue": "Calix",
+  "tissue_no": 83,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "447": {
+  "ss_name": "Healthy130",
+  "tissue": "Healthy",
+  "tissue_no": 130,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "448": {
+  "ss_name": "Healthy131",
+  "tissue": "Healthy",
+  "tissue_no": 131,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "449": {
+  "ss_name": "Healthy132",
+  "tissue": "Healthy",
+  "tissue_no": 132,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "450": {
+  "ss_name": "Healthy133",
+  "tissue": "Healthy",
+  "tissue_no": 133,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "451": {
+  "ss_name": "Stem075",
+  "tissue": "Stem",
+  "tissue_no": 75,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "452": {
+  "ss_name": "Calix084",
+  "tissue": "Calix",
+  "tissue_no": 84,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "453": {
+  "ss_name": "Healthy134",
+  "tissue": "Healthy",
+  "tissue_no": 134,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "454": {
+  "ss_name": "Healthy135",
+  "tissue": "Healthy",
+  "tissue_no": 135,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "455": {
+  "ss_name": "Stem076",
+  "tissue": "Stem",
+  "tissue_no": 76,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "456": {
+  "ss_name": "Calix085",
+  "tissue": "Calix",
+  "tissue_no": 85,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "457": {
+  "ss_name": "Defect0161",
+  "tissue": "Other",
+  "tissue_no": 19,
+  "cls": "Surface_Defect",
+  "defect_no": 161
+ },
+ "458": {
+  "ss_name": "Healthy136",
+  "tissue": "Healthy",
+  "tissue_no": 136,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "459": {
+  "ss_name": "Healthy137",
+  "tissue": "Healthy",
+  "tissue_no": 137,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "460": {
+  "ss_name": "Defect0162",
+  "tissue": "Rot",
+  "tissue_no": 21,
+  "cls": "Internal_Defect",
+  "defect_no": 162
+ },
+ "461": {
+  "ss_name": "Stem077",
+  "tissue": "Stem",
+  "tissue_no": 77,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "462": {
+  "ss_name": "Calix086",
+  "tissue": "Calix",
+  "tissue_no": 86,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "463": {
+  "ss_name": "Healthy138",
+  "tissue": "Healthy",
+  "tissue_no": 138,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "464": {
+  "ss_name": "Healthy139",
+  "tissue": "Healthy",
+  "tissue_no": 139,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "465": {
+  "ss_name": "Stem078",
+  "tissue": "Stem",
+  "tissue_no": 78,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "466": {
+  "ss_name": "Calix087",
+  "tissue": "Calix",
+  "tissue_no": 87,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "467": {
+  "ss_name": "Defect0163",
+  "tissue": "Flesh_damage",
+  "tissue_no": 2,
+  "cls": "Internal_Defect",
+  "defect_no": 163
+ },
+ "468": {
+  "ss_name": "Defect0164",
+  "tissue": "Limb_rub",
+  "tissue_no": 7,
+  "cls": "Surface_Defect",
+  "defect_no": 164
+ },
+ "469": {
+  "ss_name": "Healthy140",
+  "tissue": "Healthy",
+  "tissue_no": 140,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "470": {
+  "ss_name": "Stem079",
+  "tissue": "Stem",
+  "tissue_no": 79,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "471": {
+  "ss_name": "Calix088",
+  "tissue": "Calix",
+  "tissue_no": 88,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "472": {
+  "ss_name": "Healthy141",
+  "tissue": "Healthy",
+  "tissue_no": 141,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "473": {
+  "ss_name": "Healthy142",
+  "tissue": "Healthy",
+  "tissue_no": 142,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "474": {
+  "ss_name": "Calix089",
+  "tissue": "Calix",
+  "tissue_no": 89,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "475": {
+  "ss_name": "Defect0165",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 28,
+  "cls": "Surface_Defect",
+  "defect_no": 165
+ },
+ "476": {
+  "ss_name": "Healthy143",
+  "tissue": "Healthy",
+  "tissue_no": 143,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "477": {
+  "ss_name": "Calix090",
+  "tissue": "Calix",
+  "tissue_no": 90,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "478": {
+  "ss_name": "Stem080",
+  "tissue": "Stem",
+  "tissue_no": 80,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "479": {
+  "ss_name": "Healthy144",
+  "tissue": "Healthy",
+  "tissue_no": 144,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "480": {
+  "ss_name": "Healthy145",
+  "tissue": "Healthy",
+  "tissue_no": 145,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "481": {
+  "ss_name": "Stem081",
+  "tissue": "Stem",
+  "tissue_no": 81,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "482": {
+  "ss_name": "Defect0166",
+  "tissue": "Bruise",
+  "tissue_no": 7,
+  "cls": "Internal_Defect",
+  "defect_no": 166
+ },
+ "483": {
+  "ss_name": "Healthy146",
+  "tissue": "Healthy",
+  "tissue_no": 146,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "484": {
+  "ss_name": "Healthy147",
+  "tissue": "Healthy",
+  "tissue_no": 147,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "485": {
+  "ss_name": "Stem082",
+  "tissue": "Stem",
+  "tissue_no": 82,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "486": {
+  "ss_name": "Stem083",
+  "tissue": "Stem",
+  "tissue_no": 83,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "487": {
+  "ss_name": "Calix091",
+  "tissue": "Calix",
+  "tissue_no": 91,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "488": {
+  "ss_name": "Defect0167",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 29,
+  "cls": "Surface_Defect",
+  "defect_no": 167
+ },
+ "489": {
+  "ss_name": "Healthy148",
+  "tissue": "Healthy",
+  "tissue_no": 148,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "490": {
+  "ss_name": "Healthy149",
+  "tissue": "Healthy",
+  "tissue_no": 149,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "491": {
+  "ss_name": "Stem084",
+  "tissue": "Stem",
+  "tissue_no": 84,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "492": {
+  "ss_name": "Stem085",
+  "tissue": "Stem",
+  "tissue_no": 85,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "493": {
+  "ss_name": "Calix092",
+  "tissue": "Calix",
+  "tissue_no": 92,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "494": {
+  "ss_name": "Healthy150",
+  "tissue": "Healthy",
+  "tissue_no": 150,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "495": {
+  "ss_name": "Healthy151",
+  "tissue": "Healthy",
+  "tissue_no": 151,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "496": {
+  "ss_name": "Healthy152",
+  "tissue": "Healthy",
+  "tissue_no": 152,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "497": {
+  "ss_name": "Stem086",
+  "tissue": "Stem",
+  "tissue_no": 86,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "498": {
+  "ss_name": "Calix093",
+  "tissue": "Calix",
+  "tissue_no": 93,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "499": {
+  "ss_name": "Defect0168",
+  "tissue": "Russet",
+  "tissue_no": 40,
+  "cls": "Surface_Defect",
+  "defect_no": 168
+ },
+ "500": {
+  "ss_name": "Defect0169",
+  "tissue": "Scald",
+  "tissue_no": 17,
+  "cls": "Surface_Defect",
+  "defect_no": 169
+ },
+ "501": {
+  "ss_name": "Healthy153",
+  "tissue": "Healthy",
+  "tissue_no": 153,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "502": {
+  "ss_name": "Calix094",
+  "tissue": "Calix",
+  "tissue_no": 94,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "503": {
+  "ss_name": "Defect0170",
+  "tissue": "Flesh_damage",
+  "tissue_no": 3,
+  "cls": "Internal_Defect",
+  "defect_no": 170
+ },
+ "504": {
+  "ss_name": "Healthy154",
+  "tissue": "Healthy",
+  "tissue_no": 154,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "505": {
+  "ss_name": "Healthy155",
+  "tissue": "Healthy",
+  "tissue_no": 155,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "506": {
+  "ss_name": "Healthy156",
+  "tissue": "Healthy",
+  "tissue_no": 156,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "507": {
+  "ss_name": "Calix095",
+  "tissue": "Calix",
+  "tissue_no": 95,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "508": {
+  "ss_name": "Stem087",
+  "tissue": "Stem",
+  "tissue_no": 87,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "509": {
+  "ss_name": "Stem088",
+  "tissue": "Stem",
+  "tissue_no": 88,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "510": {
+  "ss_name": "Healthy157",
+  "tissue": "Healthy",
+  "tissue_no": 157,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "511": {
+  "ss_name": "Healthy158",
+  "tissue": "Healthy",
+  "tissue_no": 158,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "512": {
+  "ss_name": "Healthy159",
+  "tissue": "Healthy",
+  "tissue_no": 159,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "513": {
+  "ss_name": "Stem089",
+  "tissue": "Stem",
+  "tissue_no": 89,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "514": {
+  "ss_name": "Calix096",
+  "tissue": "Calix",
+  "tissue_no": 96,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "515": {
+  "ss_name": "Healthy160",
+  "tissue": "Healthy",
+  "tissue_no": 160,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "516": {
+  "ss_name": "Healthy161",
+  "tissue": "Healthy",
+  "tissue_no": 161,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "517": {
+  "ss_name": "Healthy162",
+  "tissue": "Healthy",
+  "tissue_no": 162,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "518": {
+  "ss_name": "Calix097",
+  "tissue": "Calix",
+  "tissue_no": 97,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "519": {
+  "ss_name": "Stem090",
+  "tissue": "Stem",
+  "tissue_no": 90,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "520": {
+  "ss_name": "Healthy163",
+  "tissue": "Healthy",
+  "tissue_no": 163,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "521": {
+  "ss_name": "Healthy164",
+  "tissue": "Healthy",
+  "tissue_no": 164,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "522": {
+  "ss_name": "Healthy165",
+  "tissue": "Healthy",
+  "tissue_no": 165,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "523": {
+  "ss_name": "Calix098",
+  "tissue": "Calix",
+  "tissue_no": 98,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "524": {
+  "ss_name": "Stem091",
+  "tissue": "Stem",
+  "tissue_no": 91,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "525": {
+  "ss_name": "Stem092",
+  "tissue": "Stem",
+  "tissue_no": 92,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "526": {
+  "ss_name": "Healthy166",
+  "tissue": "Healthy",
+  "tissue_no": 166,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "527": {
+  "ss_name": "Healthy167",
+  "tissue": "Healthy",
+  "tissue_no": 167,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "528": {
+  "ss_name": "Defect0171",
+  "tissue": "Flesh_damage",
+  "tissue_no": 4,
+  "cls": "Internal_Defect",
+  "defect_no": 171
+ },
+ "529": {
+  "ss_name": "Healthy168",
+  "tissue": "Healthy",
+  "tissue_no": 168,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "530": {
+  "ss_name": "Healthy169",
+  "tissue": "Healthy",
+  "tissue_no": 169,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "531": {
+  "ss_name": "Healthy170",
+  "tissue": "Healthy",
+  "tissue_no": 170,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "532": {
+  "ss_name": "Stem093",
+  "tissue": "Stem",
+  "tissue_no": 93,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "533": {
+  "ss_name": "Calix099",
+  "tissue": "Calix",
+  "tissue_no": 99,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "534": {
+  "ss_name": "Calix100",
+  "tissue": "Calix",
+  "tissue_no": 100,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "535": {
+  "ss_name": "Stem094",
+  "tissue": "Stem",
+  "tissue_no": 94,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "536": {
+  "ss_name": "Healthy171",
+  "tissue": "Healthy",
+  "tissue_no": 171,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "537": {
+  "ss_name": "Defect0172",
+  "tissue": "Rot",
+  "tissue_no": 22,
+  "cls": "Internal_Defect",
+  "defect_no": 172
+ },
+ "538": {
+  "ss_name": "Healthy172",
+  "tissue": "Healthy",
+  "tissue_no": 172,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "539": {
+  "ss_name": "Healthy173",
+  "tissue": "Healthy",
+  "tissue_no": 173,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "540": {
+  "ss_name": "Stem095",
+  "tissue": "Stem",
+  "tissue_no": 95,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "541": {
+  "ss_name": "Calix101",
+  "tissue": "Calix",
+  "tissue_no": 101,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "542": {
+  "ss_name": "Healthy174",
+  "tissue": "Healthy",
+  "tissue_no": 174,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "543": {
+  "ss_name": "Healthy175",
+  "tissue": "Healthy",
+  "tissue_no": 175,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "544": {
+  "ss_name": "Stem096",
+  "tissue": "Stem",
+  "tissue_no": 96,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "545": {
+  "ss_name": "Calix102",
+  "tissue": "Calix",
+  "tissue_no": 102,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "546": {
+  "ss_name": "Healthy176",
+  "tissue": "Healthy",
+  "tissue_no": 176,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "547": {
+  "ss_name": "Healthy177",
+  "tissue": "Healthy",
+  "tissue_no": 177,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "548": {
+  "ss_name": "Calix103",
+  "tissue": "Calix",
+  "tissue_no": 103,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "549": {
+  "ss_name": "Stem097",
+  "tissue": "Stem",
+  "tissue_no": 97,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "550": {
+  "ss_name": "Defect0173",
+  "tissue": "Bruise",
+  "tissue_no": 8,
+  "cls": "Internal_Defect",
+  "defect_no": 173
+ },
+ "551": {
+  "ss_name": "Healthy178",
+  "tissue": "Healthy",
+  "tissue_no": 178,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "552": {
+  "ss_name": "Stem098",
+  "tissue": "Stem",
+  "tissue_no": 98,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "553": {
+  "ss_name": "Calix104",
+  "tissue": "Calix",
+  "tissue_no": 104,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "554": {
+  "ss_name": "Healthy179",
+  "tissue": "Healthy",
+  "tissue_no": 179,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "555": {
+  "ss_name": "Healthy180",
+  "tissue": "Healthy",
+  "tissue_no": 180,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "556": {
+  "ss_name": "Stem099",
+  "tissue": "Stem",
+  "tissue_no": 99,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "557": {
+  "ss_name": "Stem100",
+  "tissue": "Stem",
+  "tissue_no": 100,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "558": {
+  "ss_name": "Healthy181",
+  "tissue": "Healthy",
+  "tissue_no": 181,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "559": {
+  "ss_name": "Healthy182",
+  "tissue": "Healthy",
+  "tissue_no": 182,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "560": {
+  "ss_name": "Healthy183",
+  "tissue": "Healthy",
+  "tissue_no": 183,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "561": {
+  "ss_name": "Stem101",
+  "tissue": "Stem",
+  "tissue_no": 101,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "562": {
+  "ss_name": "Calix105",
+  "tissue": "Calix",
+  "tissue_no": 105,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "563": {
+  "ss_name": "Healthy184",
+  "tissue": "Healthy",
+  "tissue_no": 184,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "564": {
+  "ss_name": "Healthy185",
+  "tissue": "Healthy",
+  "tissue_no": 185,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "565": {
+  "ss_name": "Healthy186",
+  "tissue": "Healthy",
+  "tissue_no": 186,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "566": {
+  "ss_name": "Healthy187",
+  "tissue": "Healthy",
+  "tissue_no": 187,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "567": {
+  "ss_name": "Stem102",
+  "tissue": "Stem",
+  "tissue_no": 102,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "568": {
+  "ss_name": "Stem103",
+  "tissue": "Stem",
+  "tissue_no": 103,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "569": {
+  "ss_name": "Calix106",
+  "tissue": "Calix",
+  "tissue_no": 106,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "570": {
+  "ss_name": "Healthy188",
+  "tissue": "Healthy",
+  "tissue_no": 188,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "571": {
+  "ss_name": "Healthy189",
+  "tissue": "Healthy",
+  "tissue_no": 189,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "572": {
+  "ss_name": "Healthy190",
+  "tissue": "Healthy",
+  "tissue_no": 190,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "573": {
+  "ss_name": "Stem104",
+  "tissue": "Stem",
+  "tissue_no": 104,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "574": {
+  "ss_name": "Defect0174",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 30,
+  "cls": "Surface_Defect",
+  "defect_no": 174
+ },
+ "575": {
+  "ss_name": "Healthy191",
+  "tissue": "Healthy",
+  "tissue_no": 191,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "576": {
+  "ss_name": "Healthy192",
+  "tissue": "Healthy",
+  "tissue_no": 192,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "577": {
+  "ss_name": "Stem105",
+  "tissue": "Stem",
+  "tissue_no": 105,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "578": {
+  "ss_name": "Stem106",
+  "tissue": "Stem",
+  "tissue_no": 106,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "579": {
+  "ss_name": "Calix107",
+  "tissue": "Calix",
+  "tissue_no": 107,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "580": {
+  "ss_name": "Healthy193",
+  "tissue": "Healthy",
+  "tissue_no": 193,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "581": {
+  "ss_name": "Healthy194",
+  "tissue": "Healthy",
+  "tissue_no": 194,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "582": {
+  "ss_name": "Healthy195",
+  "tissue": "Healthy",
+  "tissue_no": 195,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "583": {
+  "ss_name": "Healthy196",
+  "tissue": "Healthy",
+  "tissue_no": 196,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "584": {
+  "ss_name": "Stem107",
+  "tissue": "Stem",
+  "tissue_no": 107,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "585": {
+  "ss_name": "Calix108",
+  "tissue": "Calix",
+  "tissue_no": 108,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "586": {
+  "ss_name": "Healthy197",
+  "tissue": "Healthy",
+  "tissue_no": 197,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "587": {
+  "ss_name": "Healthy198",
+  "tissue": "Healthy",
+  "tissue_no": 198,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "588": {
+  "ss_name": "Healthy199",
+  "tissue": "Healthy",
+  "tissue_no": 199,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "589": {
+  "ss_name": "Calix109",
+  "tissue": "Calix",
+  "tissue_no": 109,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "590": {
+  "ss_name": "Stem108",
+  "tissue": "Stem",
+  "tissue_no": 108,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "591": {
+  "ss_name": "Healthy200",
+  "tissue": "Healthy",
+  "tissue_no": 200,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "592": {
+  "ss_name": "Healthy201",
+  "tissue": "Healthy",
+  "tissue_no": 201,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "593": {
+  "ss_name": "Healthy202",
+  "tissue": "Healthy",
+  "tissue_no": 202,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "594": {
+  "ss_name": "Stem109",
+  "tissue": "Stem",
+  "tissue_no": 109,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "595": {
+  "ss_name": "Calix110",
+  "tissue": "Calix",
+  "tissue_no": 110,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "596": {
+  "ss_name": "Healthy203",
+  "tissue": "Healthy",
+  "tissue_no": 203,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "597": {
+  "ss_name": "Healthy204",
+  "tissue": "Healthy",
+  "tissue_no": 204,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "598": {
+  "ss_name": "Calix111",
+  "tissue": "Calix",
+  "tissue_no": 111,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "599": {
+  "ss_name": "Stem110",
+  "tissue": "Stem",
+  "tissue_no": 110,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "600": {
+  "ss_name": "Healthy205",
+  "tissue": "Healthy",
+  "tissue_no": 205,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "601": {
+  "ss_name": "Healthy206",
+  "tissue": "Healthy",
+  "tissue_no": 206,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "602": {
+  "ss_name": "Healthy207",
+  "tissue": "Healthy",
+  "tissue_no": 207,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "603": {
+  "ss_name": "Stem111",
+  "tissue": "Stem",
+  "tissue_no": 111,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "604": {
+  "ss_name": "Calix112",
+  "tissue": "Calix",
+  "tissue_no": 112,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "605": {
+  "ss_name": "Healthy208",
+  "tissue": "Healthy",
+  "tissue_no": 208,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "606": {
+  "ss_name": "Healthy209",
+  "tissue": "Healthy",
+  "tissue_no": 209,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "607": {
+  "ss_name": "Healthy210",
+  "tissue": "Healthy",
+  "tissue_no": 210,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "608": {
+  "ss_name": "Healthy211",
+  "tissue": "Healthy",
+  "tissue_no": 211,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "609": {
+  "ss_name": "Calix113",
+  "tissue": "Calix",
+  "tissue_no": 113,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "610": {
+  "ss_name": "Stem112",
+  "tissue": "Stem",
+  "tissue_no": 112,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "611": {
+  "ss_name": "Healthy212",
+  "tissue": "Healthy",
+  "tissue_no": 212,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "612": {
+  "ss_name": "Healthy213",
+  "tissue": "Healthy",
+  "tissue_no": 213,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "613": {
+  "ss_name": "Healthy214",
+  "tissue": "Healthy",
+  "tissue_no": 214,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "614": {
+  "ss_name": "Stem113",
+  "tissue": "Stem",
+  "tissue_no": 113,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "615": {
+  "ss_name": "Calix114",
+  "tissue": "Calix",
+  "tissue_no": 114,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "616": {
+  "ss_name": "Healthy215",
+  "tissue": "Healthy",
+  "tissue_no": 215,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "617": {
+  "ss_name": "Healthy216",
+  "tissue": "Healthy",
+  "tissue_no": 216,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "618": {
+  "ss_name": "Stem114",
+  "tissue": "Stem",
+  "tissue_no": 114,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "619": {
+  "ss_name": "Calix115",
+  "tissue": "Calix",
+  "tissue_no": 115,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "620": {
+  "ss_name": "Calix116",
+  "tissue": "Calix",
+  "tissue_no": 116,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "621": {
+  "ss_name": "Healthy217",
+  "tissue": "Healthy",
+  "tissue_no": 217,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "622": {
+  "ss_name": "Healthy218",
+  "tissue": "Healthy",
+  "tissue_no": 218,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "623": {
+  "ss_name": "Healthy219",
+  "tissue": "Healthy",
+  "tissue_no": 219,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "624": {
+  "ss_name": "Calix117",
+  "tissue": "Calix",
+  "tissue_no": 117,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "625": {
+  "ss_name": "Healthy220",
+  "tissue": "Healthy",
+  "tissue_no": 220,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "626": {
+  "ss_name": "Healthy221",
+  "tissue": "Healthy",
+  "tissue_no": 221,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "627": {
+  "ss_name": "Healthy222",
+  "tissue": "Healthy",
+  "tissue_no": 222,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "628": {
+  "ss_name": "Healthy223",
+  "tissue": "Healthy",
+  "tissue_no": 223,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "629": {
+  "ss_name": "Stem115",
+  "tissue": "Stem",
+  "tissue_no": 115,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "630": {
+  "ss_name": "Calix118",
+  "tissue": "Calix",
+  "tissue_no": 118,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "631": {
+  "ss_name": "Healthy224",
+  "tissue": "Healthy",
+  "tissue_no": 224,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "632": {
+  "ss_name": "Healthy225",
+  "tissue": "Healthy",
+  "tissue_no": 225,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "633": {
+  "ss_name": "Calix119",
+  "tissue": "Calix",
+  "tissue_no": 119,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "634": {
+  "ss_name": "Calix120",
+  "tissue": "Calix",
+  "tissue_no": 120,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "635": {
+  "ss_name": "Stem116",
+  "tissue": "Stem",
+  "tissue_no": 116,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "636": {
+  "ss_name": "Stem117",
+  "tissue": "Stem",
+  "tissue_no": 117,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "637": {
+  "ss_name": "Healthy226",
+  "tissue": "Healthy",
+  "tissue_no": 226,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "638": {
+  "ss_name": "Healthy227",
+  "tissue": "Healthy",
+  "tissue_no": 227,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "639": {
+  "ss_name": "Healthy228",
+  "tissue": "Healthy",
+  "tissue_no": 228,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "640": {
+  "ss_name": "Healthy229",
+  "tissue": "Healthy",
+  "tissue_no": 229,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "641": {
+  "ss_name": "Calix121",
+  "tissue": "Calix",
+  "tissue_no": 121,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "642": {
+  "ss_name": "Stem118",
+  "tissue": "Stem",
+  "tissue_no": 118,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "643": {
+  "ss_name": "Healthy230",
+  "tissue": "Healthy",
+  "tissue_no": 230,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "644": {
+  "ss_name": "Healthy231",
+  "tissue": "Healthy",
+  "tissue_no": 231,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "645": {
+  "ss_name": "Calix122",
+  "tissue": "Calix",
+  "tissue_no": 122,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "646": {
+  "ss_name": "Stem119",
+  "tissue": "Stem",
+  "tissue_no": 119,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "647": {
+  "ss_name": "Defect0175",
+  "tissue": "Bruise",
+  "tissue_no": 9,
+  "cls": "Internal_Defect",
+  "defect_no": 175
+ },
+ "648": {
+  "ss_name": "Healthy232",
+  "tissue": "Healthy",
+  "tissue_no": 232,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "649": {
+  "ss_name": "Defect0176",
+  "tissue": "Hail_damage_perf",
+  "tissue_no": 31,
+  "cls": "Surface_Defect",
+  "defect_no": 176
+ },
+ "650": {
+  "ss_name": "Stem120",
+  "tissue": "Stem",
+  "tissue_no": 120,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "651": {
+  "ss_name": "Calix123",
+  "tissue": "Calix",
+  "tissue_no": 123,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "652": {
+  "ss_name": "Healthy233",
+  "tissue": "Healthy",
+  "tissue_no": 233,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "653": {
+  "ss_name": "Healthy234",
+  "tissue": "Healthy",
+  "tissue_no": 234,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "654": {
+  "ss_name": "Healthy235",
+  "tissue": "Healthy",
+  "tissue_no": 235,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "655": {
+  "ss_name": "Stem121",
+  "tissue": "Stem",
+  "tissue_no": 121,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "656": {
+  "ss_name": "Calix124",
+  "tissue": "Calix",
+  "tissue_no": 124,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "657": {
+  "ss_name": "Healthy236",
+  "tissue": "Healthy",
+  "tissue_no": 236,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "658": {
+  "ss_name": "Healthy237",
+  "tissue": "Healthy",
+  "tissue_no": 237,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "659": {
+  "ss_name": "Healthy238",
+  "tissue": "Healthy",
+  "tissue_no": 238,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "660": {
+  "ss_name": "Stem122",
+  "tissue": "Stem",
+  "tissue_no": 122,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "661": {
+  "ss_name": "Stem123",
+  "tissue": "Stem",
+  "tissue_no": 123,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "662": {
+  "ss_name": "Calix125",
+  "tissue": "Calix",
+  "tissue_no": 125,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "663": {
+  "ss_name": "Calix126",
+  "tissue": "Calix",
+  "tissue_no": 126,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "664": {
+  "ss_name": "Healthy239",
+  "tissue": "Healthy",
+  "tissue_no": 239,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "665": {
+  "ss_name": "Defect0177",
+  "tissue": "Russet",
+  "tissue_no": 41,
+  "cls": "Surface_Defect",
+  "defect_no": 177
+ },
+ "666": {
+  "ss_name": "Healthy240",
+  "tissue": "Healthy",
+  "tissue_no": 240,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "667": {
+  "ss_name": "Healthy241",
+  "tissue": "Healthy",
+  "tissue_no": 241,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "668": {
+  "ss_name": "Defect0178",
+  "tissue": "Other",
+  "tissue_no": 20,
+  "cls": "Surface_Defect",
+  "defect_no": 178
+ },
+ "669": {
+  "ss_name": "Stem124",
+  "tissue": "Stem",
+  "tissue_no": 124,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "670": {
+  "ss_name": "Healthy242",
+  "tissue": "Healthy",
+  "tissue_no": 242,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "671": {
+  "ss_name": "Healthy243",
+  "tissue": "Healthy",
+  "tissue_no": 243,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "672": {
+  "ss_name": "Stem125",
+  "tissue": "Stem",
+  "tissue_no": 125,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "673": {
+  "ss_name": "Calix127",
+  "tissue": "Calix",
+  "tissue_no": 127,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "674": {
+  "ss_name": "Stem126",
+  "tissue": "Stem",
+  "tissue_no": 126,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "675": {
+  "ss_name": "Healthy244",
+  "tissue": "Healthy",
+  "tissue_no": 244,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "676": {
+  "ss_name": "Healthy245",
+  "tissue": "Healthy",
+  "tissue_no": 245,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "677": {
+  "ss_name": "Healthy246",
+  "tissue": "Healthy",
+  "tissue_no": 246,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "678": {
+  "ss_name": "Calix128",
+  "tissue": "Calix",
+  "tissue_no": 128,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "679": {
+  "ss_name": "Stem127",
+  "tissue": "Stem",
+  "tissue_no": 127,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "680": {
+  "ss_name": "Healthy247",
+  "tissue": "Healthy",
+  "tissue_no": 247,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "681": {
+  "ss_name": "Healthy248",
+  "tissue": "Healthy",
+  "tissue_no": 248,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "682": {
+  "ss_name": "Calix129",
+  "tissue": "Calix",
+  "tissue_no": 129,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "683": {
+  "ss_name": "Stem128",
+  "tissue": "Stem",
+  "tissue_no": 128,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "684": {
+  "ss_name": "Healthy249",
+  "tissue": "Healthy",
+  "tissue_no": 249,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "685": {
+  "ss_name": "Healthy250",
+  "tissue": "Healthy",
+  "tissue_no": 250,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "686": {
+  "ss_name": "Calix130",
+  "tissue": "Calix",
+  "tissue_no": 130,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "687": {
+  "ss_name": "Healthy251",
+  "tissue": "Healthy",
+  "tissue_no": 251,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "688": {
+  "ss_name": "Healthy252",
+  "tissue": "Healthy",
+  "tissue_no": 252,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "689": {
+  "ss_name": "Healthy253",
+  "tissue": "Healthy",
+  "tissue_no": 253,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "690": {
+  "ss_name": "Healthy254",
+  "tissue": "Healthy",
+  "tissue_no": 254,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "691": {
+  "ss_name": "Stem129",
+  "tissue": "Stem",
+  "tissue_no": 129,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "692": {
+  "ss_name": "Stem130",
+  "tissue": "Stem",
+  "tissue_no": 130,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "693": {
+  "ss_name": "Calix131",
+  "tissue": "Calix",
+  "tissue_no": 131,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "694": {
+  "ss_name": "Calix132",
+  "tissue": "Calix",
+  "tissue_no": 132,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "695": {
+  "ss_name": "Healthy255",
+  "tissue": "Healthy",
+  "tissue_no": 255,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "696": {
+  "ss_name": "Healthy256",
+  "tissue": "Healthy",
+  "tissue_no": 256,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "697": {
+  "ss_name": "Healthy257",
+  "tissue": "Healthy",
+  "tissue_no": 257,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "698": {
+  "ss_name": "Stem131",
+  "tissue": "Stem",
+  "tissue_no": 131,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "699": {
+  "ss_name": "Calix133",
+  "tissue": "Calix",
+  "tissue_no": 133,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "700": {
+  "ss_name": "Calix134",
+  "tissue": "Calix",
+  "tissue_no": 134,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "701": {
+  "ss_name": "Healthy258",
+  "tissue": "Healthy",
+  "tissue_no": 258,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "702": {
+  "ss_name": "Healthy259",
+  "tissue": "Healthy",
+  "tissue_no": 259,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "703": {
+  "ss_name": "Healthy260",
+  "tissue": "Healthy",
+  "tissue_no": 260,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "704": {
+  "ss_name": "Stem132",
+  "tissue": "Stem",
+  "tissue_no": 132,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "705": {
+  "ss_name": "Healthy261",
+  "tissue": "Healthy",
+  "tissue_no": 261,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "706": {
+  "ss_name": "Healthy262",
+  "tissue": "Healthy",
+  "tissue_no": 262,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "707": {
+  "ss_name": "Healthy263",
+  "tissue": "Healthy",
+  "tissue_no": 263,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "708": {
+  "ss_name": "Stem133",
+  "tissue": "Stem",
+  "tissue_no": 133,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "709": {
+  "ss_name": "Stem134",
+  "tissue": "Stem",
+  "tissue_no": 134,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "710": {
+  "ss_name": "Calix135",
+  "tissue": "Calix",
+  "tissue_no": 135,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "711": {
+  "ss_name": "Healthy264",
+  "tissue": "Healthy",
+  "tissue_no": 264,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "712": {
+  "ss_name": "Healthy265",
+  "tissue": "Healthy",
+  "tissue_no": 265,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "713": {
+  "ss_name": "Stem135",
+  "tissue": "Stem",
+  "tissue_no": 135,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "714": {
+  "ss_name": "Calix136",
+  "tissue": "Calix",
+  "tissue_no": 136,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "715": {
+  "ss_name": "Defect0179",
+  "tissue": "Rot",
+  "tissue_no": 23,
+  "cls": "Internal_Defect",
+  "defect_no": 179
+ },
+ "716": {
+  "ss_name": "Healthy266",
+  "tissue": "Healthy",
+  "tissue_no": 266,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "717": {
+  "ss_name": "Calix137",
+  "tissue": "Calix",
+  "tissue_no": 137,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "718": {
+  "ss_name": "Healthy267",
+  "tissue": "Healthy",
+  "tissue_no": 267,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "719": {
+  "ss_name": "Stem136",
+  "tissue": "Stem",
+  "tissue_no": 136,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "720": {
+  "ss_name": "Calix138",
+  "tissue": "Calix",
+  "tissue_no": 138,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "721": {
+  "ss_name": "Healthy268",
+  "tissue": "Healthy",
+  "tissue_no": 268,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "722": {
+  "ss_name": "Healthy269",
+  "tissue": "Healthy",
+  "tissue_no": 269,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "723": {
+  "ss_name": "Healthy270",
+  "tissue": "Healthy",
+  "tissue_no": 270,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "724": {
+  "ss_name": "Stem137",
+  "tissue": "Stem",
+  "tissue_no": 137,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "725": {
+  "ss_name": "Stem138",
+  "tissue": "Stem",
+  "tissue_no": 138,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "726": {
+  "ss_name": "Calix139",
+  "tissue": "Calix",
+  "tissue_no": 139,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "727": {
+  "ss_name": "Healthy271",
+  "tissue": "Healthy",
+  "tissue_no": 271,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "728": {
+  "ss_name": "Healthy272",
+  "tissue": "Healthy",
+  "tissue_no": 272,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "729": {
+  "ss_name": "Healthy273",
+  "tissue": "Healthy",
+  "tissue_no": 273,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "730": {
+  "ss_name": "Stem139",
+  "tissue": "Stem",
+  "tissue_no": 139,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "731": {
+  "ss_name": "Stem140",
+  "tissue": "Stem",
+  "tissue_no": 140,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "732": {
+  "ss_name": "Calix140",
+  "tissue": "Calix",
+  "tissue_no": 140,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "733": {
+  "ss_name": "Healthy274",
+  "tissue": "Healthy",
+  "tissue_no": 274,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "734": {
+  "ss_name": "Healthy275",
+  "tissue": "Healthy",
+  "tissue_no": 275,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "735": {
+  "ss_name": "Stem141",
+  "tissue": "Stem",
+  "tissue_no": 141,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "736": {
+  "ss_name": "Stem142",
+  "tissue": "Stem",
+  "tissue_no": 142,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "737": {
+  "ss_name": "Healthy276",
+  "tissue": "Healthy",
+  "tissue_no": 276,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "738": {
+  "ss_name": "Healthy277",
+  "tissue": "Healthy",
+  "tissue_no": 277,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "739": {
+  "ss_name": "Healthy278",
+  "tissue": "Healthy",
+  "tissue_no": 278,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "740": {
+  "ss_name": "Stem143",
+  "tissue": "Stem",
+  "tissue_no": 143,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "741": {
+  "ss_name": "Stem144",
+  "tissue": "Stem",
+  "tissue_no": 144,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "742": {
+  "ss_name": "Calix141",
+  "tissue": "Calix",
+  "tissue_no": 141,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "743": {
+  "ss_name": "Calix142",
+  "tissue": "Calix",
+  "tissue_no": 142,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "744": {
+  "ss_name": "Defect0180",
+  "tissue": "Russet",
+  "tissue_no": 42,
+  "cls": "Surface_Defect",
+  "defect_no": 180
+ },
+ "745": {
+  "ss_name": "Stem145",
+  "tissue": "Stem",
+  "tissue_no": 145,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "746": {
+  "ss_name": "Stem146",
+  "tissue": "Stem",
+  "tissue_no": 146,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "747": {
+  "ss_name": "Calix143",
+  "tissue": "Calix",
+  "tissue_no": 143,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "748": {
+  "ss_name": "Calix144",
+  "tissue": "Calix",
+  "tissue_no": 144,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "749": {
+  "ss_name": "Healthy279",
+  "tissue": "Healthy",
+  "tissue_no": 279,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "750": {
+  "ss_name": "Healthy280",
+  "tissue": "Healthy",
+  "tissue_no": 280,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "751": {
+  "ss_name": "Stem147",
+  "tissue": "Stem",
+  "tissue_no": 147,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "752": {
+  "ss_name": "Stem148",
+  "tissue": "Stem",
+  "tissue_no": 148,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "753": {
+  "ss_name": "Calix145",
+  "tissue": "Calix",
+  "tissue_no": 145,
+  "cls": "Healthy",
+  "defect_no": null
+ },
+ "754": {
+  "ss_name": "Defect0181",
+  "tissue": "Bruise",
+  "tissue_no": 10,
+  "cls": "Internal_Defect",
+  "defect_no": 181
+ },
+ "755": {
+  "ss_name": "Defect0182",
+  "tissue": "Bruise",
+  "tissue_no": 11,
+  "cls": "Internal_Defect",
+  "defect_no": 182
+ },
+ "756": {
+  "ss_name": "Defect0183",
+  "tissue": "Bruise",
+  "tissue_no": 12,
+  "cls": "Internal_Defect",
+  "defect_no": 183
+ },
+ "757": {
+  "ss_name": "Defect0184",
+  "tissue": "Bruise",
+  "tissue_no": 13,
+  "cls": "Internal_Defect",
+  "defect_no": 184
+ },
+ "758": {
+  "ss_name": "Defect0185",
+  "tissue": "Bruise",
+  "tissue_no": 14,
+  "cls": "Internal_Defect",
+  "defect_no": 185
+ },
+ "759": {
+  "ss_name": "Defect0186",
+  "tissue": "Bruise",
+  "tissue_no": 15,
+  "cls": "Internal_Defect",
+  "defect_no": 186
+ },
+ "760": {
+  "ss_name": "Defect0187",
+  "tissue": "Bruise",
+  "tissue_no": 16,
+  "cls": "Internal_Defect",
+  "defect_no": 187
+ },
+ "761": {
+  "ss_name": "Defect0188",
+  "tissue": "Bruise",
+  "tissue_no": 17,
+  "cls": "Internal_Defect",
+  "defect_no": 188
+ },
+ "762": {
+  "ss_name": "Defect0189",
+  "tissue": "Bruise",
+  "tissue_no": 18,
+  "cls": "Internal_Defect",
+  "defect_no": 189
+ },
+ "763": {
+  "ss_name": "Defect0190",
+  "tissue": "Bruise",
+  "tissue_no": 19,
+  "cls": "Internal_Defect",
+  "defect_no": 190
+ },
+ "764": {
+  "ss_name": "Defect0191",
+  "tissue": "Bruise",
+  "tissue_no": 20,
+  "cls": "Internal_Defect",
+  "defect_no": 191
+ },
+ "765": {
+  "ss_name": "Defect0192",
+  "tissue": "Bruise",
+  "tissue_no": 21,
+  "cls": "Internal_Defect",
+  "defect_no": 192
+ },
+ "766": {
+  "ss_name": "Defect0193",
+  "tissue": "Bruise",
+  "tissue_no": 22,
+  "cls": "Internal_Defect",
+  "defect_no": 193
+ },
+ "767": {
+  "ss_name": "Defect0194",
+  "tissue": "Bruise",
+  "tissue_no": 23,
+  "cls": "Internal_Defect",
+  "defect_no": 194
+ },
+ "768": {
+  "ss_name": "Defect0195",
+  "tissue": "Bruise",
+  "tissue_no": 24,
+  "cls": "Internal_Defect",
+  "defect_no": 195
+ },
+ "769": {
+  "ss_name": "Defect0196",
+  "tissue": "Bruise",
+  "tissue_no": 25,
+  "cls": "Internal_Defect",
+  "defect_no": 196
+ },
+ "770": {
+  "ss_name": "Defect0197",
+  "tissue": "Bruise",
+  "tissue_no": 26,
+  "cls": "Internal_Defect",
+  "defect_no": 197
+ },
+ "771": {
+  "ss_name": "Defect0198",
+  "tissue": "Bruise",
+  "tissue_no": 27,
+  "cls": "Internal_Defect",
+  "defect_no": 198
+ },
+ "772": {
+  "ss_name": "Defect0199",
+  "tissue": "Bruise",
+  "tissue_no": 28,
+  "cls": "Internal_Defect",
+  "defect_no": 199
+ },
+ "773": {
+  "ss_name": "Defect0200",
+  "tissue": "Bruise",
+  "tissue_no": 29,
+  "cls": "Internal_Defect",
+  "defect_no": 200
+ },
+ "774": {
+  "ss_name": "Defect0201",
+  "tissue": "Bruise",
+  "tissue_no": 30,
+  "cls": "Internal_Defect",
+  "defect_no": 201
+ },
+ "775": {
+  "ss_name": "Defect0202",
+  "tissue": "Bruise",
+  "tissue_no": 31,
+  "cls": "Internal_Defect",
+  "defect_no": 202
+ },
+ "776": {
+  "ss_name": "Defect0203",
+  "tissue": "Bruise",
+  "tissue_no": 32,
+  "cls": "Internal_Defect",
+  "defect_no": 203
+ },
+ "777": {
+  "ss_name": "Defect0204",
+  "tissue": "Bruise",
+  "tissue_no": 33,
+  "cls": "Internal_Defect",
+  "defect_no": 204
+ },
+ "778": {
+  "ss_name": "Defect0205",
+  "tissue": "Bruise",
+  "tissue_no": 34,
+  "cls": "Internal_Defect",
+  "defect_no": 205
+ },
+ "779": {
+  "ss_name": "Defect0206",
+  "tissue": "Bruise",
+  "tissue_no": 35,
+  "cls": "Internal_Defect",
+  "defect_no": 206
+ },
+ "780": {
+  "ss_name": "Defect0207",
+  "tissue": "Bruise",
+  "tissue_no": 36,
+  "cls": "Internal_Defect",
+  "defect_no": 207
+ },
+ "781": {
+  "ss_name": "Defect0208",
+  "tissue": "Bruise",
+  "tissue_no": 37,
+  "cls": "Internal_Defect",
+  "defect_no": 208
+ },
+ "782": {
+  "ss_name": "Defect0209",
+  "tissue": "Bruise",
+  "tissue_no": 38,
+  "cls": "Internal_Defect",
+  "defect_no": 209
+ },
+ "783": {
+  "ss_name": "Defect0210",
+  "tissue": "Bruise",
+  "tissue_no": 39,
+  "cls": "Internal_Defect",
+  "defect_no": 210
+ },
+ "784": {
+  "ss_name": "Defect0211",
+  "tissue": "Bruise",
+  "tissue_no": 40,
+  "cls": "Internal_Defect",
+  "defect_no": 211
+ },
+ "785": {
+  "ss_name": "Defect0212",
+  "tissue": "Bruise",
+  "tissue_no": 41,
+  "cls": "Internal_Defect",
+  "defect_no": 212
+ },
+ "786": {
+  "ss_name": "Defect0213",
+  "tissue": "Bruise",
+  "tissue_no": 42,
+  "cls": "Internal_Defect",
+  "defect_no": 213
+ },
+ "787": {
+  "ss_name": "Defect0214",
+  "tissue": "Bruise",
+  "tissue_no": 43,
+  "cls": "Internal_Defect",
+  "defect_no": 214
+ },
+ "788": {
+  "ss_name": "Defect0215",
+  "tissue": "Bruise",
+  "tissue_no": 44,
+  "cls": "Internal_Defect",
+  "defect_no": 215
+ },
+ "789": {
+  "ss_name": "Defect0216",
+  "tissue": "Bruise",
+  "tissue_no": 45,
+  "cls": "Internal_Defect",
+  "defect_no": 216
+ },
+ "790": {
+  "ss_name": "Defect0217",
+  "tissue": "Bruise",
+  "tissue_no": 46,
+  "cls": "Internal_Defect",
+  "defect_no": 217
+ },
+ "791": {
+  "ss_name": "Defect0218",
+  "tissue": "Bruise",
+  "tissue_no": 47,
+  "cls": "Internal_Defect",
+  "defect_no": 218
+ },
+ "792": {
+  "ss_name": "Defect0219",
+  "tissue": "Bruise",
+  "tissue_no": 48,
+  "cls": "Internal_Defect",
+  "defect_no": 219
+ },
+ "793": {
+  "ss_name": "Defect0220",
+  "tissue": "Bruise",
+  "tissue_no": 49,
+  "cls": "Internal_Defect",
+  "defect_no": 220
+ },
+ "794": {
+  "ss_name": "Defect0221",
+  "tissue": "Bruise",
+  "tissue_no": 50,
+  "cls": "Internal_Defect",
+  "defect_no": 221
+ },
+ "795": {
+  "ss_name": "Defect0222",
+  "tissue": "Bruise",
+  "tissue_no": 51,
+  "cls": "Internal_Defect",
+  "defect_no": 222
+ },
+ "796": {
+  "ss_name": "Defect0223",
+  "tissue": "Bruise",
+  "tissue_no": 52,
+  "cls": "Internal_Defect",
+  "defect_no": 223
+ },
+ "797": {
+  "ss_name": "Defect0224",
+  "tissue": "Bruise",
+  "tissue_no": 53,
+  "cls": "Internal_Defect",
+  "defect_no": 224
+ },
+ "798": {
+  "ss_name": "Defect0225",
+  "tissue": "Bruise",
+  "tissue_no": 54,
+  "cls": "Internal_Defect",
+  "defect_no": 225
+ },
+ "799": {
+  "ss_name": "Defect0226",
+  "tissue": "Bruise",
+  "tissue_no": 55,
+  "cls": "Internal_Defect",
+  "defect_no": 226
+ },
+ "800": {
+  "ss_name": "Defect0227",
+  "tissue": "Flesh_damage",
+  "tissue_no": 5,
+  "cls": "Internal_Defect",
+  "defect_no": 227
+ },
+ "801": {
+  "ss_name": "Defect0228",
+  "tissue": "Flesh_damage",
+  "tissue_no": 6,
+  "cls": "Internal_Defect",
+  "defect_no": 228
+ },
+ "802": {
+  "ss_name": "Defect0229",
+  "tissue": "Flesh_damage",
+  "tissue_no": 7,
+  "cls": "Internal_Defect",
+  "defect_no": 229
+ },
+ "803": {
+  "ss_name": "Defect0230",
+  "tissue": "Flesh_damage",
+  "tissue_no": 8,
+  "cls": "Internal_Defect",
+  "defect_no": 230
+ },
+ "804": {
+  "ss_name": "Defect0231",
+  "tissue": "Flesh_damage",
+  "tissue_no": 9,
+  "cls": "Internal_Defect",
+  "defect_no": 231
+ },
+ "805": {
+  "ss_name": "Defect0232",
+  "tissue": "Flesh_damage",
+  "tissue_no": 10,
+  "cls": "Internal_Defect",
+  "defect_no": 232
+ },
+ "806": {
+  "ss_name": "Defect0233",
+  "tissue": "Flesh_damage",
+  "tissue_no": 11,
+  "cls": "Internal_Defect",
+  "defect_no": 233
+ },
+ "807": {
+  "ss_name": "Defect0234",
+  "tissue": "Flesh_damage",
+  "tissue_no": 12,
+  "cls": "Internal_Defect",
+  "defect_no": 234
+ },
+ "808": {
+  "ss_name": "Defect0235",
+  "tissue": "Flesh_damage",
+  "tissue_no": 13,
+  "cls": "Internal_Defect",
+  "defect_no": 235
+ },
+ "809": {
+  "ss_name": "Defect0236",
+  "tissue": "Flesh_damage",
+  "tissue_no": 14,
+  "cls": "Internal_Defect",
+  "defect_no": 236
+ },
+ "810": {
+  "ss_name": "Defect0237",
+  "tissue": "Flesh_damage",
+  "tissue_no": 15,
+  "cls": "Internal_Defect",
+  "defect_no": 237
+ },
+ "811": {
+  "ss_name": "Defect0238",
+  "tissue": "Flesh_damage",
+  "tissue_no": 16,
+  "cls": "Internal_Defect",
+  "defect_no": 238
+ },
+ "812": {
+  "ss_name": "Defect0239",
+  "tissue": "Flesh_damage",
+  "tissue_no": 17,
+  "cls": "Internal_Defect",
+  "defect_no": 239
+ },
+ "813": {
+  "ss_name": "Defect0240",
+  "tissue": "Flesh_damage",
+  "tissue_no": 18,
+  "cls": "Internal_Defect",
+  "defect_no": 240
+ },
+ "814": {
+  "ss_name": "Defect0241",
+  "tissue": "Flesh_damage",
+  "tissue_no": 19,
+  "cls": "Internal_Defect",
+  "defect_no": 241
+ },
+ "815": {
+  "ss_name": "Defect0242",
+  "tissue": "Flesh_damage",
+  "tissue_no": 20,
+  "cls": "Internal_Defect",
+  "defect_no": 242
+ },
+ "816": {
+  "ss_name": "Defect0243",
+  "tissue": "Flesh_damage",
+  "tissue_no": 21,
+  "cls": "Internal_Defect",
+  "defect_no": 243
+ },
+ "817": {
+  "ss_name": "Defect0244",
+  "tissue": "Flesh_damage",
+  "tissue_no": 22,
+  "cls": "Internal_Defect",
+  "defect_no": 244
+ },
+ "818": {
+  "ss_name": "Defect0245",
+  "tissue": "Flesh_damage",
+  "tissue_no": 23,
+  "cls": "Internal_Defect",
+  "defect_no": 245
+ },
+ "819": {
+  "ss_name": "Defect0246",
+  "tissue": "Flesh_damage",
+  "tissue_no": 24,
+  "cls": "Internal_Defect",
+  "defect_no": 246
+ }
+}

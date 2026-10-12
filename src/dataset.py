@@ -10,11 +10,12 @@ from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 from .config import CHANNEL_GROUPS, CLASS_TO_IDX, CLASSES, DATA_DIR, OUTPUT_DIR, SEED
 
 
-def list_files(split):
-    """Return [(filepath, label_idx), ...] for a split, sorted for reproducibility."""
+def list_files(split, root=None):
+    """Return [(filepath, label_idx), ...] for a split, sorted for reproducibility.
+    `root` selects another dataset tree with the same layout (e.g. Processed_Dataset_SS)."""
     items = []
     for cls in CLASSES:
-        pattern = os.path.join(DATA_DIR, split, cls, "*.npy")
+        pattern = os.path.join(root or DATA_DIR, split, cls, "*.npy")
         for fp in sorted(glob.glob(pattern)):
             items.append((fp, CLASS_TO_IDX[cls]))
     return items

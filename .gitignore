@@ -1,9 +1,11 @@
 # --- proprietary dataset (ULG Gembloux Agro-Bio Tech -- cannot redistribute, see ReadMe.txt) ---
 Processed_Dataset/
+Processed_Dataset_SS/
 images/
 segmentations/
 outputs/features/
 outputs/dl/gradcam/
+outputs/dl/gradcam_mask/
 
 # --- large model artifacts (kept in local backups/, not worth versioning) ---
 outputs/dl/*.pt

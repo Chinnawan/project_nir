@@ -38,8 +38,8 @@ import numpy as np
 import torch
 from sklearn.model_selection import StratifiedKFold, train_test_split
 
-from .config import CLASSES, OUTPUT_DIR, SEED
-from .dataset import get_dataloaders_from_items, list_files
+from .config import CLASSES, OUTPUT_DIR, PROJECT_ROOT, SEED
+from .dataset import compute_stats_for_files, get_dataloaders_from_items, list_files
 from .models import build_model
 from .train_dl import DEVICE, run_training
 
@@ -48,21 +48,35 @@ RESULTS_PATH = os.path.join(OUT, "kfold_results.json")
 N_SPLITS = 5
 VAL_FRACTION_OF_TRAINVAL = 0.176  # matches the original ~70/15 train/val ratio
 
-# name -> (channel_group, use_se, augment_train)
+SS_DIR = os.path.join(PROJECT_ROOT, "Processed_Dataset_SS")
+CKPT_DIR = os.path.join(OUT, "kfold_ckpt")
+
+# name -> (channel_group, use_se, augment_train, source, save_ckpt)
+#   source "raw" = Processed_Dataset (RawA, no flat-field correction)
+#   source "ss"  = Processed_Dataset_SS (SingleSpectra, flat-field corrected; same apples,
+#                  same file names/splits, so folds line up 1:1 with the raw runs)
 VARIANT_SPECS = {
-    "visible": ("visible", False, True),
-    "nir": ("nir", False, True),
-    "full": ("full", False, True),
-    "full_SE": ("full", True, True),
-    "nir_SE": ("nir", True, True),        # NIR-only + SE block (never tried before)
-    "nir_no_aug": ("nir", False, False),  # NIR-only, augmentation OFF (ablation)
+    "visible": ("visible", False, True, "raw", False),
+    "nir": ("nir", False, True, "raw", False),
+    "full": ("full", False, True, "raw", False),
+    "full_SE": ("full", True, True, "raw", False),
+    "nir_SE": ("nir", True, True, "raw", False),         # NIR-only + SE block
+    "nir_no_aug": ("nir", False, False, "raw", False),   # NIR-only, augmentation OFF (ablation)
+    "nir_SE_ss": ("nir", True, True, "ss", True),        # nir_SE on SingleSpectra images; ckpts feed gradcam_mask_eval
 }
 
 
-def build_pool():
-    """All 819 images (train+val+test folders combined) as one (filepath, label) pool."""
-    pool = list_files("train") + list_files("val") + list_files("test")
+def build_pool(source="raw"):
+    """All 819 images (train+val+test folders combined) as one (filepath, label) pool.
+    For source="ss" the pool has the identical order/labels as the raw pool, so
+    StratifiedKFold puts every apple in the same fold in both experiments."""
+    root = SS_DIR if source == "ss" else None
+    pool = list_files("train", root) + list_files("val", root) + list_files("test", root)
     labels = np.array([label for _, label in pool])
+    if source == "ss":
+        raw_pool = list_files("train") + list_files("val") + list_files("test")
+        assert [os.path.basename(f) for f, _ in pool] == [os.path.basename(f) for f, _ in raw_pool], \
+            "Processed_Dataset_SS does not mirror Processed_Dataset (run src.preprocess_ss)"
     return pool, labels
 
 
@@ -74,7 +88,7 @@ def get_fold_splits(pool, pool_labels):
 
 
 def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_group, use_se,
-             augment_train=True, name=None):
+             augment_train=True, name=None, ckpt_path=None):
     name = name or f"{channel_group}{'_SE' if use_se else ''}"
     torch.manual_seed(SEED)
 
@@ -94,6 +108,11 @@ def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_grou
         name=f"{name}_fold{fold_idx}", epochs=100, patience=10, lr=1e-4, save_dir=None,
         channel_group=channel_group,
     )
+
+    if ckpt_path:  # run_training leaves the best-val-loss weights loaded in `model`
+        mean, std = compute_stats_for_files(train_items)  # same stats the train loader used
+        os.makedirs(os.path.dirname(ckpt_path), exist_ok=True)
+        torch.save({"state_dict": model.state_dict(), "mean": mean.tolist(), "std": std.tolist()}, ckpt_path)
 
     del model, train_loader, val_loader, test_loader
     gc.collect()
@@ -136,7 +155,7 @@ def _summarize(fold_results):
 def run_variant(name, force=False):
     if name not in VARIANT_SPECS:
         raise ValueError(f"unknown variant {name!r}, choose from {list(VARIANT_SPECS)}")
-    channel_group, use_se, augment_train = VARIANT_SPECS[name]
+    channel_group, use_se, augment_train, source, save_ckpt = VARIANT_SPECS[name]
 
     per_fold, summary = _load_results()
     if not force and len(per_fold.get(name, [])) == N_SPLITS:
@@ -144,11 +163,11 @@ def run_variant(name, force=False):
               f"(pass --force to re-run)")
         return per_fold, summary
 
-    pool, pool_labels = build_pool()
+    pool, pool_labels = build_pool(source)
     fold_splits = get_fold_splits(pool, pool_labels)
 
     print(f"\n### Variant {name} (channel_group={channel_group}, use_se={use_se}, "
-          f"augment_train={augment_train}) -- {N_SPLITS} folds ###")
+          f"augment_train={augment_train}, source={source}) -- {N_SPLITS} folds ###")
 
     fold_results = []
     t0 = time.time()
@@ -158,8 +177,10 @@ def run_variant(name, force=False):
         trainval_labels = pool_labels[trainval_idx]
         test_items = [pool[i] for i in test_idx]
 
+        ckpt_path = os.path.join(CKPT_DIR, f"{name}_fold{fold_idx}.pt") if save_ckpt else None
         fold_result = run_fold(fold_idx, trainval_items, trainval_labels, test_items,
-                                channel_group, use_se, augment_train=augment_train, name=name)
+                                channel_group, use_se, augment_train=augment_train, name=name,
+                                ckpt_path=ckpt_path)
         fold_results.append(fold_result)
 
         per_fold[name] = fold_results

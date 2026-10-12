@@ -318,7 +318,7 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 
 **ข้อสังเกตที่น่าสนใจ**: สำหรับ NIR-only จริงๆ แล้ว **Surface_Defect** (0.737) แย่กว่า Internal_Defect (0.867) เสียอีก แม้ Internal_Defect จะมีข้อมูลน้อยกว่า (102 vs 144 ภาพ) — แปลว่าปัญหาไม่ได้อยู่ที่ class imbalance อย่างเดียว อาจเป็นเพราะ Surface_Defect มีความหลากหลายของตำหนิย่อยเยอะ (Russet/Scald/Hail/Frost/Limb_rub/Other) ทำให้ pattern ไม่สม่ำเสมอ — **สำหรับ NIR-only (โมเดลหลักที่ผลดีที่สุด) ไม่จำเป็นต้องทำ Focal Loss เพิ่ม** ข้ามไปทำ Phase 6 (เขียนเล่ม) ได้เลย ส่วน full_SE ที่แย่กว่าเป็นเพราะภาพรวม performance ต่ำกว่าอยู่แล้ว ไม่ใช่ประเด็นหลักของธีสิส (NIR-only คือโมเดลที่ดีที่สุดและใช้เป็นข้อสรุปหลัก)
 
-## งานที่ต้องทำต่อ — รอบสุดท้าย: รวมเทคนิคที่พิสูจน์แล้วว่าดีที่สุด (Best-Combo Run)
+## รอบสุดท้าย: รวมเทคนิคที่พิสูจน์แล้วว่าดีที่สุด (Best-Combo Run) — เสร็จแล้ว 2026-09-15
 
 เหตุผล: จากทุกรอบที่ทำมา (รอบ 1-4) สรุปได้ว่า NIR-only (RE,IR) เป็น input ที่ดีที่สุดเสมอ, Data Augmentation ช่วยลด variance, SE block ช่วยเล็กน้อยเมื่อวัดถูกวิธี (k-fold), Ensembling และ Focal Loss พิสูจน์แล้วว่าไม่คุ้ม/ใช้ไม่ได้บน dataset นี้ — รอบนี้คือการรวมเทคนิคที่ดีที่สุดเข้าด้วยกันเป็นครั้งแรก โดยเฉพาะ **SE block บน NIR-only ที่ยังไม่เคยทดลอง** (ที่ผ่านมาลอง SE บน full 4-channel เท่านั้น)
 
@@ -336,6 +336,19 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 .venv\Scripts\python.exe -m src.train_dl_kfold --variant nir_SE
 ```
 
+### ผลลัพธ์ nir_SE — [x] รันเสร็จแล้ว 2026-09-15 🏆 **ตัวเลขที่ดีที่สุดของทั้งโปรเจก**
+
+| Model | Macro F1 (5-fold mean±std) | Accuracy | Per-fold F1 |
+|---|---|---|---|
+| nir (เดิม, ไม่มี SE) | 0.843 ± 0.023 | 89.9% ± 2.0% | — |
+| **nir_SE (ใหม่)** | **0.862 ± 0.025** | **91.7% ± 2.1%** | [0.892, 0.878, 0.859, 0.818, 0.862] |
+
+**ข้อสรุป**: SE block บน NIR-only ช่วยดันขึ้นจริง +0.019 F1 — **nir_SE คือโมเดลสุดท้ายที่ควรใช้เป็นผลหลักของธีสิส** (F1 0.862±0.025, Accuracy 91.7%±2.1%)
+
+**SE channel importance (RE, IR)** — สม่ำเสมอมากทุก fold: RE ≈ 0.558-0.565, IR ≈ 0.375-0.379 → **ภายใน NIR เอง Red Edge สำคัญกว่า Infrared เกือบเท่าตัว** — ข้อค้นพบระดับละเอียดขึ้นสำหรับ objective 3.1 (ไม่ใช่แค่ "NIR สำคัญกว่า visible" แต่ระบุได้ถึง "ใน NIR เอง RE สำคัญกว่า IR") น่าสังเกตว่าต่างจากผล full_SE (4-channel) ที่ IR ได้น้ำหนักสูงกว่า RE — เป็นประเด็นอภิปรายที่น่าสนใจในเล่ม
+
+**ข้อควรระวังตอนรายงานผล**: fold ที่ดีที่สุดได้ถึง 0.892 F1 / 93.9% acc แต่**ห้ามหยิบตัวเลข fold เดียวไปรายงาน** (cherry-picking) — ใช้ mean±std เสมอ
+
 ### Ablation test เพิ่มเติม — แยกผลของ K-Fold ออกจาก Augmentation
 
 เหตุผล: รอบ 1-2 (single-split, ไม่มี augmentation) ได้ NIR-only F1 = 0.867/0.853 แต่รอบ 3-4 (K-Fold + augmentation) ได้แค่ 0.843±0.023 — ยังบอกไม่ได้ว่าตัวเลขที่ลดลงมาจาก **วิธีวัดผลเปลี่ยน** (k-fold เฉลี่ยรวมทั้ง fold ง่ายและยาก) หรือจาก **augmentation ทำให้แย่ลงจริง** เพราะเปลี่ยน 2 อย่างพร้อมกัน ต้องแยกทดสอบให้ชัด
@@ -347,15 +360,190 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 .venv\Scripts\python.exe -m src.train_dl_kfold --variant nir_no_aug
 ```
 
-**ตารางเทียบผลที่ต้องได้หลังรันครบ**:
+**ตารางเทียบผลที่ต้องได้หลังรันครบ** — [x] รันเสร็จแล้ว 2026-09-15:
 
 | Experiment | Augmentation | วิธีวัดผล | Macro F1 |
 |---|---|---|---|
 | รอบ 1-2 (มีอยู่แล้ว) | ไม่มี | Single-split | 0.867 / 0.853 |
-| **nir_no_aug (ใหม่)** | ไม่มี | K-Fold (5-fold mean±std) | ? |
+| **nir_no_aug (ใหม่)** | ไม่มี | K-Fold (5-fold mean±std) | **0.817 ± 0.037** (acc 89.1%±2.9%, folds=[0.820, 0.841, 0.859, 0.751, 0.815]) |
 | nir (รอบ 3, มีอยู่แล้ว) | มี | K-Fold (5-fold mean±std) | 0.843±0.023 |
 
-**วิธีอ่านผล**: ถ้า `nir_no_aug` ได้ใกล้เคียง 0.867 (สูงกว่า `nir` ที่มี augmentation) → แปลว่า augmentation ทำให้แย่ลงจริง ควรพิจารณาตัดออกจาก combo สุดท้าย ถ้า `nir_no_aug` ได้ใกล้เคียง 0.843 (เท่ากับ `nir`) → แปลว่า augmentation ไม่มีผลอะไรเลย ตัวเลขที่ต่างจากรอบ 1-2 เป็นเพราะวิธีวัดผลเปลี่ยนอย่างเดียว ไม่เกี่ยวกับ augmentation
+**ข้อสรุปจาก ablation (สำคัญสำหรับเล่ม)**:
+1. **Augmentation ช่วยจริง ไม่ได้ทำให้แย่ลง** — เทียบในเงื่อนไข K-Fold เดียวกัน: มี aug (0.843±0.023) > ไม่มี aug (0.817±0.037) และ std ก็ต่ำกว่าด้วย (เสถียรกว่า)
+2. **ตัวเลขรอบ 1-2 ที่สูง (0.867) เป็นผลจากโชคของ single-split** ไม่เกี่ยวกับการไม่มี augmentation — เห็นจาก std ของ nir_no_aug ที่สูงถึง ±0.037 (fold ต่ำสุด 0.751, สูงสุด 0.859) การสุ่มแบ่งครั้งเดียวจึงได้ค่าโชคดีแบบรอบ 1-2 ได้ง่าย
+3. ตัวเลข single-split (รอบ 1-2) **ห้ามใช้เทียบกับตัวเลข k-fold โดยตรง** — เป็นคนละมาตรฐานการวัด
+
+## Version Control + Backup — เสร็จแล้ว (2026-09-15)
+
+เหตุผล: ผลลัพธ์ปัจจุบัน (เช่น NIR-only 0.867 F1 ตอน single-split) อยู่ใน checkpoint ไฟล์ (`*_best.pt`) ที่**ไม่มี skip-logic ป้องกันการทับ** ถ้ารัน `train_dl.py` หรือ `train_classical.py` ซ้ำ ไฟล์เดิมจะถูกทับทันที และที่แย่กว่านั้นคือ **แม้ตั้ง seed=42 ไว้แล้ว ผลก็ยังไม่ตรงกันทุกรอบ** (มีบันทึกไว้แล้วว่า visible-only F1 เคยได้ 0.711 แล้วรันโค้ดเดียวกันซ้ำได้ 0.616 — เป็นผลจาก GPU/cuDNN ที่มีส่วน non-deterministic ที่ยังไม่ได้ล็อก) จึงต้องกันไว้ก่อนจะรัน `nir_SE`/`nir_no_aug` หรือ experiment อื่นต่อ
+
+### สิ่งที่เสี่ยงถูกทับ (ไม่มี skip-logic) vs สิ่งที่ปลอดภัยแล้ว
+
+| ไฟล์/โฟลเดอร์ | เสี่ยงทับ? | เหตุผล |
+|---|---|---|
+| `outputs/dl/metrics.json`, `{visible,nir,full,full_SE}_best.pt`, `*_history.json` | **เสี่ยง** | มาจาก `train_dl.py` main() — ทับทุกครั้งที่รัน ไม่เช็คของเดิม |
+| `outputs/classical/*` | **เสี่ยง** | มาจาก `train_classical.py` — ทับทุกครั้งเหมือนกัน |
+| `outputs/dl/gradcam/*.png`, `outputs/stats/results.json`, `outputs/dl/per_class_f1.json` | **เสี่ยง** | มาจาก `explain.py` — ทับทุกครั้ง และผลเปลี่ยนตาม `*_best.pt` ล่าสุดด้วย |
+| `outputs/dl/kfold_results.json` | ปลอดภัย | `train_dl_kfold.py` เช็คก่อนว่า variant นั้นมีครบ 5 fold รึยัง ถ้ามีแล้ว **ข้าม** (ต้องใส่ `--force` ถึงจะทับ) |
+| `outputs/dl/kfold_ckpt/*.pt` (checkpoint 10 ตัวจาก ensembling) | ปลอดภัย | `ensemble_kfold.py` เช็ค `if os.path.exists(ckpt_path): skip` |
+
+### 1. Local backup (ทำแล้ว)
+
+คัดลอกทุกอย่างที่เสี่ยงทับไปเก็บที่ `backups/best_results_20260915_181726/` (231MB) — รวม checkpoint ทั้งหมด (single-split + k-fold), metrics/history json, Grad-CAM images, classical models, และสำเนา `PROJECT_PLAN.md` ณ เวลานั้น โฟลเดอร์ `backups/` ไม่ถูก track ใน git (ดูข้อ 3)
+
+### 2. ข้อจำกัดลิขสิทธิ์ของ Dataset — ต้องรู้ก่อนแชร์อะไรออกไปข้างนอก
+
+เช็ค `ReadMe.txt` ของ dataset แล้วเจอเงื่อนไขชัดเจน:
+
+> "The CAPA Apple Quality Grading Image Database is a **proprietary of ULG (Gembloux Agro-Bio Tech), Belgium — and cannot be used without the consent of ULG**"
+> ติดต่อขอ consent ได้ที่ Devrim Unay (Bahcesehir University) หรือ Marie-France Destain (Gembloux Agro-Bio Tech)
+
+เงื่อนไขเพิ่มเติมตอนเผยแพร่ผลงาน (defense/thesis เข้าข่ายนี้):
+1. ต้องระบุในเล่มว่าข้อมูลได้มาจาก ULG (Gembloux Agro-Bio Tech)
+2. ต้อง cite: Kleynen, O., Leemans, V., & Destain, M.-F. (2005). *Development of a multi-spectral vision system for the detection of defects on apples.* Journal of Food Engineering, 69(1), 41-49.
+
+**นัยสำคัญ**: ห้ามอัปโหลดตัว dataset หรือสิ่งที่มีเนื้อภาพติดไปด้วย (Grad-CAM ที่ overlay บนภาพจริง, raw `.npy` cubes) ขึ้นที่ไหนที่คนนอกเข้าถึงได้ (รวมถึง private GitHub repo) โดยไม่มี consent — เป็นการ redistribute โดยไม่ได้รับอนุญาต
+
+### 3. Git repo + GitHub (ทำแล้ว)
+
+ตั้งค่า git ในเครื่อง แยกสิ่งที่ขึ้น GitHub ได้ (โค้ด + ผลตัวเลข) ออกจากสิ่งที่ห้ามขึ้น (dataset + ภาพที่มีเนื้อ dataset + ไฟล์โมเดลใหญ่) ผ่าน `.gitignore`:
+
+**ขึ้น GitHub แล้ว** (ไม่มีเนื้อภาพจาก dataset, ไม่มีปัญหาลิขสิทธิ์):
+- โค้ดทั้งหมดใน `src/`, `preprocess_pipeline.py`, `requirements.txt`
+- `PROJECT_PLAN.md`, `ReadMe.txt` (ไฟล์ license/attribution ของ dataset — เก็บไว้อ้างอิง ไม่ใช่ตัว dataset)
+- ผลตัวเลข json ล้วนๆ: `outputs/dl/metrics.json`, `kfold_results.json`, `per_class_f1.json`, `ensemble_results.json`, `outputs/stats/results.json`, `outputs/classical/metrics.json`, `predictions.json`
+- SHAP chart (`outputs/classical/shap/*.png`) — เป็น bar chart แสดง feature importance ไม่ใช่ภาพจาก dataset
+
+**ห้ามขึ้น GitHub** (กันไว้ใน `.gitignore`):
+- `Processed_Dataset/`, `images/`, `segmentations/`, `outputs/features/` — dataset ดิบ/แปรรูป
+- `outputs/dl/gradcam/*.png` — มีภาพจริงจาก dataset ซ้อน heatmap (derivative ของภาพต้นฉบับ)
+- `outputs/dl/*.pt`, `outputs/dl/kfold_ckpt/*.pt`, `outputs/classical/*.joblib` — model weight ไฟล์ใหญ่ (16MB/ไฟล์ x 15+ ไฟล์) ไม่ใช่ปัญหาลิขสิทธิ์โดยตรง แต่ไม่คุ้มจะ track ใน git (เก็บที่ local backup พอ)
+- `backups/`, `.venv/`, `__pycache__/`
+
+**สถานะ**: `git init` แล้ว, commit แรก (31 ไฟล์, 6567 บรรทัด) push ขึ้น [github.com/Chinnawan/project_nir](https://github.com/Chinnawan/project_nir) branch `main` เรียบร้อยเมื่อ 2026-09-15
+
+**ต่อจากนี้**: ทุกครั้งที่มีผลใหม่ (เช่น `nir_SE`/`nir_no_aug` รันเสร็จ) ให้ commit + push เพิ่มได้เลย — แค่ระวังอย่า `git add -A` แบบไม่เช็ค ถ้ามีการสร้างไฟล์โฟลเดอร์ใหม่ที่ไม่ได้อยู่ใน `.gitignore` (เช่น เพิ่ม output folder ใหม่ที่มีภาพ) ให้เพิ่มเข้า `.gitignore` ก่อน commit เสมอ
+
+## งานที่ต้องทำต่อ — ใช้ข้อมูลใน CAPA ที่ยังไม่เคยใช้ (พบ 2026-10-12)
+
+### สิ่งที่พบจากการสำรวจโฟลเดอร์
+
+1. **`images/SingleSpectraImages/`** — 3,276 ไฟล์ = 819 ภาพ × 4 แบนด์ (`{Healthy|Stem|Calix|Defect}NNN_{BL|GR|RE|IR}.tif`, 560×430) เป็น**แอปเปิลชุดเดียวกับ RawA** (Healthy 280 + Stem 148 + Calix 145 + Defect 246 = 819) **ไม่ใช่ข้อมูลเพิ่ม** แต่ตาม `Info_ReadFirst.rtf` ภาพชุดนี้ **ผ่าน flat-field correction** (ใช้ `RefFile/BW8RefWhite*`, `BW8RefBlack*`) และครอป/แก้ rotation+scale แล้ว ขณะที่ `RawA*.tif` ที่ pipeline ปัจจุบันใช้คือ "raw images **without** flat field correction"
+2. **`segmentations/Segmented_defects/jona/im/segmentedBW/SBW_DefectNNNN.bmp`** — **mask ตำหนิระดับพิกเซล 246 ภาพ** ขนาด 560×430 ตรงกับ `DefectNNNN_*.tif` + `segmentations/KleynenDefectClasses_Simplified.txt` (ระดับความรุนแรง Class 1-4)
+3. `Multispectral images of apples/` (นอก CAPA) — dataset อื่น 16 แบนด์ label เป็น ripeness/sweetness/variety **ไม่มี label ตำหนิ ใช้กับงานนี้ไม่ได้** — ไม่ต้องแตะ
+
+**ข้อควรระวัง**:
+- mask อยู่ในเรขาคณิตของภาพ SingleSpectra เท่านั้น ใช้กับ RawA ไม่ได้
+- `Defects.txt` ที่ rtf อ้างถึง (บอกชนิดตำหนิของ DefectNNNN) **ไม่มีในโฟลเดอร์** — ต้องสร้าง mapping DefectNNNN → ชนิดตำหนิ (→ Internal/Surface) เอง โดยอิงลำดับใน `RawFile.txt` และ**ตรวจกับเบาะแสใน `SingleSpectraImages/notes.txt`** (เช่น Bruise010–055 = defect181–226, Flesh_damage005–014 = defect227–236, Flesh_damage015–024 = defect237–246) ถ้า mapping ไม่ลงตัว ให้หยุดแจ้งผู้ใช้ก่อน ห้ามเดา
+- Healthy/Stem/Calix ทั้งหมด → class Healthy (เหมือน label เดิม) ตรวจว่าจำนวนต่อ class ยังเป็น 573/102/144
+
+### งานที่ 1 — เทรน nir_SE ด้วยภาพ SingleSpectra (flat-field corrected)
+
+1. สร้าง dataset ใหม่แยกโฟลเดอร์ (เช่น `Processed_Dataset_SS/`) **ห้ามทับ `Processed_Dataset/` เดิม** — stack แบนด์ BL/GR/RE/IR, resize 224×224, เก็บ `.npy` + เก็บ mapping ไฟล์ → class
+2. เพิ่ม variant `nir_SE_ss` ใน `train_dl_kfold.py` ทุกอย่างเหมือน `nir_SE` (RE+IR, SE, augmentation, WeightedRandomSampler, StratifiedKFold n=5 random_state=42) ต่างแค่แหล่งภาพ
+3. รายงาน Macro F1 / Accuracy mean±std + per-fold เทียบกับ `nir_SE` (0.862±0.025) + SE weights (RE, IR)
+4. ทุกอย่างวัดด้วยภาพจริงเท่านั้น
+
+#### สถานะ: [x] เสร็จแล้ว 2026-10-12
+
+**สิ่งที่ทำ / ไฟล์ใหม่**
+- `src/preprocess_ss.py` — สร้าง `Processed_Dataset_SS/` (819 ไฟล์ `.npy` 224×224×4, BL/GR/RE/IR) โดย **mirror `Processed_Dataset/` ไฟล์ต่อไฟล์** (ชื่อ `RawA####.npy` เดิม, split train/val/test เดิม, โฟลเดอร์ class เดิม) → StratifiedKFold ให้ **แอปเปิลทุกลูกอยู่ fold เดียวกับ `nir_SE`** (เทียบแบบจับคู่ได้ และมี assert ใน `build_pool("ss")` กันพลาด) แปลงภาพ 560×430 เป็นสี่เหลี่ยมจัตุรัสด้วยการ **pad ดำบน/ล่างเป็น 560×560 แล้ว resize 224** (ไม่ตัดแอปเปิลทิ้ง — วัดกรอบแอปเปิล (รวมก้าน) ทั้ง 819 ภาพ พบว่า center-crop 430×430 จะตัดส่วนของแอปเปิลหรือก้านทิ้งในราว 36% ของภาพ) ผลคือแอปเปิลเล็กลงราว 9% เทียบ pipeline raw
+- `outputs/ss_mapping.json` — mapping RawA → ชื่อไฟล์ SingleSpectra + ชนิดตำหนิ + class (ไม่มีเนื้อภาพ ขึ้น git ได้)
+- `train_dl_kfold.py` — เพิ่ม variant `nir_SE_ss` (+ field `source`, `save_ckpt` ใน `VARIANT_SPECS`), checkpoint ต่อ fold เก็บที่ `outputs/dl/kfold_ckpt/nir_SE_ss_fold{0-4}.pt` (อยู่ใน `.gitignore`), `dataset.list_files(split, root=None)` รองรับ dataset root อื่น
+- `.gitignore` — เพิ่ม `Processed_Dataset_SS/`, `outputs/dl/gradcam_mask/`
+- Backup ก่อนรัน: `backups/pre_ss_20261012_231238/`
+
+**Mapping DefectNNNN → ชนิดตำหนิ (ไม่ได้เดา — ตรวจ 2 ทาง)**: `Defects.txt` ไม่มีในโฟลเดอร์ จึงใช้สมมติฐาน "Defect k = รายการที่ k ใน RawFile.txt ที่ไม่ใช่ Healthy/Stem/Calix" แล้วตรวจ
+1. เบาะแสใน `notes.txt` ตรงครบ **9/9 จุด** (Other 15/16/17 = defect106/107/125, Bruise010/055 = defect181/226, Flesh_damage005/014/015/024 = defect227/236/237/246)
+2. **ตรวจด้วยเนื้อภาพทั้ง 819 ภาพ**: normalized cross-correlation ระหว่างแบนด์ IR ของภาพ SingleSpectra กับ quadrant IR ของ RawA ที่ map ได้ → RawA ที่ map ชนะ RawA สุ่ม 10 ภาพอื่น **819/819** (NCC เฉลี่ย 0.995, ต่ำสุด 0.984) (`outputs/ss_mapping_verification.json`) และ class ตรงกับ label เดิมทุกไฟล์ (573/102/144)
+
+**ผล `nir_SE_ss` (5-fold, ภาพ flat-field corrected)** vs `nir_SE` (ภาพ raw, fold เดียวกัน):
+
+| Variant | Macro F1 | Accuracy | per-fold F1 (fold 0-4) | SE weight (RE, IR) |
+|---|---|---|---|---|
+| `nir_SE` (raw) | 0.862 ± 0.025 | 91.7% ± 2.1% | 0.892, 0.878, 0.859, 0.818, 0.862 | 0.561, 0.377 |
+| **`nir_SE_ss` (SingleSpectra)** | **0.859 ± 0.024** | **90.9% ± 1.7%** | 0.850, 0.831, 0.859, 0.853, 0.903 | 0.558, 0.377 |
+
+**ข้อสรุป**: ไม่ต่างกัน — ผลต่างเฉลี่ย −0.003 F1 เล็กกว่า std (±0.024) มาก และผลต่างรายคู่ fold กลับเครื่องหมาย (−0.042, −0.047, 0.000, +0.035, +0.041) → **flat-field correction ไม่ได้ช่วยและไม่ได้ทำให้แย่ลงอย่างมีนัยสำคัญ** ใช้เขียนในเล่มได้ว่าผลไม่ขึ้นกับการแก้ flat-field และ pipeline จาก RawA เพียงพอ (ข้อควรระวัง: ต่างกันทั้ง flat-field + วิธีครอป/pad จึงไม่ใช่การทดสอบ flat-field ล้วนๆ) SE weight เกือบเหมือนกันทั้ง 2 แหล่งภาพ (RE ≈ 0.56 > IR ≈ 0.38) แต่ weight นี้ไม่ได้บอกว่า band ไหน "สำคัญกว่า" โดยตรง เพราะ SE ทำงานก่อน normalization ของ backbone และมีเพียง 2 ช่อง
+
+รันซ้ำ: `.venv\Scripts\python.exe -m src.preprocess_ss --verify-content` แล้ว `.venv\Scripts\python.exe -m src.train_dl_kfold --variant nir_SE_ss` (~8.5 นาที)
+
+### งานที่ 2 — ตรวจ Grad-CAM เชิงปริมาณกับ mask ตำหนิ
+
+ทำบนโมเดลจากงานที่ 1 (เพราะ mask ตรงกับเรขาคณิต SingleSpectra) ใช้เฉพาะภาพ Defect ที่อยู่ใน **test fold ของโมเดลนั้น** (out-of-fold เท่านั้น ห้ามใช้ภาพที่โมเดลเคยเห็นตอนเทรน):
+1. สร้าง Grad-CAM แล้ว resize mask ให้ตรงขนาด
+2. วัด **Pointing Game** (จุดที่ Grad-CAM สูงสุดตกในตำหนิไหม → hit rate %) และ **IoU** ระหว่าง Grad-CAM ที่ threshold (เช่น top 20% ของค่า) กับ mask
+3. รายงานแยกตาม Internal vs Surface defect และตามระดับความรุนแรง Kleynen Class 1-4
+4. เซฟผลตัวเลขลง `outputs/dl/gradcam_mask_eval.json` และภาพตัวอย่าง (overlay) ลงโฟลเดอร์ที่อยู่ใน `.gitignore` (มีเนื้อภาพ dataset — ห้ามขึ้น GitHub)
+
+เหตุผล: เปลี่ยน Grad-CAM จาก "ดูภาพแล้วบอกว่าดูถูกจุด" เป็นตัวเลขที่พิสูจน์ได้ — Makieu et al. (2025) หัวข้อ 2.7 เขียนว่าคำอธิบายควรตรวจกับขอบเขตตำหนิจริง แต่งานเขาไม่ได้ทำ
+
+#### สถานะ: [x] เสร็จแล้ว 2026-10-12 — **ผลไม่สนับสนุนข้อสรุปเดิมที่ว่า "Grad-CAM ยืนยันว่าโมเดลโฟกัสตำหนิ"**
+
+สคริปต์: `src/gradcam_mask_eval.py` (รัน: `.venv\Scripts\python.exe -m src.gradcam_mask_eval`) ผลเต็มราย 246 ภาพที่ `outputs/dl/gradcam_mask_eval.json`, overlay ตัวอย่าง 12 ภาพที่ `outputs/dl/gradcam_mask/` (อยู่ใน `.gitignore` — มีเนื้อภาพ dataset ห้ามขึ้น GitHub)
+
+**วิธีวัด**: ใช้โมเดล `nir_SE_ss` 5 fold; Grad-CAM (เทียบ class จริง) ของภาพ Defect แต่ละภาพคำนวณด้วย **โมเดลของ fold ที่ภาพนั้นเป็น test เท่านั้น (out-of-fold)** ครบ 246/246 ภาพ ภาพละ 1 ครั้ง; Pointing Game = จุดสูงสุดของ CAM ตกใน mask; IoU = CAM top-20% ของพิกเซล vs mask; mask ผ่านการ pad+resize แบบเดียวกับภาพ (ตรวจ overlay แล้วว่า mask ตรงตำหนิจริง) **ต้องมี null baseline**: เอา CAM เดิมไปเทียบกับ mask ของภาพอื่นที่สุ่ม (20 ครั้ง/ภาพ) — แบบ "สุ่มจาก class เดียวกัน" (same-cls) คือตัวเทียบที่ยุติธรรม เพราะ mask Internal ใหญ่ (~9% ของภาพ) แต่ Surface เล็กมาก (~2%) การสุ่มจากทุก class จึงให้ null ที่สูงเกินจริงของ Surface (ผลรอบแรกที่ใช้ null แบบนั้นทำให้ดูเหมือน Surface "แย่กว่าสุ่ม" ซึ่งเป็นการเทียบที่ไม่ยุติธรรม — แก้แล้ว)
+
+| กลุ่ม | n | Pointing hit [95% CI] | null same-cls | IoU | null same-cls |
+|---|---|---|---|---|---|
+| ทั้งหมด | 246 | 49.6% [43.4, 55.8] | 42.0% | 0.209 | 0.186 |
+| **Internal_Defect** | 102 | **85.3%** [77.1, 90.9] | 71.5% | 0.390 | 0.339 |
+| **Surface_Defect** | 144 | **24.3%** [18.0, 31.9] | 21.0% | 0.081 | 0.077 |
+| Kleynen 1 (rejection) | 59 | 61.0% | 50.6% | 0.234 | 0.241 |
+| Kleynen 2 (bruise) | 56 | 96.4% | 77.6% | 0.485 | 0.367 |
+| Kleynen 3 (serious) | 55 | 27.3% | 22.8% | 0.082 | 0.087 |
+| Kleynen 4 (slight) | 76 | 22.4% | 22.9% | 0.079 | 0.080 |
+| Bruise | 55 | 96.4% | 78.1% | 0.493 | 0.368 |
+| Flesh_damage | 24 | 79.2% | 61.2% | 0.287 | 0.297 |
+| Rot | 23 | 65.2% | 66.5% | 0.254 | 0.311 |
+| Russet | 42 | 28.6% | 21.5% | 0.146 | 0.076 |
+
+(ทำนายถูก vs ผิด: Internal/ถูก 96.4% hit (n=84) vs Internal/ผิด 33.3% (n=18); Surface/ถูก 28.1% (n=114) vs Surface/ผิด 10.0% (n=30))
+
+**ข้อสรุปที่ซื่อสัตย์ (ต้องปรับ narrative ในเล่ม/defense)**
+1. **Surface defect: CAM ไม่ได้ชี้ตำแหน่งตำหนิดีกว่าสุ่ม** (24.3% vs null 21.0%, IoU 0.081 vs 0.077 — ต่างกันน้อยกว่า CI) แยกตามชนิดย่อย (n เพียง 7–42 ต่อชนิด CI กว้างมาก) hit rate ของบางชนิดสูงกว่า null เล็กน้อย (Hail, Frost, Scald, Other, Russet +6–10 จุด) แต่ IoU ไม่ต่างจาก null (ยกเว้น Russet ที่ IoU 0.146 vs 0.076) ส่วน Hail_damage_perf และ Limb_rub ต่ำกว่า null — ไม่มีชนิดไหนให้หลักฐานที่ชัดเจนว่าชี้ตำแหน่งได้
+2. **Internal defect: ดีกว่า null แต่ไม่มากอย่างที่ตัวเลข 85% บอก** — ส่วนใหญ่มาจากกลุ่มที่ mask ใหญ่และอยู่กลางผล (null same-cls ก็ได้ 71.5% อยู่แล้ว) เหนือ null ราว +14 จุด (Bruise +18, Flesh_damage +18, **Rot +0 — ไม่ดีกว่า null เลย**)
+3. จาก overlay: CAM เกือบทุกภาพเป็น **blob เรียบขนาดใหญ่ตรงกลางผล** (feature map สุดท้ายของ EfficientNet-B0 ละเอียดแค่ 7×7) — ละเอียดเกินกว่าจะชี้ตำหนิ Surface ที่เล็ก (<1-2% ของภาพ) ได้ และ Bruise/Flesh_damage ส่วนใหญ่เป็นตำหนิที่ **ทำให้เกิดขึ้นเองบริเวณกลางผล** (notes.txt) จึง "ถูก" ได้ง่ายแม้ CAM เป็นแค่ center prior
+4. ผลนี้ **ไม่ได้แปลว่าโมเดลทำนายผิด** (F1 0.86 มาจากการวัดแยกต่างหาก) แต่แปลว่า **Grad-CAM แบบนี้ใช้เป็นหลักฐานว่า "โมเดลเข้าใจตำแหน่งตำหนิ" ไม่ได้** โดยเฉพาะ Surface — ข้อ 3 ใน "ข้อค้นพบสำคัญที่ต้องอภิปรายตอน defense" (Grad-CAM ยืนยันว่าโมเดลโฟกัสตรงตำแหน่งตำหนิ จากภาพตัวอย่างที่เลือก) **ต้องเปลี่ยนเป็น**: ตัวอย่างที่เลือกดูตรงจุดจริง แต่เมื่อวัดทั้ง 246 ภาพเทียบ null พบว่าได้ผลเหนือ null เฉพาะ Internal (Bruise/Flesh_damage) ส่วน Surface ไม่ต่างจากสุ่ม
+5. ข้อจำกัด: วัดบนโมเดลเดียว (`nir_SE_ss`) ด้วย Grad-CAM ชั้นสุดท้ายเท่านั้น; ถ้าจะลองต่อให้ชี้ตำแหน่งได้ละเอียดขึ้น ลอง layer ก่อนหน้า (stride 16/ละเอียด 14×14), Grad-CAM++/ScoreCAM ได้ — ยังไม่ได้ทำ
+
+### (ทำทีหลัง ถ้ามีเวลา) งานที่ 3 — Defect Copy-Paste augmentation
+
+ใช้ mask ตัดตำหนิจากภาพ Defect ใน **training fold เท่านั้น** แปะทุกแบนด์ตำแหน่งเดียวกันลงภาพ Healthy ใน training fold เดียวกัน เทียบ K-Fold มี/ไม่มี ถ้าดีขึ้นไม่เกิน ± std ถือว่าไม่ช่วย — ยังไม่ต้องทำจนกว่าผู้ใช้สั่ง
+
+**ก่อนเริ่ม**: backup ผลปัจจุบันตาม workflow หัวข้อ Version Control และแจ้งเวลาประมาณก่อนรันจริง
+
+## งานที่ต้องทำต่อ — ทดสอบความสำคัญของแบนด์แบบตรง (Single-band ablation) + Commit
+
+### เหตุผล
+
+ข้อสรุป "RE สำคัญกว่า IR" ที่ใช้ตอบ objective 3.1 ตอนนี้อิงจาก SE weight อย่างเดียว แต่ SE weight ออกมา RE ≈ 0.56, IR ≈ 0.38 **เกือบเท่ากันทุก fold และทั้ง 2 แหล่งภาพ (raw/SingleSpectra)** ความคงที่ระดับนี้ชวนสงสัยว่า SE แทบไม่ได้เรียนรู้จากข้อมูล และหมายเหตุในงานที่ 1 ก็ระบุแล้วว่า weight นี้บอกความสำคัญของแบนด์โดยตรงไม่ได้ (SE อยู่ก่อน normalization ของ backbone) → ต้องพิสูจน์ด้วยการเทรนแบนด์เดียวแล้วเทียบ ซึ่งเป็นหลักฐานตรงที่สุด
+
+### งานที่ 4 — เทรน RE-only และ IR-only (5-fold)
+
+1. เพิ่ม channel group `re` (RE อย่างเดียว) และ `ir` (IR อย่างเดียว) ใน `CHANNEL_GROUPS` (`src/config.py`) — ตรวจว่า `build_model` รองรับ in_channels=1 (ปรับ conv แรกของ EfficientNet-B0 จาก pretrained weight แบบเดียวกับที่ทำกับ 2/4 channel)
+2. เพิ่ม variant `re_only` และ `ir_only` ใน `VARIANT_SPECS` ของ `train_dl_kfold.py` — **ทุกอย่างเหมือน `nir` เดิม** (ไม่มี SE เพราะ SE บน 1 ช่องไม่มีความหมาย, มี augmentation, WeightedRandomSampler, StratifiedKFold n=5 random_state=42, แหล่งภาพ raw) ต่างแค่จำนวนแบนด์ → fold ตรงกับ `nir`/`nir_SE` ทุกลูก เทียบแบบจับคู่ได้
+3. รายงาน Macro F1 / Accuracy mean±std + per-fold ของ `re_only`, `ir_only` เทียบกับ `nir` (RE+IR, 0.843±0.023) ในตารางเดียว + per-class F1 (Healthy/Internal/Surface) ของแต่ละ variant ถ้าทำได้จากผลเดิมโดยไม่ต้องเทรนใหม่
+4. เทียบรายคู่ fold (เหมือนที่ทำกับ `nir_SE_ss`) ระบุว่าผลต่างแต่ละคู่เครื่องหมายเดียวกันทุก fold หรือไม่
+5. **วิธีอ่านผล**:
+   - `re_only` ชนะ `ir_only` ชัด (ทุก/เกือบทุก fold, ต่างเกิน std) → ข้อสรุป "RE สำคัญกว่า IR" ยืนได้ด้วยหลักฐานตรง (SE weight เป็นแค่ข้อมูลเสริม)
+   - ต่างไม่เกิน std หรือ `ir_only` ชนะ → **ต้องตัดข้อสรุป "RE สำคัญกว่า IR" ออก** และหยุดใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์
+   - ถ้า RE+IR (`nir`) ดีกว่าแบนด์เดียวทั้งคู่ → สรุปได้ว่า 2 แบนด์ NIR เสริมกัน
+6. หมายเหตุให้ใส่ผลไว้ในหัวข้อนี้ และอัปเดตข้อสรุปเรื่อง SE weight ในส่วนอื่นของไฟล์ที่อ้างถึง "RE สำคัญกว่า IR" ให้ตรงกับผล
+
+รัน (ประมาณ 2 × 8–12 นาที): แจ้งเวลาประมาณก่อนรันจริง
+```
+.venv\Scripts\python.exe -m src.train_dl_kfold --variant re_only
+.venv\Scripts\python.exe -m src.train_dl_kfold --variant ir_only
+```
+
+### งานที่ 5 — Commit + push ขึ้น GitHub (ค้าง 2 ชุด + ชุดนี้)
+
+ทำ**หลัง**งานที่ 4 เสร็จ ตาม workflow หัวข้อ Version Control:
+1. ก่อน add: รัน `git status` ตรวจว่าไม่มีไฟล์ที่มีเนื้อภาพ dataset (`Processed_Dataset*/`, `outputs/dl/gradcam*/`, `*.pt`, `*.joblib`, `backups/`) หลุดเข้ามา — ถ้ามีโฟลเดอร์ output ใหม่ที่มีภาพ ให้เพิ่มเข้า `.gitignore` ก่อน
+2. **ห้าม `git add -A`** — add ทีละไฟล์/โฟลเดอร์ที่ตั้งใจ: `src/`, `.gitignore`, `PROJECT_PLAN.md`, `outputs/dl/kfold_results.json`, `outputs/dl/gradcam_mask_eval.json`, `outputs/ss_mapping*.json` และไฟล์ผล json ใหม่จากงานที่ 4
+3. แยก commit ตามชุดงานให้อ่าน history ง่าย (เช่น 1: nir_SE + nir_no_aug, 2: SingleSpectra + Grad-CAM mask eval, 3: single-band ablation) — ถ้าแยกไม่ได้เพราะแก้ไฟล์เดียวกัน ให้รวมเป็น commit เดียวพร้อมข้อความที่ระบุครบ
+4. push ขึ้น `main` ของ github.com/Chinnawan/project_nir แล้วรายงาน hash ของ commit
 
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
@@ -365,6 +553,13 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 - [x] สร้าง K-Fold Cross-Validation ใน `src/train_dl_kfold.py`
 - [x] Ensembling จาก 5-fold models (NIR-only, full_SE) — พบว่าทำไม่ได้อย่างยุติธรรมบน dataset นี้ (data leakage) สรุปว่ายังคงใช้ผล 5-fold CV เดิมเป็นหลัก ไม่ใช้ ensemble
 - [x] เช็ค Per-Class F1 — สรุปว่า NIR-only ไม่ต้องทำ Focal Loss เพิ่ม (full_SE ควรทำแต่ไม่ใช่โมเดลหลัก)
-- [ ] รอบสุดท้าย — ทดลอง NIR-only + SE Block (`nir_SE`) ประเมินด้วย K-Fold — ดูหัวข้อ "งานที่ต้องทำต่อ — รอบสุดท้าย" ด้านบน
-- [ ] Ablation test — แยกผลของ K-Fold ออกจาก Augmentation (`nir_no_aug`) — ดูหัวข้อ "Ablation test เพิ่มเติม" ด้านบน
-- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์"
+- [x] Backup ผลลัพธ์ปัจจุบันไว้ที่ `backups/best_results_20260915_181726/` ก่อนรัน experiment ใหม่ + ตั้ง git repo push ขึ้น [github.com/Chinnawan/project_nir](https://github.com/Chinnawan/project_nir) (โค้ด+ผลตัวเลขเท่านั้น ไม่มี dataset — ดูหัวข้อ "Version Control + Backup" ด้านบน)
+- [x] รอบสุดท้าย — ทดลอง NIR-only + SE Block (`nir_SE`) ประเมินด้วย K-Fold — **ได้ผลดีที่สุดของโปรเจก: F1 0.862±0.025, acc 91.7%±2.1%** (ดูหัวข้อ "ผลลัพธ์ nir_SE" ด้านบน)
+- [x] Ablation test — แยกผลของ K-Fold ออกจาก Augmentation (`nir_no_aug`) — **สรุป: augmentation ช่วยจริง (+0.026 F1), ตัวเลขรอบ 1-2 เป็นโชคจาก single-split** (ดูตาราง ablation ด้านบน)
+- [ ] Commit + push ผลใหม่ (`nir_SE`, `nir_no_aug` ใน `kfold_results.json`) ขึ้น GitHub ตาม workflow ในหัวข้อ Version Control (ระวังอย่า `git add -A` แบบไม่เช็ค)
+- [x] งานที่ 1 — เทรน `nir_SE_ss` ด้วยภาพ SingleSpectra (flat-field corrected) — **F1 0.859±0.024, acc 90.9%±1.7% ไม่ต่างจาก `nir_SE` raw (0.862±0.025)** mapping ตรวจด้วยเนื้อภาพ 819/819 (ดูหัวข้อ "ใช้ข้อมูลใน CAPA ที่ยังไม่เคยใช้")
+- [x] งานที่ 2 — ตรวจ Grad-CAM เชิงปริมาณกับ mask ตำหนิ (Pointing Game + IoU) — **Surface ไม่ดีกว่าสุ่ม, Internal ดีกว่า null ~+14 จุด (Bruise/Flesh_damage) แต่ Rot ไม่ดีกว่า — ต้องแก้ narrative เรื่อง Grad-CAM ในเล่ม**
+- [ ] Commit + push งานชุดนี้ (`src/preprocess_ss.py`, `src/gradcam_mask_eval.py`, แก้ `train_dl_kfold.py`/`dataset.py`/`.gitignore`/`PROJECT_PLAN.md`, `outputs/ss_mapping*.json`, `kfold_results.json`, `gradcam_mask_eval.json`) — ยังไม่ได้ commit รอผู้ใช้สั่ง
+- [ ] งานที่ 4 — Single-band ablation (`re_only`, `ir_only`) เพื่อพิสูจน์ "RE สำคัญกว่า IR" แบบตรง — ดูหัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง"
+- [ ] งานที่ 5 — Commit + push ทุกชุดที่ค้าง (ทำหลังงานที่ 4)
+- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว (nir_SE 0.862±0.025) แต่ต้องปรับ narrative 2 จุดก่อน: Grad-CAM (ดูงานที่ 2) และ SE weight / RE vs IR (รอผลงานที่ 4)**

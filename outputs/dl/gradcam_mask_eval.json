@@ -1,0 +1,5644 @@
+{
+  "variant": "nir_SE_ss",
+  "n_defect_images": 246,
+  "top_fraction": 0.2,
+  "n_null_draws": 20,
+  "overall": {
+    "n": 246,
+    "pointing_hit_rate": 0.4959349593495935,
+    "pointing_hit_ci95": [
+      0.4339991946313925,
+      0.5579957333549798
+    ],
+    "null_pointing_hit_rate": 0.4211382113821138,
+    "null_cls_pointing_hit_rate": 0.41971544715447157,
+    "iou_mean": 0.2092147530204741,
+    "iou_std": 0.21857672631261907,
+    "iou_ci95": [
+      0.182450256541311,
+      0.2364963889931609
+    ],
+    "null_iou_mean": 0.1873334334996241,
+    "null_cls_iou_mean": 0.18551727639736837,
+    "mask_area_frac_mean": 0.050114329268292686,
+    "pred_correct_rate": 0.8048780487804879
+  },
+  "by_class": {
+    "Internal_Defect": {
+      "n": 102,
+      "pointing_hit_rate": 0.8529411764705882,
+      "pointing_hit_ci95": [
+        0.771452166523051,
+        0.9088096586950106
+      ],
+      "null_pointing_hit_rate": 0.41176470588235287,
+      "null_cls_pointing_hit_rate": 0.7151960784313727,
+      "iou_mean": 0.3904357658970184,
+      "iou_std": 0.21192525902515594,
+      "iou_ci95": [
+        0.3468287369364668,
+        0.4306830334276668
+      ],
+      "null_iou_mean": 0.18617676027751348,
+      "null_cls_iou_mean": 0.33879942210235614,
+      "mask_area_frac_mean": 0.09229981054921971,
+      "pred_correct_rate": 0.8235294117647058
+    },
+    "Surface_Defect": {
+      "n": 144,
+      "pointing_hit_rate": 0.24305555555555555,
+      "pointing_hit_ci95": [
+        0.18026844362664393,
+        0.3191958478853526
+      ],
+      "null_pointing_hit_rate": 0.4277777777777778,
+      "null_cls_pointing_hit_rate": 0.21041666666666664,
+      "iou_mean": 0.0808498688995886,
+      "iou_std": 0.10032008099981014,
+      "iou_ci95": [
+        0.06523422676975626,
+        0.09743385052861114
+      ],
+      "null_iou_mean": 0.18815274369861917,
+      "null_cls_iou_mean": 0.07694242318966868,
+      "mask_area_frac_mean": 0.020232946694302718,
+      "pred_correct_rate": 0.7916666666666666
+    }
+  },
+  "by_kleynen_class": {
+    "1 (rejection)": {
+      "n": 59,
+      "pointing_hit_rate": 0.6101694915254238,
+      "pointing_hit_ci95": [
+        0.4826610956186712,
+        0.724208239344156
+      ],
+      "null_pointing_hit_rate": 0.38474576271186445,
+      "null_cls_pointing_hit_rate": 0.5059322033898306,
+      "iou_mean": 0.2340599054127863,
+      "iou_std": 0.2060226046438679,
+      "iou_ci95": [
+        0.18109508985785927,
+        0.2886881904271632
+      ],
+      "null_iou_mean": 0.18503027526413035,
+      "null_cls_iou_mean": 0.24114568485942114,
+      "mask_area_frac_mean": 0.05695139549463854,
+      "pred_correct_rate": 0.8305084745762712
+    },
+    "2 (bruise)": {
+      "n": 56,
+      "pointing_hit_rate": 0.9642857142857143,
+      "pointing_hit_ci95": [
+        0.8788099414778991,
+        0.9901507814974224
+      ],
+      "null_pointing_hit_rate": 0.47053571428571433,
+      "null_cls_pointing_hit_rate": 0.7758928571428572,
+      "iou_mean": 0.484581566849516,
+      "iou_std": 0.1415762871738679,
+      "iou_ci95": [
+        0.4469241445052134,
+        0.5218840916777129
+      ],
+      "null_iou_mean": 0.2088235660537368,
+      "null_cls_iou_mean": 0.3667341245034107,
+      "mask_area_frac_mean": 0.11156301248177843,
+      "pred_correct_rate": 0.9107142857142857
+    },
+    "3 (serious)": {
+      "n": 55,
+      "pointing_hit_rate": 0.2727272727272727,
+      "pointing_hit_ci95": [
+        0.17280602508013648,
+        0.40232449482414895
+      ],
+      "null_pointing_hit_rate": 0.4109090909090909,
+      "null_cls_pointing_hit_rate": 0.22818181818181824,
+      "iou_mean": 0.08226356707107259,
+      "iou_std": 0.11792230786937428,
+      "iou_ci95": [
+        0.054377962160635,
+        0.11689159901696769
+      ],
+      "null_iou_mean": 0.1764184489044117,
+      "null_cls_iou_mean": 0.086558475721711,
+      "mask_area_frac_mean": 0.021597431586270865,
+      "pred_correct_rate": 0.6727272727272727
+    },
+    "4 (slight)": {
+      "n": 76,
+      "pointing_hit_rate": 0.2236842105263158,
+      "pointing_hit_ci95": [
+        0.1446106442066905,
+        0.3293477934999686
+      ],
+      "null_pointing_hit_rate": 0.4203947368421053,
+      "null_cls_pointing_hit_rate": 0.22894736842105265,
+      "iou_mean": 0.0788977748842151,
+      "iou_std": 0.10891166901879268,
+      "iou_ci95": [
+        0.05619862308623851,
+        0.10532325116625653
+      ],
+      "null_iou_mean": 0.18118557909963082,
+      "null_cls_iou_mean": 0.0804187822389693,
+      "mask_area_frac_mean": 0.020165858284103114,
+      "pred_correct_rate": 0.8026315789473685
+    }
+  },
+  "by_prediction": {
+    "pred correct": {
+      "n": 198,
+      "pointing_hit_rate": 0.5707070707070707,
+      "pointing_hit_ci95": [
+        0.5010616603626183,
+        0.6376609815506444
+      ],
+      "null_pointing_hit_rate": 0.47070707070707063,
+      "null_cls_pointing_hit_rate": 0.47777777777777775,
+      "iou_mean": 0.24065830065604446,
+      "iou_std": 0.2270059469422556,
+      "iou_ci95": [
+        0.2104674749282089,
+        0.2716961888463085
+      ],
+      "null_iou_mean": 0.20891836221782314,
+      "null_cls_iou_mean": 0.2095578667685846,
+      "mask_area_frac_mean": 0.0544017382047516,
+      "pred_correct_rate": 1.0
+    },
+    "pred wrong": {
+      "n": 48,
+      "pointing_hit_rate": 0.1875,
+      "pointing_hit_ci95": [
+        0.10191276348200173,
+        0.31940139348846214
+      ],
+      "null_pointing_hit_rate": 0.21666666666666667,
+      "null_cls_pointing_hit_rate": 0.1802083333333334,
+      "iou_mean": 0.07951011902374643,
+      "iou_std": 0.10668163566683254,
+      "iou_ci95": [
+        0.05229866305908889,
+        0.11118484465672672
+      ],
+      "null_iou_mean": 0.0982956025370532,
+      "null_cls_iou_mean": 0.08634984111610132,
+      "mask_area_frac_mean": 0.032428767405399656,
+      "pred_correct_rate": 0.0
+    }
+  },
+  "by_class_and_prediction": {
+    "Internal_Defect / correct": {
+      "n": 84,
+      "pointing_hit_rate": 0.9642857142857143,
+      "pointing_hit_ci95": [
+        0.900181415678933,
+        0.9877805522269338
+      ],
+      "null_pointing_hit_rate": 0.4708333333333332,
+      "null_cls_pointing_hit_rate": 0.8041666666666669,
+      "iou_mean": 0.45413869525191036,
+      "iou_std": 0.16742703216383617,
+      "iou_ci95": [
+        0.41735879458766695,
+        0.49078660625215864
+      ],
+      "null_iou_mean": 0.21033658203137076,
+      "null_cls_iou_mean": 0.38063215678571105,
+      "mask_area_frac_mean": 0.10305083249817784,
+      "pred_correct_rate": 1.0
+    },
+    "Internal_Defect / wrong": {
+      "n": 18,
+      "pointing_hit_rate": 0.3333333333333333,
+      "pointing_hit_ci95": [
+        0.1627855436366286,
+        0.5625093065574964
+      ],
+      "null_pointing_hit_rate": 0.13611111111111113,
+      "null_cls_pointing_hit_rate": 0.30000000000000004,
+      "iou_mean": 0.09315542890752239,
+      "iou_std": 0.127963960331287,
+      "iou_ci95": [
+        0.03823622711324298,
+        0.15245058188312954
+      ],
+      "null_iou_mean": 0.0734309254261795,
+      "null_cls_iou_mean": 0.14357999358003287,
+      "mask_area_frac_mean": 0.04212837478741497,
+      "pred_correct_rate": 0.0
+    },
+    "Surface_Defect / correct": {
+      "n": 114,
+      "pointing_hit_rate": 0.2807017543859649,
+      "pointing_hit_ci95": [
+        0.20640600067746484,
+        0.3692956191240314
+      ],
+      "null_pointing_hit_rate": 0.4706140350877194,
+      "null_cls_pointing_hit_rate": 0.23728070175438598,
+      "iou_mean": 0.08335695726961696,
+      "iou_std": 0.10258139222862035,
+      "iou_ci95": [
+        0.06577767867140664,
+        0.10474276160127632
+      ],
+      "null_iou_mean": 0.20787335814468277,
+      "null_cls_iou_mean": 0.08350312675596508,
+      "mask_area_frac_mean": 0.018555037146437525,
+      "pred_correct_rate": 1.0
+    },
+    "Surface_Defect / wrong": {
+      "n": 30,
+      "pointing_hit_rate": 0.1,
+      "pointing_hit_ci95": [
+        0.03459925995971615,
+        0.25621441315266624
+      ],
+      "null_pointing_hit_rate": 0.265,
+      "null_cls_pointing_hit_rate": 0.10833333333333332,
+      "iou_mean": 0.07132293309348084,
+      "iou_std": 0.09058665703584415,
+      "iou_ci95": [
+        0.04241797927018458,
+        0.10614099919882963
+      ],
+      "null_iou_mean": 0.11321440880357739,
+      "null_cls_iou_mean": 0.0520117496377424,
+      "mask_area_frac_mean": 0.026609002976190475,
+      "pred_correct_rate": 0.0
+    }
+  },
+  "by_tissue_type": {
+    "Bruise": {
+      "n": 55,
+      "pointing_hit_rate": 0.9636363636363636,
+      "pointing_hit_ci95": [
+        0.8767630702509827,
+        0.989970669144275
+      ],
+      "null_pointing_hit_rate": 0.4636363636363637,
+      "null_cls_pointing_hit_rate": 0.7809090909090907,
+      "iou_mean": 0.49288108808598435,
+      "iou_std": 0.1336389122798969,
+      "iou_ci95": [
+        0.4573526243014258,
+        0.5293056221935007
+      ],
+      "null_iou_mean": 0.2075426047767733,
+      "null_cls_iou_mean": 0.36835675235008947,
+      "mask_area_frac_mean": 0.1084172802643785,
+      "pred_correct_rate": 0.9090909090909091
+    },
+    "Flesh_damage": {
+      "n": 24,
+      "pointing_hit_rate": 0.7916666666666666,
+      "pointing_hit_ci95": [
+        0.5952915551476452,
+        0.9075531089521192
+      ],
+      "null_pointing_hit_rate": 0.3666666666666667,
+      "null_cls_pointing_hit_rate": 0.6124999999999999,
+      "iou_mean": 0.28679388121118693,
+      "iou_std": 0.15572208737448376,
+      "iou_ci95": [
+        0.22280943089812377,
+        0.34401391786553703
+      ],
+      "null_iou_mean": 0.1695850185551393,
+      "null_cls_iou_mean": 0.29748092962924316,
+      "mask_area_frac_mean": 0.06114393999787415,
+      "pred_correct_rate": 0.7916666666666666
+    },
+    "Frost_damage": {
+      "n": 11,
+      "pointing_hit_rate": 0.2727272727272727,
+      "pointing_hit_ci95": [
+        0.09745880573921467,
+        0.5656502930102463
+      ],
+      "null_pointing_hit_rate": 0.4090909090909091,
+      "null_cls_pointing_hit_rate": 0.17727272727272725,
+      "iou_mean": 0.07368484324287547,
+      "iou_std": 0.06387587907732349,
+      "iou_ci95": [
+        0.04085401996445098,
+        0.1150310946933183
+      ],
+      "null_iou_mean": 0.163936062624234,
+      "null_cls_iou_mean": 0.0648029542541832,
+      "mask_area_frac_mean": 0.016038091372912802,
+      "pred_correct_rate": 0.6363636363636364
+    },
+    "Hail_damage": {
+      "n": 16,
+      "pointing_hit_rate": 0.3125,
+      "pointing_hit_ci95": [
+        0.14164435051961052,
+        0.5559606813326594
+      ],
+      "null_pointing_hit_rate": 0.40625,
+      "null_cls_pointing_hit_rate": 0.2125,
+      "iou_mean": 0.02674244678296367,
+      "iou_std": 0.023810886352988843,
+      "iou_ci95": [
+        0.01747892455862846,
+        0.0394633478748356
+      ],
+      "null_iou_mean": 0.18820780993530223,
+      "null_cls_iou_mean": 0.07469301140187218,
+      "mask_area_frac_mean": 0.006044971699617346,
+      "pred_correct_rate": 0.875
+    },
+    "Hail_damage_perf": {
+      "n": 31,
+      "pointing_hit_rate": 0.12903225806451613,
+      "pointing_hit_ci95": [
+        0.05134201164644764,
+        0.28852756954385356
+      ],
+      "null_pointing_hit_rate": 0.42903225806451617,
+      "null_cls_pointing_hit_rate": 0.2096774193548387,
+      "iou_mean": 0.03617487668513622,
+      "iou_std": 0.028626668058633287,
+      "iou_ci95": [
+        0.02672444993827705,
+        0.04680036656452
+      ],
+      "null_iou_mean": 0.20215243188125764,
+      "null_cls_iou_mean": 0.08223981109918457,
+      "mask_area_frac_mean": 0.0073676143844634626,
+      "pred_correct_rate": 0.8064516129032258
+    },
+    "Limb_rub": {
+      "n": 7,
+      "pointing_hit_rate": 0.0,
+      "pointing_hit_ci95": [
+        0.0,
+        0.35433884297520657
+      ],
+      "null_pointing_hit_rate": 0.4714285714285714,
+      "null_cls_pointing_hit_rate": 0.1642857142857143,
+      "iou_mean": 0.05314276924790841,
+      "iou_std": 0.03753584089995582,
+      "iou_ci95": [
+        0.030828659682286628,
+        0.08404031201958663
+      ],
+      "null_iou_mean": 0.21060827734353157,
+      "null_cls_iou_mean": 0.07944307930354155,
+      "mask_area_frac_mean": 0.010642538265306123,
+      "pred_correct_rate": 0.7142857142857143
+    },
+    "Other": {
+      "n": 20,
+      "pointing_hit_rate": 0.25,
+      "pointing_hit_ci95": [
+        0.11186005278940309,
+        0.4687050099580636
+      ],
+      "null_pointing_hit_rate": 0.34500000000000003,
+      "null_cls_pointing_hit_rate": 0.1625,
+      "iou_mean": 0.0773502009095492,
+      "iou_std": 0.09677380371520532,
+      "iou_ci95": [
+        0.040659021440372506,
+        0.12411951646284321
+      ],
+      "null_iou_mean": 0.16452234626314563,
+      "null_cls_iou_mean": 0.07269985352332223,
+      "mask_area_frac_mean": 0.020880500637755102,
+      "pred_correct_rate": 0.75
+    },
+    "Rot": {
+      "n": 23,
+      "pointing_hit_rate": 0.6521739130434783,
+      "pointing_hit_ci95": [
+        0.4488997690689164,
+        0.8118894536301776
+      ],
+      "null_pointing_hit_rate": 0.33478260869565224,
+      "null_cls_pointing_hit_rate": 0.6652173913043478,
+      "iou_mean": 0.2536058751173147,
+      "iou_std": 0.27593037594017344,
+      "iou_ci95": [
+        0.1477228853087467,
+        0.36582522345558494
+      ],
+      "null_iou_mean": 0.15239764522871735,
+      "null_cls_iou_mean": 0.3112337984384159,
+      "mask_area_frac_mean": 0.08626850876220052,
+      "pred_correct_rate": 0.6521739130434783
+    },
+    "Russet": {
+      "n": 42,
+      "pointing_hit_rate": 0.2857142857142857,
+      "pointing_hit_ci95": [
+        0.1716685874457567,
+        0.43567496077245566
+      ],
+      "null_pointing_hit_rate": 0.4297619047619048,
+      "null_cls_pointing_hit_rate": 0.2154761904761905,
+      "iou_mean": 0.14576058288530833,
+      "iou_std": 0.13601906933041424,
+      "iou_ci95": [
+        0.10783961726097527,
+        0.18972926423781708
+      ],
+      "null_iou_mean": 0.17848740690940954,
+      "null_cls_iou_mean": 0.07634389300448488,
+      "mask_area_frac_mean": 0.039764315324344025,
+      "pred_correct_rate": 0.7857142857142857
+    },
+    "Scald": {
+      "n": 17,
+      "pointing_hit_rate": 0.35294117647058826,
+      "pointing_hit_ci95": [
+        0.17309486143904904,
+        0.5870003327878818
+      ],
+      "null_pointing_hit_rate": 0.5323529411764706,
+      "null_cls_pointing_hit_rate": 0.29411764705882354,
+      "iou_mean": 0.07303527270548205,
+      "iou_std": 0.07774872957858786,
+      "iou_ci95": [
+        0.039792861716425085,
+        0.1119842285203503
+      ],
+      "null_iou_mean": 0.22067482938752533,
+      "null_cls_iou_mean": 0.0826948226018823,
+      "mask_area_frac_mean": 0.014694158913565427,
+      "pred_correct_rate": 0.8823529411764706
+    }
+  },
+  "per_image": [
+    {
+      "defect_no": 132,
+      "rawno": 322,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.18401266323703996,
+      "mask_frac": 0.03850446428571429,
+      "peak_xy": [
+        80,
+        143
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.18008975448692377,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.3110099319237128
+    },
+    {
+      "defect_no": 146,
+      "rawno": 388,
+      "fold": 0,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.44537415612817344,
+      "mask_frac": 0.10293765943877552,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.14887843304117193,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4624087383447102
+    },
+    {
+      "defect_no": 191,
+      "rawno": 764,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4886408927859705,
+      "mask_frac": 0.0977359693877551,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.18021830172498693,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.31067195523193564
+    },
+    {
+      "defect_no": 194,
+      "rawno": 767,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.45346751693901954,
+      "mask_frac": 0.09070073341836735,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.8,
+      "null_iou": 0.3162805584647372,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4510125878150351
+    },
+    {
+      "defect_no": 199,
+      "rawno": 772,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.16861958266452648,
+      "mask_frac": 0.09018255739795919,
+      "peak_xy": [
+        112,
+        79
+      ],
+      "null_hit": 0.1,
+      "null_iou": 0.059238895365924825,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.1206272317475587
+    },
+    {
+      "defect_no": 206,
+      "rawno": 779,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": true,
+      "iou": 0.32738137082601054,
+      "mask_frac": 0.17629942602040816,
+      "peak_xy": [
+        111,
+        144
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.13523806453827678,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.24396411055382822
+    },
+    {
+      "defect_no": 208,
+      "rawno": 781,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": true,
+      "iou": 0.2136941369413694,
+      "mask_frac": 0.09496572066326531,
+      "peak_xy": [
+        79,
+        143
+      ],
+      "null_hit": 0.05,
+      "null_iou": 0.059606309797426635,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.08915749865443665
+    },
+    {
+      "defect_no": 216,
+      "rawno": 789,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.44489836588282183,
+      "mask_frac": 0.08898676658163265,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.22958500414045,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.4172638860755716
+    },
+    {
+      "defect_no": 221,
+      "rawno": 794,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.48307110137422826,
+      "mask_frac": 0.09679926658163265,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.25527178503993586,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.3970723292504347
+    },
+    {
+      "defect_no": 223,
+      "rawno": 796,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.23516594032852833,
+      "mask_frac": 0.09371014030612244,
+      "peak_xy": [
+        143,
+        143
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.12634955034254236,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.17620683733333584
+    },
+    {
+      "defect_no": 231,
+      "rawno": 804,
+      "fold": 0,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3417696293343962,
+      "mask_frac": 0.068359375,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.28951087646036555,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.40835186595874023
+    },
+    {
+      "defect_no": 243,
+      "rawno": 816,
+      "fold": 0,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.42218052538020934,
+      "mask_frac": 0.0869937818877551,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.2026092348912992,
+      "null_cls_hit": 0.65,
+      "null_cls_iou": 0.307961174849458
+    },
+    {
+      "defect_no": 245,
+      "rawno": 818,
+      "fold": 0,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3072631264322009,
+      "mask_frac": 0.06148357780612245,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.17761833956487033,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.3174656371700814
+    },
+    {
+      "defect_no": 6,
+      "rawno": 12,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.025895263765883712,
+      "mask_frac": 0.012376434948979591,
+      "peak_xy": [
+        79,
+        143
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0840393716935633,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.066841180849598
+    },
+    {
+      "defect_no": 11,
+      "rawno": 31,
+      "fold": 0,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.018234356317257873,
+      "mask_frac": 0.0036471619897959183,
+      "peak_xy": [
+        79,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.20920887274500494,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.04409158810208444
+    },
+    {
+      "defect_no": 31,
+      "rawno": 80,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.24226903749516815,
+      "mask_frac": 0.05618223852040816,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2275914494685211,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.09903156878428451
+    },
+    {
+      "defect_no": 41,
+      "rawno": 104,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.05679553607014747,
+      "mask_frac": 0.01136001275510204,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.1353805174767164,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.07383968943014332
+    },
+    {
+      "defect_no": 47,
+      "rawno": 113,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.018632921482662414,
+      "mask_frac": 0.0037268813775510204,
+      "peak_xy": [
+        111,
+        80
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.2112823697759195,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.09761690728935464
+    },
+    {
+      "defect_no": 54,
+      "rawno": 126,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.05460342766042248,
+      "mask_frac": 0.01092155612244898,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.20406319367636933,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.12665036370243402
+    },
+    {
+      "defect_no": 69,
+      "rawno": 151,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.023913909924272617,
+      "mask_frac": 0.0047831632653061226,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.1944090275828739,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.07326582704610488
+    },
+    {
+      "defect_no": 76,
+      "rawno": 169,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.08270227182144281,
+      "mask_frac": 0.016541772959183673,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.24994693131698487,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.05447601038285273
+    },
+    {
+      "defect_no": 114,
+      "rawno": 255,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.019629334396173776,
+      "mask_frac": 0.003926179846938775,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.21961486179703255,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.10480626546955282
+    },
+    {
+      "defect_no": 123,
+      "rawno": 288,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.007134885204081632,
+      "peak_xy": [
+        0,
+        0
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0
+    },
+    {
+      "defect_no": 134,
+      "rawno": 326,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3168923593950776,
+      "mask_frac": 0.0655094068877551,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.22101748503211788,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.10382981326629645
+    },
+    {
+      "defect_no": 157,
+      "rawno": 436,
+      "fold": 0,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.19243339605823512,
+      "mask_frac": 0.039939413265306124,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.20725942439109252,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.08371511589538225
+    },
+    {
+      "defect_no": 161,
+      "rawno": 457,
+      "fold": 0,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.023409719478467008,
+      "mask_frac": 0.006477200255102041,
+      "peak_xy": [
+        143,
+        143
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.2073382108764971,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.04439756508533823
+    },
+    {
+      "defect_no": 165,
+      "rawno": 475,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.015539396354218547,
+      "mask_frac": 0.0031090561224489796,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.19159775129653045,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.06802649282126406
+    },
+    {
+      "defect_no": 169,
+      "rawno": 500,
+      "fold": 0,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.0385611797528896,
+      "mask_frac": 0.0077128507653061226,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.21934440981651862,
+      "null_cls_hit": 0.2,
+      "null_cls_iou": 0.11287737007494758
+    },
+    {
+      "defect_no": 178,
+      "rawno": 668,
+      "fold": 0,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.028597050617776006,
+      "mask_frac": 0.005719866071428571,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.1423949858530283,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.06808033266028178
+    },
+    {
+      "defect_no": 64,
+      "rawno": 145,
+      "fold": 0,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.540499784575614,
+      "mask_frac": 0.3700573979591837,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.21292477487076686,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3506483399573308
+    },
+    {
+      "defect_no": 175,
+      "rawno": 647,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.511060183339976,
+      "mask_frac": 0.1022201849489796,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.15052198420091892,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.32691639280436324
+    },
+    {
+      "defect_no": 218,
+      "rawno": 791,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.46233559186927065,
+      "mask_frac": 0.09247448979591837,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.12956938597450923,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4554745885843675
+    },
+    {
+      "defect_no": 226,
+      "rawno": 799,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.7284865112025606,
+      "mask_frac": 0.1766780931122449,
+      "peak_xy": [
+        112,
+        80
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.2969186277305681,
+      "null_cls_hit": 0.45,
+      "null_cls_iou": 0.42622984137882397
+    },
+    {
+      "defect_no": 1,
+      "rawno": 1,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6837700508119956,
+      "mask_frac": 0.1367984693877551,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.22757299990305993,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06595830248760362
+    },
+    {
+      "defect_no": 18,
+      "rawno": 49,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.017935432443204464,
+      "mask_frac": 0.003587372448979592,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.26658402863869674,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.06706352975185437
+    },
+    {
+      "defect_no": 30,
+      "rawno": 76,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.1072636815920398,
+      "mask_frac": 0.021763392857142856,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.21466387812248225,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.08392631680868204
+    },
+    {
+      "defect_no": 49,
+      "rawno": 116,
+      "fold": 0,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.014560221870047544,
+      "mask_frac": 0.00412547831632653,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.15656355475791006,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.08337124931722478
+    },
+    {
+      "defect_no": 85,
+      "rawno": 190,
+      "fold": 0,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.018234356317257873,
+      "mask_frac": 0.0036471619897959183,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.14874395036157784,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.08477833685687268
+    },
+    {
+      "defect_no": 102,
+      "rawno": 227,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.050717417297728176,
+      "mask_frac": 0.010144292091836735,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.8,
+      "null_iou": 0.291988595650159,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.1180304038110804
+    },
+    {
+      "defect_no": 186,
+      "rawno": 759,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.46163810282981266,
+      "mask_frac": 0.09233498086734694,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.22554113160130446,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3449700631683591
+    },
+    {
+      "defect_no": 201,
+      "rawno": 774,
+      "fold": 0,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5611797528895974,
+      "mask_frac": 0.11224489795918367,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.12029324939615245,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.3144958695357004
+    },
+    {
+      "defect_no": 246,
+      "rawno": 819,
+      "fold": 0,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.35532084495815064,
+      "mask_frac": 0.07106983418367346,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.15800021208653894,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.3338180392506372
+    },
+    {
+      "defect_no": 4,
+      "rawno": 5,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.038461538461538464,
+      "mask_frac": 0.007692920918367347,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.15546493442793985,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.06765685644795413
+    },
+    {
+      "defect_no": 52,
+      "rawno": 122,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.2370625924100542,
+      "mask_frac": 0.050103635204081634,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.22102199077974438,
+      "null_cls_hit": 0.2,
+      "null_cls_iou": 0.11039919843325985
+    },
+    {
+      "defect_no": 71,
+      "rawno": 156,
+      "fold": 0,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.14328417696293344,
+      "mask_frac": 0.028659119897959183,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.15975247266331002,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.04533907097207257
+    },
+    {
+      "defect_no": 82,
+      "rawno": 184,
+      "fold": 0,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.036667995217218016,
+      "mask_frac": 0.007334183673469388,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.3012765756536301,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.05848107951592139
+    },
+    {
+      "defect_no": 93,
+      "rawno": 206,
+      "fold": 0,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.014547628537265843,
+      "mask_frac": 0.0029097576530612247,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.17656862558699135,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.09396677079681272
+    },
+    {
+      "defect_no": 133,
+      "rawno": 325,
+      "fold": 0,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.006276150627615063,
+      "mask_frac": 0.0012555803571428572,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.12008762530887378,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.05685626828856899
+    },
+    {
+      "defect_no": 143,
+      "rawno": 367,
+      "fold": 0,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01534475886807493,
+      "mask_frac": 0.0030691964285714285,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.16083384702207243,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.11148749822942569
+    },
+    {
+      "defect_no": 66,
+      "rawno": 147,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.7871569968616722,
+      "mask_frac": 0.24260602678571427,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.2064443507906537,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.38789070163965056
+    },
+    {
+      "defect_no": 75,
+      "rawno": 168,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0020126246455036134,
+      "mask_frac": 0.018215880102040817,
+      "peak_xy": [
+        112,
+        176
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.028270122476507974,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.02705372504167493
+    },
+    {
+      "defect_no": 141,
+      "rawno": 352,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.504095659542416,
+      "mask_frac": 0.11836336096938775,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.22588815865728168,
+      "null_cls_hit": 0.6,
+      "null_cls_iou": 0.2875519265888166
+    },
+    {
+      "defect_no": 148,
+      "rawno": 390,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.2838780390593862,
+      "mask_frac": 0.05678013392857143,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.21777622769811664,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.3639602657258977
+    },
+    {
+      "defect_no": 170,
+      "rawno": 503,
+      "fold": 1,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.019629334396173776,
+      "mask_frac": 0.003926179846938775,
+      "peak_xy": [
+        144,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.12281166178901537,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.295401212360324
+    },
+    {
+      "defect_no": 172,
+      "rawno": 537,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.037465125548027105,
+      "mask_frac": 0.0074936224489795915,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.14039242025713233,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3978034976948189
+    },
+    {
+      "defect_no": 198,
+      "rawno": 771,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.48515344758868073,
+      "mask_frac": 0.09703842474489796,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2501972133123123,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.4301000262202965
+    },
+    {
+      "defect_no": 205,
+      "rawno": 778,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.40158259149357073,
+      "mask_frac": 0.08238998724489796,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.30855815691793964,
+      "null_cls_hit": 1.0,
+      "null_cls_iou": 0.45252988187748466
+    },
+    {
+      "defect_no": 207,
+      "rawno": 780,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5928656835392586,
+      "mask_frac": 0.11858258928571429,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.1519931185382294,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3909536285972628
+    },
+    {
+      "defect_no": 214,
+      "rawno": 787,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3981666002391391,
+      "mask_frac": 0.07963966836734694,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.24005552384560097,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.3910708837661613
+    },
+    {
+      "defect_no": 224,
+      "rawno": 797,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4363292148266242,
+      "mask_frac": 0.08727279974489796,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.2569159831878266,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.3271474287860613
+    },
+    {
+      "defect_no": 225,
+      "rawno": 798,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4856516540454364,
+      "mask_frac": 0.09713807397959184,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.25931106314434055,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.40641192008378113
+    },
+    {
+      "defect_no": 228,
+      "rawno": 801,
+      "fold": 1,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3077919489836588,
+      "mask_frac": 0.06156329719387755,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.8,
+      "null_iou": 0.31046622045046385,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.36008093957120624
+    },
+    {
+      "defect_no": 235,
+      "rawno": 808,
+      "fold": 1,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4588013119968194,
+      "mask_frac": 0.09249441964285714,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.2278273467492477,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.3756524285393209
+    },
+    {
+      "defect_no": 240,
+      "rawno": 813,
+      "fold": 1,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.369469908330012,
+      "mask_frac": 0.0738998724489796,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.18108671316646957,
+      "null_cls_hit": 0.55,
+      "null_cls_iou": 0.30220216564454067
+    },
+    {
+      "defect_no": 5,
+      "rawno": 6,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01634117178158629,
+      "mask_frac": 0.003268494897959184,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.21225553165462316,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.09058410456260291
+    },
+    {
+      "defect_no": 16,
+      "rawno": 42,
+      "fold": 1,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.00876843363889996,
+      "mask_frac": 0.001753826530612245,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.25373616129397175,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.09826670150346559
+    },
+    {
+      "defect_no": 33,
+      "rawno": 84,
+      "fold": 1,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.04693104822638501,
+      "mask_frac": 0.009386957908163265,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.2211928781132789,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06632625974748627
+    },
+    {
+      "defect_no": 43,
+      "rawno": 108,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.18564682201749633,
+      "mask_frac": 0.10518973214285714,
+      "peak_xy": [
+        111,
+        79
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.029906147300545676,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.018923213445379634
+    },
+    {
+      "defect_no": 51,
+      "rawno": 120,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.04075328816261459,
+      "mask_frac": 0.008151307397959183,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.22861241031483703,
+      "null_cls_hit": 0.45,
+      "null_cls_iou": 0.14267108927803226
+    },
+    {
+      "defect_no": 56,
+      "rawno": 131,
+      "fold": 1,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.08160621761658031,
+      "mask_frac": 0.016322544642857144,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.20644542852840572,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.0887257949095763
+    },
+    {
+      "defect_no": 60,
+      "rawno": 137,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.033579115185332804,
+      "mask_frac": 0.006716358418367347,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.17698017171019736,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.10629334797031864
+    },
+    {
+      "defect_no": 86,
+      "rawno": 191,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03656835392586688,
+      "mask_frac": 0.007314253826530612,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.1893157831978889,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06749695697799966
+    },
+    {
+      "defect_no": 97,
+      "rawno": 216,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.22038592927707507,
+      "mask_frac": 0.06341677295918367,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.14935805030275348,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.08948194880443659
+    },
+    {
+      "defect_no": 101,
+      "rawno": 226,
+      "fold": 1,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.02869669190912714,
+      "mask_frac": 0.005739795918367347,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.20357048062803468,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.06441720447925414
+    },
+    {
+      "defect_no": 104,
+      "rawno": 232,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.11525086934923001,
+      "mask_frac": 0.02369658801020408,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.1690342653912322,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.12248751488723775
+    },
+    {
+      "defect_no": 105,
+      "rawno": 236,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.023316062176165803,
+      "mask_frac": 0.00466358418367347,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.23856074493628218,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.07338072788658494
+    },
+    {
+      "defect_no": 106,
+      "rawno": 241,
+      "fold": 1,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.06937080240367621,
+      "mask_frac": 0.04115513392857143,
+      "peak_xy": [
+        112,
+        175
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.058187736071666774,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.029407698109841878
+    },
+    {
+      "defect_no": 116,
+      "rawno": 258,
+      "fold": 1,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01046233559186927,
+      "mask_frac": 0.0020926339285714285,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.1642414026947288,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.0748773064776563
+    },
+    {
+      "defect_no": 117,
+      "rawno": 265,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.2318814222060562,
+      "mask_frac": 0.06997369260204081,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.1964467328579203,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.06098322739890559
+    },
+    {
+      "defect_no": 121,
+      "rawno": 272,
+      "fold": 1,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.024013551215623756,
+      "mask_frac": 0.004803093112244898,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.3162649628956276,
+      "null_cls_hit": 0.45,
+      "null_cls_iou": 0.05647454959643198
+    },
+    {
+      "defect_no": 124,
+      "rawno": 291,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.02172180151454763,
+      "mask_frac": 0.004344706632653061,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.2156505767058015,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.10669369219233896
+    },
+    {
+      "defect_no": 130,
+      "rawno": 319,
+      "fold": 1,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03776404942208051,
+      "mask_frac": 0.007553411989795918,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.21365528023905314,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.06245923286243001
+    },
+    {
+      "defect_no": 174,
+      "rawno": 574,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.020825029892387405,
+      "mask_frac": 0.004165338010204082,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.17537688051875686,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.09171219958692588
+    },
+    {
+      "defect_no": 177,
+      "rawno": 665,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.009526558891454965,
+      "mask_frac": 0.009068080357142858,
+      "peak_xy": [
+        112,
+        79
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.06420414616734554,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.04243212542656134
+    },
+    {
+      "defect_no": 197,
+      "rawno": 770,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5563969709047429,
+      "mask_frac": 0.11128826530612244,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.270135833130812,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.43495740031308017
+    },
+    {
+      "defect_no": 239,
+      "rawno": 812,
+      "fold": 1,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.2907532881626146,
+      "mask_frac": 0.05815529336734694,
+      "peak_xy": [
+        143,
+        143
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.18289794399171333,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.3639702035015405
+    },
+    {
+      "defect_no": 9,
+      "rawno": 28,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.028098844161020327,
+      "mask_frac": 0.005620216836734694,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.2893716864714863,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.08841411711678107
+    },
+    {
+      "defect_no": 26,
+      "rawno": 68,
+      "fold": 1,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.013252291749701077,
+      "mask_frac": 0.002650669642857143,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.2590457253703622,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.10619116472449519
+    },
+    {
+      "defect_no": 28,
+      "rawno": 74,
+      "fold": 1,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.023814268632921482,
+      "mask_frac": 0.004763233418367347,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.16287130912193623,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.12937034898694613
+    },
+    {
+      "defect_no": 61,
+      "rawno": 139,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.15030079565301765,
+      "mask_frac": 0.036252391581632654,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.26890050069551613,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.11104764542792644
+    },
+    {
+      "defect_no": 144,
+      "rawno": 374,
+      "fold": 1,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.38163245065952595,
+      "mask_frac": 0.07762675382653061,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.1565612859665763,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.07705954608556928
+    },
+    {
+      "defect_no": 136,
+      "rawno": 332,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.02938600758976355,
+      "mask_frac": 0.010821906887755101,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.18419049536878143,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4008749005699034
+    },
+    {
+      "defect_no": 162,
+      "rawno": 460,
+      "fold": 1,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.168135593220339,
+      "mask_frac": 0.040357940051020405,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2887251954745887,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.39627267408218997
+    },
+    {
+      "defect_no": 222,
+      "rawno": 795,
+      "fold": 1,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.8344390533716209,
+      "mask_frac": 0.16920440051020408,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.19490781894036427,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.42639778438234544
+    },
+    {
+      "defect_no": 7,
+      "rawno": 19,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.022718214428058988,
+      "mask_frac": 0.004544005102040816,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.23734983492660972,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.07379413962396184
+    },
+    {
+      "defect_no": 17,
+      "rawno": 48,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.018234356317257873,
+      "mask_frac": 0.0036471619897959183,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.19735660244718087,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06609669892107242
+    },
+    {
+      "defect_no": 111,
+      "rawno": 248,
+      "fold": 1,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.15188515799026484,
+      "mask_frac": 0.07824457908163265,
+      "peak_xy": [
+        143,
+        111
+      ],
+      "null_hit": 0.1,
+      "null_iou": 0.1078315751110498,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.07122943566689627
+    },
+    {
+      "defect_no": 176,
+      "rawno": 649,
+      "fold": 1,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.07522917497010762,
+      "mask_frac": 0.01504703443877551,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.20806526209263415,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.09636091746388117
+    },
+    {
+      "defect_no": 48,
+      "rawno": 115,
+      "fold": 2,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": true,
+      "iou": 0.02501454333915067,
+      "mask_frac": 0.010682397959183673,
+      "peak_xy": [
+        112,
+        80
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.13684076747377044,
+      "null_cls_hit": 0.65,
+      "null_cls_iou": 0.3379026876120671
+    },
+    {
+      "defect_no": 100,
+      "rawno": 224,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 4,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5882295529962912,
+      "mask_frac": 0.12430245535714286,
+      "peak_xy": [
+        112,
+        144
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.1390316341262822,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.22741844866989794
+    },
+    {
+      "defect_no": 108,
+      "rawno": 243,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.41400956556396973,
+      "mask_frac": 0.08280851403061225,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.22339439690558258,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.45040943603160954
+    },
+    {
+      "defect_no": 171,
+      "rawno": 528,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.003527582908163265,
+      "peak_xy": [
+        175,
+        47
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0015949941613091624,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0009355747606414049
+    },
+    {
+      "defect_no": 173,
+      "rawno": 550,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6678535438360765,
+      "mask_frac": 0.2947624362244898,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.21095068867485392,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.4136956480787573
+    },
+    {
+      "defect_no": 179,
+      "rawno": 715,
+      "fold": 2,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5142051282051282,
+      "mask_frac": 0.38845264668367346,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.18157767483839787,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.4253309354934798
+    },
+    {
+      "defect_no": 182,
+      "rawno": 755,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5957552809884417,
+      "mask_frac": 0.11916055484693877,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2351081156440129,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.32554425567828615
+    },
+    {
+      "defect_no": 188,
+      "rawno": 761,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.45396572339577523,
+      "mask_frac": 0.09080038265306123,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.2733193647185942,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.42789027406250746
+    },
+    {
+      "defect_no": 189,
+      "rawno": 762,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.34087285771223597,
+      "mask_frac": 0.06818000637755102,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.14863455816281668,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.39937622772282344
+    },
+    {
+      "defect_no": 195,
+      "rawno": 768,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4916301315265046,
+      "mask_frac": 0.09833386479591837,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.14979991819478453,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3837576575014904
+    },
+    {
+      "defect_no": 209,
+      "rawno": 782,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.440613790354723,
+      "mask_frac": 0.08812978316326531,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.1830152766191865,
+      "null_cls_hit": 0.65,
+      "null_cls_iou": 0.3920825435440738
+    },
+    {
+      "defect_no": 217,
+      "rawno": 790,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4435033878039059,
+      "mask_frac": 0.08870774872448979,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.22123321932671067,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3922261565505915
+    },
+    {
+      "defect_no": 220,
+      "rawno": 793,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5187325627740136,
+      "mask_frac": 0.10375478316326531,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.2060697637116855,
+      "null_cls_hit": 1.0,
+      "null_cls_iou": 0.42452727983647165
+    },
+    {
+      "defect_no": 236,
+      "rawno": 809,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.2946392985253089,
+      "mask_frac": 0.05893255739795918,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.13253976020666908,
+      "null_cls_hit": 0.6,
+      "null_cls_iou": 0.31151007678533704
+    },
+    {
+      "defect_no": 244,
+      "rawno": 817,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4328417696293344,
+      "mask_frac": 0.08657525510204081,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.8,
+      "null_iou": 0.27318714621084156,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.4108414852069339
+    },
+    {
+      "defect_no": 22,
+      "rawno": 62,
+      "fold": 2,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.04902351534475887,
+      "mask_frac": 0.00980548469387755,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.2614716946054335,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.09049794376015372
+    },
+    {
+      "defect_no": 32,
+      "rawno": 81,
+      "fold": 2,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.09695097648465524,
+      "mask_frac": 0.019391741071428572,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2411205728028097,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.0902158725242456
+    },
+    {
+      "defect_no": 35,
+      "rawno": 89,
+      "fold": 2,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.13850139497807892,
+      "mask_frac": 0.02770248724489796,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.23437975418372456,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.06434603232534505
+    },
+    {
+      "defect_no": 37,
+      "rawno": 93,
+      "fold": 2,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.12415304902351534,
+      "mask_frac": 0.024832589285714284,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.25142702719354987,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.10179690753511732
+    },
+    {
+      "defect_no": 40,
+      "rawno": 102,
+      "fold": 2,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.07453168593064965,
+      "mask_frac": 0.014907525510204082,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.22510482939745274,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.08294032323318613
+    },
+    {
+      "defect_no": 44,
+      "rawno": 110,
+      "fold": 2,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.11827421283379833,
+      "mask_frac": 0.02365672831632653,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.15823834199325898,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06762673560727574
+    },
+    {
+      "defect_no": 62,
+      "rawno": 140,
+      "fold": 2,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.018632921482662414,
+      "mask_frac": 0.0037268813775510204,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.1694254064384193,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.06457652976785595
+    },
+    {
+      "defect_no": 73,
+      "rawno": 162,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.13660821044240734,
+      "mask_frac": 0.027323820153061226,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.2925343762898284,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.09167437642512295
+    },
+    {
+      "defect_no": 74,
+      "rawno": 165,
+      "fold": 2,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.1553407732164209,
+      "mask_frac": 0.03107063137755102,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.18712555940375944,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.061383591447023454
+    },
+    {
+      "defect_no": 79,
+      "rawno": 174,
+      "fold": 2,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.010163411717815863,
+      "mask_frac": 0.002032844387755102,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.25199918227128904,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.06572521986534095
+    },
+    {
+      "defect_no": 87,
+      "rawno": 192,
+      "fold": 2,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03407732164208848,
+      "mask_frac": 0.006816007653061225,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.1640346222203659,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.09616168072854607
+    },
+    {
+      "defect_no": 91,
+      "rawno": 200,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.05669589477879634,
+      "mask_frac": 0.011340082908163265,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.24235652753440737,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.09262182895833956
+    },
+    {
+      "defect_no": 95,
+      "rawno": 210,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.2746139470837022,
+      "mask_frac": 0.05825494260204082,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.23317107159507514,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.09603440868709827
+    },
+    {
+      "defect_no": 110,
+      "rawno": 247,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.15898503320448013,
+      "mask_frac": 0.03302375637755102,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.21548838358735195,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.09158968843865223
+    },
+    {
+      "defect_no": 122,
+      "rawno": 276,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.1256096347168309,
+      "mask_frac": 0.025370695153061226,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.11146091711242492,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.07152755364826724
+    },
+    {
+      "defect_no": 152,
+      "rawno": 410,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.04942208051016341,
+      "mask_frac": 0.009885204081632654,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.17665969063095505,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.07339109703438267
+    },
+    {
+      "defect_no": 154,
+      "rawno": 428,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.0034080038265306123,
+      "peak_xy": [
+        144,
+        79
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.017793732355299414,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.006113270188986436
+    },
+    {
+      "defect_no": 160,
+      "rawno": 443,
+      "fold": 2,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01484655241131925,
+      "mask_frac": 0.002969547193877551,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.16099328979021604,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.07843328759220927
+    },
+    {
+      "defect_no": 167,
+      "rawno": 488,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.02411319250697489,
+      "mask_frac": 0.004823022959183673,
+      "peak_xy": [
+        143,
+        143
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.15403517441886214,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.09155116823285384
+    },
+    {
+      "defect_no": 180,
+      "rawno": 744,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.1538614451843753,
+      "mask_frac": 0.031349649234693876,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.18721706306732813,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.06188282229271904
+    },
+    {
+      "defect_no": 229,
+      "rawno": 802,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.34734954165005977,
+      "mask_frac": 0.06947544642857142,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.20468669848844448,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.4351642637570793
+    },
+    {
+      "defect_no": 233,
+      "rawno": 806,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.44410123555201275,
+      "mask_frac": 0.08882732780612244,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.16922476200077446,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.2809954314103386
+    },
+    {
+      "defect_no": 241,
+      "rawno": 814,
+      "fold": 2,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.24730968513351934,
+      "mask_frac": 0.04946588010204082,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.15788646622918606,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.37402033793590983
+    },
+    {
+      "defect_no": 13,
+      "rawno": 39,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.11310812082431543,
+      "mask_frac": 0.03573421556122449,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.24684513121347934,
+      "null_cls_hit": 0.2,
+      "null_cls_iou": 0.07766912628813517
+    },
+    {
+      "defect_no": 15,
+      "rawno": 41,
+      "fold": 2,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.015047747660846917,
+      "mask_frac": 0.009665975765306123,
+      "peak_xy": [
+        143,
+        144
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.03562902160784332,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.011889694215677359
+    },
+    {
+      "defect_no": 53,
+      "rawno": 123,
+      "fold": 2,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.08233784184026063,
+      "mask_frac": 0.0184749681122449,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2388284373498669,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.10570402291938072
+    },
+    {
+      "defect_no": 57,
+      "rawno": 134,
+      "fold": 2,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.2450179354324432,
+      "mask_frac": 0.04900749362244898,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.16707824042259714,
+      "null_cls_hit": 0.55,
+      "null_cls_iou": 0.10442255171286688
+    },
+    {
+      "defect_no": 77,
+      "rawno": 172,
+      "fold": 2,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.03527301713830211,
+      "mask_frac": 0.00705516581632653,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.19714613885406423,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.07909498363372561
+    },
+    {
+      "defect_no": 90,
+      "rawno": 198,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.009366281387006776,
+      "mask_frac": 0.0018734056122448979,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.2566038028173202,
+      "null_cls_hit": 0.45,
+      "null_cls_iou": 0.0638226202990876
+    },
+    {
+      "defect_no": 113,
+      "rawno": 251,
+      "fold": 2,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.08070944599442009,
+      "mask_frac": 0.016143176020408163,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.24294405674004502,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.07863542145215767
+    },
+    {
+      "defect_no": 138,
+      "rawno": 341,
+      "fold": 2,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.0194515306122449,
+      "peak_xy": [
+        80,
+        47
+      ],
+      "null_hit": 0.05,
+      "null_iou": 0.007268933813689706,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.005558707166568028
+    },
+    {
+      "defect_no": 213,
+      "rawno": 786,
+      "fold": 2,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5714428058987644,
+      "mask_frac": 0.11429767219387756,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.2562263621978318,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.32112634888229113
+    },
+    {
+      "defect_no": 14,
+      "rawno": 40,
+      "fold": 2,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.1090493862403654,
+      "mask_frac": 0.03226642219387755,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.246838094167883,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.09356295755034767
+    },
+    {
+      "defect_no": 81,
+      "rawno": 180,
+      "fold": 2,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.046233559186927065,
+      "mask_frac": 0.009247448979591837,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.20063335651883465,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.100597306718558
+    },
+    {
+      "defect_no": 46,
+      "rawno": 112,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3410721402949382,
+      "mask_frac": 0.06821986607142858,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.1518009572408681,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.38500693511427364
+    },
+    {
+      "defect_no": 63,
+      "rawno": 141,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.027013704032337573,
+      "mask_frac": 0.007075095663265306,
+      "peak_xy": [
+        144,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.07852273667771018,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.13766653194672734
+    },
+    {
+      "defect_no": 120,
+      "rawno": 271,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.21323236349143085,
+      "mask_frac": 0.042649872448979595,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.23449988322113374,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.39037951287054784
+    },
+    {
+      "defect_no": 140,
+      "rawno": 350,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.10412514946193703,
+      "mask_frac": 0.02082669005102041,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.22563166491154588,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4332754874005393
+    },
+    {
+      "defect_no": 142,
+      "rawno": 356,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.0682542845755281,
+      "mask_frac": 0.013651945153061224,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.16284638584848987,
+      "null_cls_hit": 0.6,
+      "null_cls_iou": 0.3600666020445632
+    },
+    {
+      "defect_no": 153,
+      "rawno": 419,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.009665975765306123,
+      "peak_xy": [
+        208,
+        175
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0011205633198698931
+    },
+    {
+      "defect_no": 159,
+      "rawno": 442,
+      "fold": 3,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.027403539540816327,
+      "peak_xy": [
+        208,
+        112
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0026749383857206247,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0027795359580098603
+    },
+    {
+      "defect_no": 181,
+      "rawno": 754,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6353421859039836,
+      "mask_frac": 0.1509685905612245,
+      "peak_xy": [
+        112,
+        80
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.26931915643996945,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.41898447590589133
+    },
+    {
+      "defect_no": 185,
+      "rawno": 758,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6881448316137824,
+      "mask_frac": 0.14564732142857142,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.2788930810330291,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.3778006664146799
+    },
+    {
+      "defect_no": 187,
+      "rawno": 760,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5219210840972499,
+      "mask_frac": 0.10439253826530612,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2222785788634222,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4117035463418057
+    },
+    {
+      "defect_no": 200,
+      "rawno": 773,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5397568752491032,
+      "mask_frac": 0.10795998086734694,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.1769347141526702,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.40516693124105113
+    },
+    {
+      "defect_no": 203,
+      "rawno": 776,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.7213391615338764,
+      "mask_frac": 0.14530851403061223,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.15734540981147774,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3729648128997986
+    },
+    {
+      "defect_no": 212,
+      "rawno": 785,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6204663212435233,
+      "mask_frac": 0.1241031568877551,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.2349075751495886,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.38854975095605204
+    },
+    {
+      "defect_no": 230,
+      "rawno": 803,
+      "fold": 3,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.47768035073734555,
+      "mask_frac": 0.09554368622448979,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.20774590004817156,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.3983869234165484
+    },
+    {
+      "defect_no": 232,
+      "rawno": 805,
+      "fold": 3,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.003062185929648241,
+      "mask_frac": 0.054587850765306124,
+      "peak_xy": [
+        111,
+        47
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.006690884517499278,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.014994358034465981
+    },
+    {
+      "defect_no": 237,
+      "rawno": 810,
+      "fold": 3,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.23634914308489438,
+      "mask_frac": 0.04727359693877551,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.2555353238857826,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.37529424175755244
+    },
+    {
+      "defect_no": 2,
+      "rawno": 3,
+      "fold": 3,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.013252291749701077,
+      "mask_frac": 0.002650669642857143,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.18752360415075753,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.09613485804061286
+    },
+    {
+      "defect_no": 8,
+      "rawno": 27,
+      "fold": 3,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.2881454828357483,
+      "mask_frac": 0.06397480867346939,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.19908338517140692,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.13377841054228556
+    },
+    {
+      "defect_no": 10,
+      "rawno": 30,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.03919627833316837,
+      "mask_frac": 0.009088010204081632,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.15008998354204356,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.06005800598187838
+    },
+    {
+      "defect_no": 21,
+      "rawno": 61,
+      "fold": 3,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.047429254683140694,
+      "mask_frac": 0.009486607142857142,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.14716061492250004,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.09776353424828807
+    },
+    {
+      "defect_no": 24,
+      "rawno": 66,
+      "fold": 3,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 2,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.10213232363491431,
+      "mask_frac": 0.0204280931122449,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.23673039557461412,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.07957710611249472
+    },
+    {
+      "defect_no": 25,
+      "rawno": 67,
+      "fold": 3,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.011658031088082901,
+      "mask_frac": 0.002331792091836735,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.18627168254053483,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.10539782191146432
+    },
+    {
+      "defect_no": 55,
+      "rawno": 130,
+      "fold": 3,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.24970107612594658,
+      "mask_frac": 0.04994419642857143,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.2079897405132692,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.06558532035537488
+    },
+    {
+      "defect_no": 58,
+      "rawno": 135,
+      "fold": 3,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.06508933830748086,
+      "mask_frac": 0.01620296556122449,
+      "peak_xy": [
+        143,
+        144
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.08826444925079663,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.04512841123078396
+    },
+    {
+      "defect_no": 59,
+      "rawno": 136,
+      "fold": 3,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.10611797528895975,
+      "mask_frac": 0.02122528698979592,
+      "peak_xy": [
+        112,
+        80
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.11967858762142772,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.06391001504503555
+    },
+    {
+      "defect_no": 68,
+      "rawno": 149,
+      "fold": 3,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.055599840573933836,
+      "mask_frac": 0.011120854591836735,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.20407027087934998,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.08319441464939539
+    },
+    {
+      "defect_no": 80,
+      "rawno": 179,
+      "fold": 3,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03527301713830211,
+      "mask_frac": 0.00705516581632653,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.21172670662051168,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.07680845126606026
+    },
+    {
+      "defect_no": 83,
+      "rawno": 188,
+      "fold": 3,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.03347947389398167,
+      "mask_frac": 0.006696428571428571,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.23896858779920832,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.08889192238679171
+    },
+    {
+      "defect_no": 84,
+      "rawno": 189,
+      "fold": 3,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.04105221203666799,
+      "mask_frac": 0.00821109693877551,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.2096740316932034,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.08870619921506875
+    },
+    {
+      "defect_no": 107,
+      "rawno": 242,
+      "fold": 3,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.06682477678571429,
+      "peak_xy": [
+        144,
+        176
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0005285125544919528,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 7.330034817665384e-05
+    },
+    {
+      "defect_no": 109,
+      "rawno": 246,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.16399530883502736,
+      "mask_frac": 0.03734853316326531,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.2532491533799959,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.08240447792815829
+    },
+    {
+      "defect_no": 118,
+      "rawno": 267,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.19020852221214868,
+      "mask_frac": 0.061623086734693876,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.15182026289052705,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.10051923710139124
+    },
+    {
+      "defect_no": 119,
+      "rawno": 269,
+      "fold": 3,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.010526315789473684,
+      "mask_frac": 0.0027901785714285715,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.22995796444657146,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.054555127695088565
+    },
+    {
+      "defect_no": 127,
+      "rawno": 305,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.49139217832620163,
+      "mask_frac": 0.09867267219387756,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.24517475541366057,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.07982166602657474
+    },
+    {
+      "defect_no": 128,
+      "rawno": 310,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.0887803905938621,
+      "mask_frac": 0.01775749362244898,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.17402511828365555,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.08148483858214547
+    },
+    {
+      "defect_no": 129,
+      "rawno": 315,
+      "fold": 3,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.018931845356715823,
+      "mask_frac": 0.003786670918367347,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.25390141883729805,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.08706787142735109
+    },
+    {
+      "defect_no": 137,
+      "rawno": 335,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.1008553809429083,
+      "mask_frac": 0.020567602040816327,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.24165334754086815,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.05955008399182109
+    },
+    {
+      "defect_no": 145,
+      "rawno": 378,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.09276604224790753,
+      "mask_frac": 0.0185546875,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.15241408308599044,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.10762221004734485
+    },
+    {
+      "defect_no": 149,
+      "rawno": 391,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.08119147240486152,
+      "mask_frac": 0.01628268494897959,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.2334671762981312,
+      "null_cls_hit": 0.2,
+      "null_cls_iou": 0.051286266288802194
+    },
+    {
+      "defect_no": 168,
+      "rawno": 499,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.07766798418972332,
+      "mask_frac": 0.017338966836734693,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.17714414405743062,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.10605344300746251
+    },
+    {
+      "defect_no": 126,
+      "rawno": 300,
+      "fold": 3,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.15292130365659778,
+      "mask_frac": 0.031230070153061226,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.16812957405243018,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.39582921179126046
+    },
+    {
+      "defect_no": 183,
+      "rawno": 756,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.40534077321642087,
+      "mask_frac": 0.08107461734693877,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.75,
+      "null_iou": 0.3133720864947115,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.3785153466361869
+    },
+    {
+      "defect_no": 131,
+      "rawno": 320,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0865624066142046,
+      "mask_frac": 0.01735889668367347,
+      "peak_xy": [
+        112,
+        79
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.085700686520113,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.034752965089119035
+    },
+    {
+      "defect_no": 156,
+      "rawno": 435,
+      "fold": 3,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.10983118172790467,
+      "mask_frac": 0.02272002551020408,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.22658924907561176,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.09276337966366713
+    },
+    {
+      "defect_no": 196,
+      "rawno": 769,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5748740798140256,
+      "mask_frac": 0.1240234375,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.15200874098150824,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.39551485454518953
+    },
+    {
+      "defect_no": 219,
+      "rawno": 792,
+      "fold": 3,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5489238740534077,
+      "mask_frac": 0.10979352678571429,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.19472902610090562,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3760941200450398
+    },
+    {
+      "defect_no": 242,
+      "rawno": 815,
+      "fold": 3,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.39278597050617775,
+      "mask_frac": 0.07856345663265306,
+      "peak_xy": [
+        143,
+        143
+      ],
+      "null_hit": 0.15,
+      "null_iou": 0.16120664138362525,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.33953901322380203
+    },
+    {
+      "defect_no": 34,
+      "rawno": 88,
+      "fold": 3,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03876046233559187,
+      "mask_frac": 0.007752710459183673,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.22561027454908267,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.10641670896342667
+    },
+    {
+      "defect_no": 36,
+      "rawno": 91,
+      "fold": 3,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.0001992984693877551,
+      "peak_xy": [
+        111,
+        0
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0005735860015973281
+    },
+    {
+      "defect_no": 70,
+      "rawno": 153,
+      "fold": 3,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01434834595456357,
+      "mask_frac": 0.0028698979591836736,
+      "peak_xy": [
+        111,
+        143
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.24387255712038297,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.09560117059014267
+    },
+    {
+      "defect_no": 3,
+      "rawno": 4,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.3939816660023914,
+      "mask_frac": 0.07880261479591837,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.21597249858291198,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.4219806286255686
+    },
+    {
+      "defect_no": 65,
+      "rawno": 146,
+      "fold": 4,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.8153383702981558,
+      "mask_frac": 0.24531648596938777,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.13261266806240019,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.41319827843855805
+    },
+    {
+      "defect_no": 163,
+      "rawno": 467,
+      "fold": 4,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.012790240062967336,
+      "mask_frac": 0.005082110969387755,
+      "peak_xy": [
+        79,
+        144
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.05542873222584159,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.05864263725791834
+    },
+    {
+      "defect_no": 166,
+      "rawno": 482,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6393103448275862,
+      "mask_frac": 0.1315967793367347,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.2738040167959389,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.41401906732552424
+    },
+    {
+      "defect_no": 184,
+      "rawno": 757,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.47200079713033083,
+      "mask_frac": 0.0944076849489796,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.19162712162014472,
+      "null_cls_hit": 0.6,
+      "null_cls_iou": 0.41671008990171166
+    },
+    {
+      "defect_no": 190,
+      "rawno": 763,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5101634117178159,
+      "mask_frac": 0.10204081632653061,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.21441659123775078,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.40142960006308714
+    },
+    {
+      "defect_no": 192,
+      "rawno": 765,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4797728178557194,
+      "mask_frac": 0.09596221301020408,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.19144547217124322,
+      "null_cls_hit": 0.85,
+      "null_cls_iou": 0.35097497894918006
+    },
+    {
+      "defect_no": 193,
+      "rawno": 766,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5042845755280988,
+      "mask_frac": 0.10086495535714286,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.200805323974649,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3885773146665786
+    },
+    {
+      "defect_no": 204,
+      "rawno": 777,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5709445994420088,
+      "mask_frac": 0.11419802295918367,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.22156967897332674,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.34320964463252873
+    },
+    {
+      "defect_no": 210,
+      "rawno": 783,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.6262093227792436,
+      "mask_frac": 0.13163663903061223,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.2011600396772546,
+      "null_cls_hit": 0.8,
+      "null_cls_iou": 0.38920088199576597
+    },
+    {
+      "defect_no": 211,
+      "rawno": 784,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.5957552809884417,
+      "mask_frac": 0.11916055484693877,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.2763481425532397,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.430021284250466
+    },
+    {
+      "defect_no": 238,
+      "rawno": 811,
+      "fold": 4,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.41131925069748904,
+      "mask_frac": 0.08227040816326531,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.18161406633127317,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3946927698208038
+    },
+    {
+      "defect_no": 12,
+      "rawno": 37,
+      "fold": 4,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.06141747959386821,
+      "mask_frac": 0.012376434948979591,
+      "peak_xy": [
+        144,
+        112
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.15739433376502743,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.08428304178841661
+    },
+    {
+      "defect_no": 19,
+      "rawno": 52,
+      "fold": 4,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.010063770426464728,
+      "mask_frac": 0.0020129145408163264,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.17525699790314994,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.10652337805653052
+    },
+    {
+      "defect_no": 20,
+      "rawno": 58,
+      "fold": 4,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.02411319250697489,
+      "mask_frac": 0.004823022959183673,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.26371636261309817,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.059354343135656275
+    },
+    {
+      "defect_no": 23,
+      "rawno": 65,
+      "fold": 4,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.02092467118373854,
+      "mask_frac": 0.004185267857142857,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.18911710533702505,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.06294521699417291
+    },
+    {
+      "defect_no": 27,
+      "rawno": 69,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.006775607811877242,
+      "mask_frac": 0.0013552295918367347,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.35,
+      "null_iou": 0.19576404187926733,
+      "null_cls_hit": 0.2,
+      "null_cls_iou": 0.11003678918410857
+    },
+    {
+      "defect_no": 38,
+      "rawno": 96,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.024511757672379435,
+      "mask_frac": 0.004902742346938775,
+      "peak_xy": [
+        80,
+        111
+      ],
+      "null_hit": 0.2,
+      "null_iou": 0.17064205942594757,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.10917224134576069
+    },
+    {
+      "defect_no": 39,
+      "rawno": 100,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.06307293742526904,
+      "mask_frac": 0.012615593112244899,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.8,
+      "null_iou": 0.3040212256620045,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.06798038940014078
+    },
+    {
+      "defect_no": 45,
+      "rawno": 111,
+      "fold": 4,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.06586289358310084,
+      "mask_frac": 0.013173628826530613,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.6,
+      "null_iou": 0.23096613867664825,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.06643604689607108
+    },
+    {
+      "defect_no": 72,
+      "rawno": 158,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.02999202869669191,
+      "mask_frac": 0.005998883928571429,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.21593136198318064,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.07440254093697415
+    },
+    {
+      "defect_no": 78,
+      "rawno": 173,
+      "fold": 4,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.00332828443877551,
+      "peak_xy": [
+        0,
+        47
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.0012183924283090833,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.0007061025339294897
+    },
+    {
+      "defect_no": 88,
+      "rawno": 193,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.014946193702670387,
+      "mask_frac": 0.0029894770408163264,
+      "peak_xy": [
+        112,
+        80
+      ],
+      "null_hit": 0.1,
+      "null_iou": 0.14782529411239725,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.06723824055554974
+    },
+    {
+      "defect_no": 89,
+      "rawno": 194,
+      "fold": 4,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.021622160223196494,
+      "mask_frac": 0.004324776785714286,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.16322477579215847,
+      "null_cls_hit": 0.45,
+      "null_cls_iou": 0.08212754028462109
+    },
+    {
+      "defect_no": 94,
+      "rawno": 207,
+      "fold": 4,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03537265842965325,
+      "mask_frac": 0.007075095663265306,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.13476603153577923,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.054306650935335765
+    },
+    {
+      "defect_no": 96,
+      "rawno": 213,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.42283822920976416,
+      "mask_frac": 0.14267777423469388,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.1564913607380058,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.08084637706964976
+    },
+    {
+      "defect_no": 98,
+      "rawno": 219,
+      "fold": 4,
+      "tissue": "Hail_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.012536066063078301,
+      "mask_frac": 0.002810108418367347,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.26351845142801356,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.08607393922645648
+    },
+    {
+      "defect_no": 103,
+      "rawno": 228,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03328019131127939,
+      "mask_frac": 0.00665656887755102,
+      "peak_xy": [
+        48,
+        111
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.14707368296691806,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.07065674080007209
+    },
+    {
+      "defect_no": 125,
+      "rawno": 296,
+      "fold": 4,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.07512953367875648,
+      "mask_frac": 0.015027104591836735,
+      "peak_xy": [
+        144,
+        112
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.13382148641649513,
+      "null_cls_hit": 0.15,
+      "null_cls_iou": 0.08055289049579713
+    },
+    {
+      "defect_no": 135,
+      "rawno": 331,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.21960344182566405,
+      "mask_frac": 0.059869260204081634,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.21470571726340495,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.07470290592338774
+    },
+    {
+      "defect_no": 151,
+      "rawno": 409,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.03174132304954019,
+      "mask_frac": 0.007692920918367347,
+      "peak_xy": [
+        80,
+        143
+      ],
+      "null_hit": 0.05,
+      "null_iou": 0.07881374292596444,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.05546139701716122
+    },
+    {
+      "defect_no": 155,
+      "rawno": 430,
+      "fold": 4,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.025427872860635695,
+      "mask_frac": 0.008948501275510204,
+      "peak_xy": [
+        79,
+        80
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.11035473240588548,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.032760502484204916
+    },
+    {
+      "defect_no": 164,
+      "rawno": 468,
+      "fold": 4,
+      "tissue": "Limb_rub",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.033977680350737345,
+      "mask_frac": 0.006796077806122449,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.7,
+      "null_iou": 0.31276988787860444,
+      "null_cls_hit": 0.25,
+      "null_cls_iou": 0.06950326751808475
+    },
+    {
+      "defect_no": 92,
+      "rawno": 203,
+      "fold": 4,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 3,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.0,
+      "mask_frac": 0.0029496173469387753,
+      "peak_xy": [
+        144,
+        176
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.003973448039764454,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.01694709934411892
+    },
+    {
+      "defect_no": 147,
+      "rawno": 389,
+      "fold": 4,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": false,
+      "hit": false,
+      "iou": 0.42093626838411996,
+      "mask_frac": 0.09458705357142858,
+      "peak_xy": [
+        80,
+        143
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.17676444332217545,
+      "null_cls_hit": 0.3,
+      "null_cls_iou": 0.3466681437305146
+    },
+    {
+      "defect_no": 227,
+      "rawno": 800,
+      "fold": 4,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.37504982064567555,
+      "mask_frac": 0.07501594387755102,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.45,
+      "null_iou": 0.21909482702348898,
+      "null_cls_hit": 0.75,
+      "null_cls_iou": 0.323483418113793
+    },
+    {
+      "defect_no": 234,
+      "rawno": 807,
+      "fold": 4,
+      "tissue": "Flesh_damage",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.33479473893981665,
+      "mask_frac": 0.06696428571428571,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.18810075507473212,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3533585768168532
+    },
+    {
+      "defect_no": 50,
+      "rawno": 117,
+      "fold": 4,
+      "tissue": "Other",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.01267703278201446,
+      "mask_frac": 0.0037667410714285715,
+      "peak_xy": [
+        112,
+        143
+      ],
+      "null_hit": 0.25,
+      "null_iou": 0.13181108073670456,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.07203363115597503
+    },
+    {
+      "defect_no": 158,
+      "rawno": 439,
+      "fold": 4,
+      "tissue": "Scald",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": true,
+      "iou": 0.09460266879107747,
+      "mask_frac": 0.018933354591836735,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.65,
+      "null_iou": 0.2537679112874107,
+      "null_cls_hit": 0.55,
+      "null_cls_iou": 0.0832588644050981
+    },
+    {
+      "defect_no": 115,
+      "rawno": 257,
+      "fold": 4,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 1,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.8368856447688564,
+      "mask_frac": 0.17613998724489796,
+      "peak_xy": [
+        111,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.1969415402825699,
+      "null_cls_hit": 0.95,
+      "null_cls_iou": 0.39060037622227256
+    },
+    {
+      "defect_no": 139,
+      "rawno": 346,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.2117377441211638,
+      "mask_frac": 0.04235092474489796,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.2011436752832334,
+      "null_cls_hit": 0.4,
+      "null_cls_iou": 0.28515327462814005
+    },
+    {
+      "defect_no": 150,
+      "rawno": 395,
+      "fold": 4,
+      "tissue": "Rot",
+      "cls": "Internal_Defect",
+      "kleynen_class": 4,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.020027899561578317,
+      "mask_frac": 0.0040058992346938774,
+      "peak_xy": [
+        143,
+        112
+      ],
+      "null_hit": 0.4,
+      "null_iou": 0.2201331424978338,
+      "null_cls_hit": 0.7,
+      "null_cls_iou": 0.33191344853202853
+    },
+    {
+      "defect_no": 202,
+      "rawno": 775,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4170984455958549,
+      "mask_frac": 0.08342633928571429,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.17060442625899006,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.3627612178155297
+    },
+    {
+      "defect_no": 215,
+      "rawno": 788,
+      "fold": 4,
+      "tissue": "Bruise",
+      "cls": "Internal_Defect",
+      "kleynen_class": 2,
+      "pred": "Internal_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.4861498605021921,
+      "mask_frac": 0.09723772321428571,
+      "peak_xy": [
+        112,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.18668913580485993,
+      "null_cls_hit": 0.9,
+      "null_cls_iou": 0.4400406101835925
+    },
+    {
+      "defect_no": 29,
+      "rawno": 75,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 4,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.05154228855721393,
+      "mask_frac": 0.010602678571428572,
+      "peak_xy": [
+        112,
+        111
+      ],
+      "null_hit": 0.55,
+      "null_iou": 0.13022582477937508,
+      "null_cls_hit": 0.5,
+      "null_cls_iou": 0.07824153089938071
+    },
+    {
+      "defect_no": 42,
+      "rawno": 107,
+      "fold": 4,
+      "tissue": "Russet",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.00018942981625307822,
+      "mask_frac": 0.11567283163265306,
+      "peak_xy": [
+        0,
+        0
+      ],
+      "null_hit": 0.0,
+      "null_iou": 0.005071686574822072,
+      "null_cls_hit": 0.0,
+      "null_cls_iou": 0.001138360293252175
+    },
+    {
+      "defect_no": 67,
+      "rawno": 148,
+      "fold": 4,
+      "tissue": "Frost_damage",
+      "cls": "Surface_Defect",
+      "kleynen_class": 3,
+      "pred": "Healthy",
+      "correct": false,
+      "hit": false,
+      "iou": 0.2474155069582505,
+      "mask_frac": 0.050083705357142856,
+      "peak_xy": [
+        111,
+        112
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.23767401805927135,
+      "null_cls_hit": 0.35,
+      "null_cls_iou": 0.07976430962504745
+    },
+    {
+      "defect_no": 99,
+      "rawno": 223,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": false,
+      "iou": 0.06905141490633719,
+      "mask_frac": 0.013811383928571428,
+      "peak_xy": [
+        80,
+        112
+      ],
+      "null_hit": 0.3,
+      "null_iou": 0.2017839300581011,
+      "null_cls_hit": 0.05,
+      "null_cls_iou": 0.05348693382079599
+    },
+    {
+      "defect_no": 112,
+      "rawno": 249,
+      "fold": 4,
+      "tissue": "Hail_damage_perf",
+      "cls": "Surface_Defect",
+      "kleynen_class": 1,
+      "pred": "Surface_Defect",
+      "correct": true,
+      "hit": true,
+      "iou": 0.05838979673176564,
+      "mask_frac": 0.01167889030612245,
+      "peak_xy": [
+        143,
+        111
+      ],
+      "null_hit": 0.5,
+      "null_iou": 0.21938172164948844,
+      "null_cls_hit": 0.1,
+      "null_cls_iou": 0.09222505701194753
+    }
+  ]
+}
