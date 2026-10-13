@@ -8,6 +8,7 @@ import torch
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
 from .config import CHANNEL_GROUPS, CLASS_TO_IDX, CLASSES, DATA_DIR, OUTPUT_DIR, SEED
+from .repro import make_generator, seed_worker
 
 
 def list_files(split, root=None):
@@ -141,13 +142,17 @@ def get_dataloaders(channel_group="full", batch_size=32, num_workers=0, use_weig
 
 def get_dataloaders_from_items(train_items, val_items, test_items, channel_group="full",
                                 batch_size=16, num_workers=0, use_weighted_sampler=True,
-                                augment_train=True):
+                                augment_train=True, seed=None):
     """Same as get_dataloaders() but built from explicit (filepath, label) item
     lists instead of the fixed train/val/test folders — used by k-fold CV, where
     the pool is re-split per fold. Channel stats are computed from train_items
     only (no leakage from val/test of that fold). Set augment_train=False for
-    ablation runs that need the exact same split logic without augmentation."""
+    ablation runs that need the exact same split logic without augmentation.
+    Pass `seed` to make the sampler / loader order reproducible (seeded generator +
+    worker_init_fn); the Python `random` used by augmentation is seeded by repro.set_seed."""
     mean, std = compute_stats_for_files(train_items)
+    generator = make_generator(seed) if seed is not None else None
+    worker_init_fn = seed_worker if seed is not None else None
 
     train_ds = ApplesDataset("train", channel_group, augment=augment_train, mean=mean, std=std, items=train_items)
     val_ds = ApplesDataset("val", channel_group, augment=False, mean=mean, std=std, items=val_items)
@@ -159,10 +164,13 @@ def get_dataloaders_from_items(train_items, val_items, test_items, channel_group
             counts[label] += 1
         weight_per_class = 1.0 / counts
         sample_weights = [weight_per_class[label] for _, label in train_ds.items]
-        sampler = WeightedRandomSampler(sample_weights, num_samples=len(sample_weights), replacement=True)
-        train_loader = DataLoader(train_ds, batch_size=batch_size, sampler=sampler, num_workers=num_workers)
+        sampler = WeightedRandomSampler(sample_weights, num_samples=len(sample_weights), replacement=True,
+                                        generator=generator)
+        train_loader = DataLoader(train_ds, batch_size=batch_size, sampler=sampler, num_workers=num_workers,
+                                  generator=generator, worker_init_fn=worker_init_fn)
     else:
-        train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+        train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=num_workers,
+                                  generator=generator, worker_init_fn=worker_init_fn)
 
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)
     test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)

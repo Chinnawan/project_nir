@@ -41,6 +41,7 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from .config import CLASSES, OUTPUT_DIR, PROJECT_ROOT, SEED
 from .dataset import compute_stats_for_files, get_dataloaders_from_items, list_files
 from .models import build_model
+from .repro import set_seed
 from .train_dl import DEVICE, run_training
 
 OUT = os.path.join(OUTPUT_DIR, "dl")
@@ -66,6 +67,10 @@ VARIANT_SPECS = {
     # single-band ablation: identical recipe to `nir` (no SE: SE on 1 channel is meaningless)
     "re_only": ("re", False, True, "raw", False),
     "ir_only": ("ir", False, True, "raw", False),
+    "bl_only": ("bl", False, True, "raw", False),
+    "gr_only": ("gr", False, True, "raw", False),
+    # GR + NIR: does adding one visible band to NIR help? (no SE)
+    "gr_nir": ("gr_nir", False, True, "raw", False),
 }
 
 
@@ -91,9 +96,15 @@ def get_fold_splits(pool, pool_labels):
 
 
 def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_group, use_se,
-             augment_train=True, name=None, ckpt_path=None):
+             augment_train=True, name=None, ckpt_path=None, seed=None, epochs=100, with_history=False):
+    """seed=None keeps the legacy behaviour (torch.manual_seed(42) only). With a seed, every
+    RNG is seeded + deterministic kernels (repro.set_seed). The train/val split inside the
+    fold always uses random_state=SEED so the data partition never changes with the seed."""
     name = name or f"{channel_group}{'_SE' if use_se else ''}"
-    torch.manual_seed(SEED)
+    if seed is None:
+        torch.manual_seed(SEED)
+    else:
+        set_seed(seed)
 
     train_items, val_items = train_test_split(
         trainval_items, test_size=VAL_FRACTION_OF_TRAINVAL,
@@ -102,14 +113,14 @@ def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_grou
 
     train_loader, val_loader, test_loader = get_dataloaders_from_items(
         train_items, val_items, test_items, channel_group=channel_group, batch_size=16,
-        augment_train=augment_train,
+        augment_train=augment_train, seed=seed,
     )
     model = build_model(channel_group, num_classes=len(CLASSES), pretrained=True, use_se=use_se).to(DEVICE)
 
     result = run_training(
         model, train_loader, val_loader, test_loader,
-        name=f"{name}_fold{fold_idx}", epochs=100, patience=10, lr=1e-4, save_dir=None,
-        channel_group=channel_group,
+        name=f"{name}_fold{fold_idx}", epochs=epochs, patience=10, lr=1e-4, save_dir=None,
+        channel_group=channel_group, return_history=with_history,
     )
 
     if ckpt_path:  # run_training leaves the best-val-loss weights loaded in `model`
@@ -122,8 +133,9 @@ def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_grou
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
 
-    return {
+    out = {
         "fold": fold_idx,
+        "best_val_loss": result["best_val_loss"],
         "test_accuracy": result["test_accuracy"],
         "test_macro_f1": result["test_macro_f1"],
         "epochs_trained": result["epochs_trained"],
@@ -133,6 +145,9 @@ def run_fold(fold_idx, trainval_items, trainval_labels, test_items, channel_grou
         "test_predictions": result["test_predictions"],  # same order as the fold's test_idx
         "test_labels": result["test_labels"],
     }
+    if with_history:
+        out["history"] = result["history"]
+    return out
 
 
 def _load_results():

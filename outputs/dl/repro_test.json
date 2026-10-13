@@ -1,0 +1,73 @@
+{
+  "epochs": 5,
+  "seed": 0,
+  "fold": 0,
+  "variants": {
+    "nir": {
+      "bit_identical": true,
+      "max_abs_diff_per_metric": {
+        "train_loss": 0.0,
+        "val_loss": 0.0,
+        "val_f1": 0.0,
+        "val_acc": 0.0
+      },
+      "test_macro_f1": [
+        0.8138528138528138,
+        0.8138528138528138
+      ],
+      "best_val_loss": [
+        0.3664003220097772,
+        0.3664003220097772
+      ],
+      "n_prediction_mismatches": 0,
+      "val_loss_per_epoch_run1": [
+        1.1364326065984265,
+        0.5577814250156797,
+        0.42463462722712547,
+        0.3669040521671032,
+        0.3664003220097772
+      ],
+      "val_loss_per_epoch_run2": [
+        1.1364326065984265,
+        0.5577814250156797,
+        0.42463462722712547,
+        0.3669040521671032,
+        0.3664003220097772
+      ],
+      "warnings_from_deterministic_mode": []
+    },
+    "nir_SE": {
+      "bit_identical": true,
+      "max_abs_diff_per_metric": {
+        "train_loss": 0.0,
+        "val_loss": 0.0,
+        "val_f1": 0.0,
+        "val_acc": 0.0
+      },
+      "test_macro_f1": [
+        0.8086526328872461,
+        0.8086526328872461
+      ],
+      "best_val_loss": [
+        0.3551022533712716,
+        0.3551022533712716
+      ],
+      "n_prediction_mismatches": 0,
+      "val_loss_per_epoch_run1": [
+        15.148636160225704,
+        0.5745357275009155,
+        0.38808527897144185,
+        0.36827376279337654,
+        0.3551022533712716
+      ],
+      "val_loss_per_epoch_run2": [
+        15.148636160225704,
+        0.5745357275009155,
+        0.38808527897144185,
+        0.36827376279337654,
+        0.3551022533712716
+      ],
+      "warnings_from_deterministic_mode": []
+    }
+  }
+}

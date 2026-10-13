@@ -48,7 +48,7 @@ def _run_epoch(model, loader, loss_fn, optimizer=None):
 
 
 def run_training(model, train_loader, val_loader, test_loader, name, epochs=100, patience=10, lr=1e-4,
-                  save_dir=None, channel_group=None):
+                  save_dir=None, channel_group=None, return_history=False):
     """Core train/val loop with early stopping + final test evaluation. Shared by
     train_one() (fixed train/val/test folders) and train_dl_kfold.py (per-fold
     dataloaders), so the training procedure stays identical between the two.
@@ -112,7 +112,7 @@ def run_training(model, train_loader, val_loader, test_loader, name, epochs=100,
         with open(os.path.join(save_dir, f"{name}_history.json"), "w") as f:
             json.dump(history, f, indent=2)
 
-    return {
+    out = {
         "name": name,
         "test_accuracy": test_acc,
         "test_macro_f1": test_f1,
@@ -124,6 +124,9 @@ def run_training(model, train_loader, val_loader, test_loader, name, epochs=100,
         "test_predictions": test_preds.tolist(),
         "test_labels": test_labels.tolist(),
     }
+    if return_history:
+        out["history"] = history
+    return out
 
 
 def train_one(channel_group, use_se=False, epochs=100, patience=10, batch_size=16, lr=1e-4, seed=SEED):

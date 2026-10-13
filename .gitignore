@@ -20,3 +20,6 @@ backups/
 __pycache__/
 *.pyc
 .claude/
+
+# --- logs of long runs (large, regenerated) ---
+outputs/logs/

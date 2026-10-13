@@ -16,6 +16,9 @@ CHANNEL_GROUPS = {
     "full": [0, 1, 2, 3],  # all 4 bands
     "re": [2],            # RE only (single-band ablation)
     "ir": [3],            # IR only (single-band ablation)
+    "bl": [0],            # BL only (single-band ablation)
+    "gr": [1],            # GR only (single-band ablation)
+    "gr_nir": [1, 2, 3],  # GR + RE + IR (does one visible band help NIR?)
 }
 
 SEED = 42
