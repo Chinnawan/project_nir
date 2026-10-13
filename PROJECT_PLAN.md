@@ -140,17 +140,25 @@ SE Block คือชิ้นส่วนเล็กๆ ที่แปะเ�
 
 ```
 src/
-  config.py            constants: classes, channel groups (visible/nir/full), paths
-  dataset.py           PyTorch Dataset/DataLoader, per-channel norm stats, weighted sampler
-  features.py          hand-crafted features (color stats + GLCM texture + band-ratio NDI) — Phase 2
-  train_classical.py   SVM / RandomForest / LightGBM + SHAP — Phase 2
-  models.py            EfficientNet-B0 (variable in_channels) + InputChannelSE — Phase 3/4
-  train_dl.py          training loop, early stopping (patience=10), 3 variants + SE variant — Phase 3/4
-  explain.py           Grad-CAM + Bootstrap CI + McNemar's test — Phase 5
+  config.py              constants: classes, channel groups (visible/nir/full/re/ir), paths
+  dataset.py             PyTorch Dataset/DataLoader, per-channel norm stats, weighted sampler, augmentation (train only)
+  features.py            hand-crafted features (color stats + GLCM texture + band-ratio NDI) — Phase 2
+  train_classical.py     SVM / RandomForest / LightGBM + SHAP — Phase 2
+  models.py              EfficientNet-B0 (variable in_channels) + InputChannelSE — Phase 3/4
+  train_dl.py            training loop (run_training), early stopping (patience=10), single-split variants — Phase 3/4
+  train_dl_kfold.py      5-fold CV, VARIANT_SPECS (visible/nir/full/full_SE/nir_SE/nir_no_aug/nir_SE_ss/re_only/ir_only), --variant, merges into kfold_results.json
+  ensemble_kfold.py      soft-vote ensemble of per-fold checkpoints (result: data leakage, not usable) + in-sample/OOF split
+  preprocess_ss.py       build Processed_Dataset_SS from SingleSpectra images + RawA<->SingleSpectra mapping (verified by image content)
+  gradcam_mask_eval.py   out-of-fold Grad-CAM vs pixel-level defect masks (Pointing Game, IoU, same-class null)
+  band_ablation_report.py single-band ablation report (re_only / ir_only / nir: paired folds, per-class F1, McNemar)
+  explain.py             Grad-CAM + Bootstrap CI + McNemar's test + per-class F1 — Phase 5
 outputs/
-  classical/           metrics.json, predictions.json, *_model.joblib, shap/*.png
-  dl/                  metrics.json, {variant}_best.pt, {variant}_history.json, gradcam/*.png
-  stats/               results.json (bootstrap CI + pairwise McNemar's)
+  classical/             metrics.json, predictions.json, *_model.joblib, shap/*.png
+  dl/                    metrics.json, kfold_results.json, ensemble_results.json, per_class_f1.json, gradcam_mask_eval.json,
+                         band_ablation.json, {variant}_best.pt, kfold_ckpt/*.pt, gradcam/ + gradcam_mask/ (images, not in git)
+  stats/                 results.json (bootstrap CI + pairwise McNemar's)
+  ss_mapping.json, ss_mapping_verification.json   RawA <-> SingleSpectra mapping + its image-content check
+Processed_Dataset/, Processed_Dataset_SS/        dataset cubes (proprietary, not in git)
 ```
 
 Rerun any phase with `.venv/Scripts/python.exe -m src.<module_name>`.
@@ -187,8 +195,8 @@ Rerun any phase with `.venv/Scripts/python.exe -m src.<module_name>`.
 ### ข้อค้นพบสำคัญที่ต้องอภิปรายตอน defense
 
 1. **NIR-only ชนะทุกตัวรวมถึง full 4-channel** — ผลตรงข้ามกับสมมติฐานตั้งต้นที่ว่า "ยิ่งรวมทุก band ยิ่งดี" ต้องอธิบายว่า visible bands (BL,GR) อาจเป็น noise สำหรับงานนี้มากกว่าจะช่วย เพราะตำหนิ (โดยเฉพาะ internal defect) ไม่ปรากฏใน visible channel ชัดเจน การรวมเข้ามาอาจทำให้โมเดล confuse
-2. **SE block (Phase 4) ทำให้ผลแย่ลงกว่า full ธรรมดา** (0.640 vs 0.745) ทั้งที่ตั้งใจให้ช่วย — สาเหตุที่เป็นไปได้: (a) dataset เล็กเกินไปสำหรับพารามิเตอร์เพิ่ม เกิด overfitting เร็วกว่า (early stop ที่ epoch 23 vs 27), (b) SE weight ที่เรียนรู้ได้ (0.45-0.59 ทุกตัวใกล้เคียงกัน ไม่ discriminative มาก) ยังไม่ได้ช่วยแยก band ที่สำคัญจริงออกจากกันชัดเจน — เป็นประเด็นเปิดให้ทดลองต่อ (เช่น ปรับ `se_reduction`, เพิ่ม regularization, หรือรัน seed หลายค่าแล้วดู variance)
-3. Grad-CAM ยืนยันว่าโมเดล full_SE โฟกัสตรงตำแหน่งรอยช้ำ/ตำหนิจริงในภาพตัวอย่างที่ทำนายถูก (ดู `outputs/dl/gradcam/`) — เป็นหลักฐานเชิงคุณภาพว่าโมเดล "เข้าใจ" ปัญหา แม้ตัวเลข F1 จะไม่ใช่ตัวที่ดีที่สุด
+2. **SE block (Phase 4) ทำให้ผลแย่ลงกว่า full ธรรมดา** (0.640 vs 0.745) ทั้งที่ตั้งใจให้ช่วย — สาเหตุที่เป็นไปได้: (a) dataset เล็กเกินไปสำหรับพารามิเตอร์เพิ่ม เกิด overfitting เร็วกว่า (early stop ที่ epoch 23 vs 27), (b) SE weight ที่เรียนรู้ได้ (0.45-0.59 ทุกตัวใกล้เคียงกัน ไม่ discriminative มาก) ยังไม่ได้ช่วยแยก band ที่สำคัญจริงออกจากกันชัดเจน — เป็นประเด็นเปิดให้ทดลองต่อ (เช่น ปรับ `se_reduction`, เพิ่ม regularization, หรือรัน seed หลายค่าแล้วดู variance) **[แก้ 2026-10-13: ข้อสรุปนี้ไม่ robust — ผล k-fold และ 3 seed แสดงว่า SE ไม่ได้แย่ลงหรือดีขึ้นอย่างมีนัยสำคัญ (full_SE 0.737 vs full 0.754, ต่างไม่เกินความแกว่ง) ความต่างในรอบเดียวนี้เป็น noise]**
+3. Grad-CAM ยืนยันว่าโมเดล full_SE โฟกัสตรงตำแหน่งรอยช้ำ/ตำหนิจริงในภาพตัวอย่างที่ทำนายถูก (ดู `outputs/dl/gradcam/`) — เป็นหลักฐานเชิงคุณภาพว่าโมเดล "เข้าใจ" ปัญหา แม้ตัวเลข F1 จะไม่ใช่ตัวที่ดีที่สุด **[แก้ 2026-10-13: วัดเชิงปริมาณกับ mask ตำหนิจริงทั้ง 246 ภาพแล้ว ไม่สนับสนุนข้อความนี้ — ดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage), Surface ไม่ต่างจากสุ่ม ดูหัวข้อ "งานที่ 2 — ตรวจ Grad-CAM เชิงปริมาณ"]**
 
 ### ข้อจำกัดที่ควรระบุในเล่ม
 
@@ -203,7 +211,11 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 .venv\Scripts\python.exe -m src.dataset            # ตรวจ class counts + channel stats
 .venv\Scripts\python.exe -m src.train_classical    # Phase 2
 .venv\Scripts\python.exe -m src.train_dl           # Phase 3+4 (ใช้ GPU, ~6 นาทีรวม)
-.venv\Scripts\python.exe -m src.explain            # Phase 5
+.venv\Scripts\python.exe -m src.explain            # Phase 5 (+ per-class F1)
+.venv\Scripts\python.exe -m src.train_dl_kfold --variant <name>   # k-fold: nir, nir_SE, nir_no_aug, nir_SE_ss, re_only, ir_only, ... (~8-10 นาที/variant; ข้ามถ้ามีผลครบ 5 fold แล้ว, --force เพื่อรันทับ)
+.venv\Scripts\python.exe -m src.preprocess_ss --verify-content    # สร้าง Processed_Dataset_SS (ก่อนรัน nir_SE_ss)
+.venv\Scripts\python.exe -m src.gradcam_mask_eval                  # ต้องมี checkpoint nir_SE_ss_fold0-4
+.venv\Scripts\python.exe -m src.band_ablation_report               # ต้องมีผล re_only, ir_only, nir
 ```
 
 ## Data Augmentation + K-Fold Cross-Validation — เสร็จแล้ว
@@ -336,14 +348,14 @@ cd D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
 .venv\Scripts\python.exe -m src.train_dl_kfold --variant nir_SE
 ```
 
-### ผลลัพธ์ nir_SE — [x] รันเสร็จแล้ว 2026-09-15 🏆 **ตัวเลขที่ดีที่สุดของทั้งโปรเจก**
+### ผลลัพธ์ nir_SE (การรันครั้งเดียว) — [x] รันเสร็จ 2026-09-15 ~~🏆 ตัวเลขที่ดีที่สุดของทั้งโปรเจก~~ **[ถูกแทนที่ 2026-10-13: เฉลี่ย 3 seed ได้ 0.847 ไม่ต่างจาก `nir` 0.843 — ตัวเลข 0.862 เป็นรอบที่โชคดี ดูหัวข้อ "ผล multi-seed (รันข้ามคืน)"]**
 
 | Model | Macro F1 (5-fold mean±std) | Accuracy | Per-fold F1 |
 |---|---|---|---|
 | nir (เดิม, ไม่มี SE) | 0.843 ± 0.023 | 89.9% ± 2.0% | — |
 | **nir_SE (ใหม่)** | **0.862 ± 0.025** | **91.7% ± 2.1%** | [0.892, 0.878, 0.859, 0.818, 0.862] |
 
-**ข้อสรุป**: SE block บน NIR-only ช่วยดันขึ้นจริง +0.019 F1 — **nir_SE คือโมเดลสุดท้ายที่ควรใช้เป็นผลหลักของธีสิส** (F1 0.862±0.025, Accuracy 91.7%±2.1%)
+~~**ข้อสรุป**: SE block บน NIR-only ช่วยดันขึ้นจริง +0.019 F1 — nir_SE คือโมเดลสุดท้ายที่ควรใช้เป็นผลหลักของธีสิส (F1 0.862±0.025, Accuracy 91.7%±2.1%)~~ **[ถูกหักล้าง 2026-10-13: ผล 3 seed × 5 fold: `nir_SE` − `nir` = +0.003 (95% CI −0.012..+0.018, เครื่องหมายเดียวกันเพียง 7/15 คู่) → SE ไม่ได้ช่วยเกินความแกว่งของการเทรน ห้ามใช้ 0.862 เป็นผลหลัก ใช้ตัวเลข multi-seed แทน]**
 
 **SE channel importance (RE, IR)** — สม่ำเสมอมากทุก fold: RE ≈ 0.558-0.565, IR ≈ 0.375-0.379 ~~→ ภายใน NIR เอง Red Edge สำคัญกว่า Infrared เกือบเท่าตัว~~ **[ถูกหักล้างแล้ว 2026-10-13 โดยการเทรนแบนด์เดี่ยว (หัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง"): RE-only ≈ IR-only ≈ RE+IR ไม่ต่างกัน — ห้ามใช้ข้อสรุปนี้ในเล่ม; ค่า SE weight ที่นิ่งเกือบเท่ากันทุก fold/ทุกแหล่งภาพน่าจะสะท้อนการ initialize + scale ของ input มากกว่าความสำคัญของแบนด์]**
 
@@ -573,6 +585,141 @@ Per-class F1 (pooled out-of-fold ทั้ง 819 ภาพ):
 3. แยก commit ตามชุดงานให้อ่าน history ง่าย (เช่น 1: nir_SE + nir_no_aug, 2: SingleSpectra + Grad-CAM mask eval, 3: single-band ablation) — ถ้าแยกไม่ได้เพราะแก้ไฟล์เดียวกัน ให้รวมเป็น commit เดียวพร้อมข้อความที่ระบุครบ
 4. push ขึ้น `main` ของ github.com/Chinnawan/project_nir แล้วรายงาน hash ของ commit
 
+## งานที่ต้องทำต่อ — รันข้ามคืน: Multi-seed ทุก variant ด้วย protocol เดียว (2026-10-13)
+
+### เหตุผล
+
+งานที่ 4 พบว่าเทรน `nir` สูตรเดิม 2 รอบ F1 ต่อ fold ต่างกันได้ถึง **0.065** (GPU non-deterministic + `random` ของ Python ที่ augmentation ใช้ไม่ได้ seed — ตรวจแล้ว: `dataset.py` ใช้ `random.random()`/`random.choice()` แต่มีแค่ `torch.manual_seed`) ความแกว่งนี้ **ใหญ่กว่า** ความต่างหลายตัวที่เคยสรุปว่า "ช่วย":
+
+| ข้อสรุป | ความต่าง | สถานะ |
+|---|---|---|
+| NIR > Visible | +0.18 | น่าจะจริง (ใหญ่กว่า noise มาก) |
+| NIR > Vis+NIR (full) | +0.12 | น่าจะจริง |
+| DL > classical ML | +0.2 ขึ้นไป | น่าจะจริง แต่ classical ML ยังวัดแบบ single split |
+| Augmentation ช่วย (nir vs nir_no_aug) | +0.026 | **ยังไม่แน่** → ผล 3 seed: +0.025 ก้ำกึ่ง ยังไม่ยืนยัน (ดู "ผล multi-seed") |
+| SE ช่วย (nir_SE vs nir) | +0.019 | **ยังไม่แน่** → ผล 3 seed: +0.003 ไม่ต่าง (ดู "ผล multi-seed") |
+| RE vs IR | −0.006 | ไม่ต่าง |
+
+เป้าหมายรอบนี้: ทุกตัวเลขในเล่มมาจาก protocol เดียว ทำซ้ำได้ และแยก "ผลจริง" ออกจาก "ความแกว่งของการเทรน" ได้ + เติมแบนด์เดี่ยวให้ครบ 4 แบนด์ (ตอบ objective 3.1 ทีละแบนด์)
+
+### ขั้นที่ A — ทำให้เทรนซ้ำได้ (ทำก่อนทุกอย่าง)
+
+1. ฟังก์ชัน `set_seed(seed)` เรียกตอนเริ่มทุก (variant, seed, fold): seed `random`, `numpy`, `torch`, `torch.cuda` (all), ตั้ง `torch.backends.cudnn.deterministic=True`, `benchmark=False`, `os.environ["PYTHONHASHSEED"]`; DataLoader ใช้ `generator` ที่ seed แล้ว + `worker_init_fn` ที่ seed `random`/`numpy` ในแต่ละ worker; WeightedRandomSampler ใช้ generator ที่ seed แล้ว
+2. ลอง `torch.use_deterministic_algorithms(True, warn_only=True)` (ถ้าต้องใช้ ให้ตั้ง `CUBLAS_WORKSPACE_CONFIG=:4096:8`) — ถ้ามี op ที่ไม่รองรับ ให้ใช้ warn_only และบันทึกชื่อ op ไว้
+3. **Fold split คงที่** (StratifiedKFold n=5, random_state=42 เหมือนเดิม) — seed ใหม่เปลี่ยนแค่การเทรน (init head, ลำดับ batch, augmentation) fold จึงยังเทียบรายคู่กับผลเดิมได้
+4. **ทดสอบความทำซ้ำได้**: รัน `nir` fold 0 seed 0 **2 ครั้ง** (จำกัด epoch ให้สั้นได้ เช่น 5 epoch) เทียบ val loss/test F1 → บันทึกผลว่าตรงกันเป๊ะหรือต่างเท่าไร ถ้ายังต่าง ให้บันทึกขนาดความต่างไว้เป็นข้อจำกัด แล้วไปต่อ (multi-seed จะครอบคลุมส่วนที่เหลือ)
+
+### ขั้นที่ B — เพิ่ม variant ใหม่
+
+- `bl_only` (BL), `gr_only` (GR): recipe เหมือน `re_only`/`ir_only` (ไม่มี SE, มี aug, raw) → ได้แบนด์เดี่ยวครบ 4 แบนด์
+- `gr_nir` (GR+RE+IR, ไม่มี SE, มี aug, raw): ตอบคำถามที่จะถามอาจารย์ว่า "เลือก visible บางแบนด์แล้วช่วย NIR ไหม"
+- เพิ่ม channel group `bl`, `gr`, `gr_nir` ใน `CHANNEL_GROUPS`
+
+### ขั้นที่ C — สคริปต์รันข้ามคืน
+
+สร้าง `src/run_multiseed.py` + `run_overnight.bat` (ให้ผู้ใช้เปิดรันเองใน terminal แยก ไม่ผูกกับ session ของ Claude Code):
+1. **Seeds = 0, 1, 2** × 5 fold × variant ตามลำดับความสำคัญ (ถ้าเครื่องดับกลางคืน ของสำคัญจะเสร็จก่อน):
+   1. classical ML (SVM/RF/LightGBM) 5-fold ด้วย fold เดียวกัน — เร็ว, ทำครั้งเดียวพอ (deterministic) เก็บ per-fold + prediction
+   2. `nir`, `nir_SE`, `nir_no_aug`
+   3. `re_only`, `ir_only`, `bl_only`, `gr_only`
+   4. `visible`, `full`, `full_SE`, `gr_nir`
+2. **ห้ามทับ `kfold_results.json` เดิม** — เขียนผลลง `outputs/dl/multiseed_results.json` **ทันทีหลังจบแต่ละ fold** (เก็บ F1, acc, per-class F1, confusion matrix, epochs, SE weights ถ้ามี, และ prediction ต่อภาพ)
+3. **Resume ได้**: ถ้า (variant, seed, fold) มีในไฟล์แล้ว ให้ข้าม — สั่งรันซ้ำหลังเครื่องดับก็ต่อจากจุดเดิม
+4. ถ้า fold ไหน error ให้ log แล้วไปต่อ ไม่ให้ทั้ง batch ตาย log ทั้งหมดลง `outputs/logs/overnight_YYYYMMDD.log` (พร้อมเวลาเริ่ม/จบแต่ละ fold)
+5. ไม่ต้องเซฟ checkpoint ทุกตัว (เปลืองที่) ยกเว้น `nir_SE` seed 0 (เผื่อ demo / Grad-CAM)
+6. ก่อนผู้ใช้รันจริง: **smoke test** (2 variant × 1 seed × 1 fold × 2 epoch) ว่ารันจบ เขียน json ถูก และ resume ข้ามได้ แล้วลบผล smoke test ออกจาก json
+7. ประเมินเวลาจริงจาก smoke test แล้วแจ้งผู้ใช้ (คาดราว 12 variant × 3 seed × ~9 นาที ≈ 5–7 ชม. ถ้า deterministic mode ช้าลง ให้บอก)
+
+### ขั้นที่ D — สคริปต์สรุปผล (เขียนไว้ก่อน รันตอนเช้า)
+
+`src/multiseed_report.py` → `outputs/dl/multiseed_summary.json` + พิมพ์ตาราง:
+1. ต่อ variant: Macro F1 / Accuracy = mean ± std ของค่าเฉลี่ย 5-fold ข้าม 3 seed, และ mean ± std ข้ามทั้ง 15 run + per-class F1 (pooled out-of-fold)
+2. **การเปรียบเทียบรายคู่** (จับคู่ด้วย seed+fold เดียวกัน): nir_SE−nir, nir−nir_no_aug, nir−full, nir−visible, re−ir, gr_nir−nir, แบนด์เดี่ยวทั้ง 4 แบนด์ไล่คู่, DL ตัวดีสุด−classical ตัวดีสุด → รายงานผลต่างเฉลี่ย, 95% CI (bootstrap ข้าม 15 คู่), และนับว่ากี่คู่จาก 15 ที่เครื่องหมายเดียวกัน
+3. **เกณฑ์ตัดสิน**: ถือว่า "ต่างจริง" เมื่อ CI ไม่คร่อม 0 **และ** เครื่องหมายเดียวกัน ≥ 12/15 คู่ — ไม่เข้าเกณฑ์ให้เขียนว่า "ไม่ต่างเกินความแกว่งของการเทรน"
+4. ความแกว่งจาก seed: ต่อ fold, std ข้าม 3 seed (ใช้ตอบว่าการเทรนซ้ำแกว่งแค่ไหนหลังล็อก seed)
+
+**ห้ามสรุปผลใน PROJECT_PLAN.md เอง** — รอสรุปกับผู้ใช้ตอนเช้า
+
+### ขั้นที่ E — (ถ้า batch หลักเสร็จก่อนเช้า) Grad-CAM ชั้นละเอียดขึ้น
+
+บน checkpoint `nir_SE_ss` เดิม รัน `gradcam_mask_eval` เพิ่มที่ layer ก่อนสุดท้าย (14×14) เทียบ Pointing/IoU กับ null แบบเดิม → `outputs/dl/gradcam_mask_eval_14x14.json` ทำเป็นขั้นสุดท้ายของ `run_overnight.bat`
+
+### สถานะการเตรียม (2026-10-13): ขั้น A–D เสร็จ + smoke test ผ่าน — batch จริงรันเสร็จแล้ว (ดู "ผล multi-seed" ด้านล่าง)
+
+**ขั้น A (ทำซ้ำได้)** — `src/repro.py` (`set_seed`: random/numpy/torch/cuda + `cudnn.deterministic` + `use_deterministic_algorithms(True, warn_only=True)` + `CUBLAS_WORKSPACE_CONFIG`; generator/worker_init_fn); `dataset.get_dataloaders_from_items(seed=)` ใช้ generator ที่ seed แล้วกับ WeightedRandomSampler/DataLoader; `train_dl_kfold.run_fold(seed=, epochs=, with_history=)` fold split และ inner train/val split ยังคงที่ (random_state=42) seed เปลี่ยนแค่ head init / ลำดับ batch / augmentation
+- **ทดสอบความทำซ้ำได้ (`python -m src.run_multiseed --repro-test`, ผลที่ `outputs/dl/repro_test.json`)**: `nir` และ `nir_SE` fold 0 seed 0 รัน 2 ครั้งใน**โปรเซสแยก** (5 epoch) → **ตรงกันแบบ bit-identical** (train/val loss ทุก epoch ต่าง 0.0, prediction ต่าง 0 ภาพ, test F1 0.813853 = 0.813853 และ 0.808653 = 0.808653), ไม่มี warning จาก deterministic mode (ไม่มี op ที่ไม่รองรับ) — ข้อจำกัด: ทดสอบเพียง 5 epoch / 1 fold / 2 โครงสร้างบน GPU เครื่องนี้; ผลไม่ได้ยืนยันว่าเครื่องอื่น/เวอร์ชัน torch อื่นจะได้ตัวเลขเดียวกัน
+- ราคาของ deterministic mode: ~4.1–5.0 วินาที/epoch (re_only 4.14, nir 4.77, nir_SE 4.87, gr_nir 4.94, full 5.04) ช้ากว่าแบบเดิม (~4.2 วินาที/epoch ของ nir) ราว 13%
+
+**ขั้น B** — channel group `bl`, `gr`, `gr_nir` ใน `config.py`; variant `bl_only`, `gr_only`, `gr_nir` ใน `VARIANT_SPECS` (recipe เหมือน `re_only`: ไม่มี SE, มี aug, raw) รวม DL 11 variant (นับ classical เป็นกลุ่มแยก — แผนเดิมเขียน 12)
+
+**ขั้น C** — `src/run_multiseed.py` + `run_overnight.bat`: seeds 0,1,2 × 5 fold; ลำดับ classical → [nir, nir_SE, nir_no_aug] → [re, ir, bl, gr] → [visible, full, full_SE, gr_nir] (ในแต่ละกลุ่ม: seed → variant → fold); เขียน `outputs/dl/multiseed_results.json` ด้วย atomic write หลังจบทุก fold (ไม่แตะ `kfold_results.json`); resume ได้ (ข้าม key `variant|seedN|foldK` ที่มีแล้ว); fold ที่ error ถูก log + บันทึกใน `errors` แล้ว batch ไปต่อ (ทดสอบด้วยการจำลองความล้มเหลวแล้ว; รันซ้ำจะลอง fold ที่ล้มใหม่); log ลง `outputs/logs/overnight_YYYYMMDD.log` พร้อมเวลาเริ่ม/จบและ ETA ต่อ fold; checkpoint เก็บเฉพาะ `nir_SE` seed 0 (`outputs/dl/kfold_ckpt/nir_SE_seed0_fold*.pt`); classical (SVM/RF/LightGBM, hyperparameter เดิมของ Phase 2, LightGBM ตั้ง `deterministic=True`) รัน 5 fold ด้วย fold เดียวกันครั้งเดียว เก็บเป็น seed 0 (deterministic) และใช้ซ้ำทุก seed ตอนจับคู่; ขอให้ Windows ไม่ idle-sleep ระหว่างรัน (`SetThreadExecutionState` ระดับโปรเซส หมดเมื่อโปรเซสจบ — ไม่แก้ power setting ของเครื่อง; ปิดฝาโน้ตบุ๊กยังทำให้เครื่องหลับ)
+- **Smoke test (ผ่าน)** — `run_overnight.bat --smoke`: classical fold 0 + `nir`/`nir_SE` seed 0 fold 0 2 epoch เขียน json ถูก, รันซ้ำแล้วข้ามทั้งหมด ("0 runs to do"), ไม่มี checkpoint หลุดจาก smoke; ผล smoke อยู่ใน json แยกและลบทิ้งแล้ว (`multiseed_results.json` จริงยังไม่ถูกสร้าง) — ตัวเลข F1 ของ `nir` fold 0 2 epoch (0.7455) ตรงกันทุกครั้งที่รัน
+- ส่วนเบี่ยงจากแผน: bat รัน `multiseed_report` ต่อท้ายอัตโนมัติ (บันทึกที่ `outputs/logs/overnight_report.txt`) เพื่อให้ตอนเช้ามีตารางพร้อม — สคริปต์นี้แค่พิมพ์ตัวเลข/บอก verdict ตามเกณฑ์ ไม่ได้สรุปผลลงแผน; **ขั้น E (Grad-CAM 14×14) ยังไม่ได้ทำ** (อยู่นอกขอบเขตที่สั่ง "ขั้น A ถึง D")
+
+**เวลาประมาณ** (วัดจริง: วินาที/epoch × epoch เฉลี่ยของแต่ละ variant จากรอบ k-fold ก่อนหน้า + overhead ~3 วินาที/fold; `bl_only`, `gr_only`, `gr_nir` ใช้ค่า epoch ของ variant ใกล้เคียง): ~8–11.5 นาที/(variant, seed) × 11 variant × 3 seed ≈ **5.1 ชั่วโมง** (ช่วงที่เป็นไปได้ ~4.1–6.6 ชม. ขึ้นกับจำนวน epoch ที่ early stopping หยุด และอุณหภูมิ/พลังงานของโน้ตบุ๊ก GPU RTX 3050 Ti 4GB) + classical ~1 นาที ถ้ารันเป็น 165 fold-run ทั้งหมด
+
+**ขั้น D** — `src/multiseed_report.py` (รัน: `.venv\Scripts\python.exe -m src.multiseed_report` → `outputs/dl/multiseed_summary.json`): ตารางต่อ variant, การเปรียบเทียบรายคู่ (จับคู่ seed+fold, bootstrap 95% CI 10,000 ครั้ง, นับคู่ที่เครื่องหมายเดียวกัน, เกณฑ์ "ต่างจริง" = CI ไม่คร่อม 0 และ ≥ 12/15), seed noise ต่อ fold — ทดสอบกับข้อมูลจำลองที่ฝังความต่างจริงไว้ (ตัดสินถูก) และกับข้อมูล smoke ที่ไม่ครบ (แก้ข้อบกพร่องที่พบ: คู่ที่มีไม่ครบ 15 คู่จะไม่ถูกตัดสิน แสดงเป็น INCOMPLETE แทนที่จะอ้างว่า "REAL") ข้อควรระวังในการอ่าน: 15 คู่ใช้ 5 fold ร่วมกัน CI จึงเป็นค่าประมาณ; classical ถูก broadcast ข้าม seed ตอนจับคู่
+
+**คำสั่งเปิดรัน** (เปิด terminal แยก; รันซ้ำคำสั่งเดิมเพื่อทำต่อหลังเครื่องดับ):
+```
+cd /d D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
+run_overnight.bat
+```
+
+### ผล multi-seed (รันข้ามคืน เสร็จ 2026-10-13) — **ตัวเลขอ้างอิงสำหรับเล่ม (แทนตัวเลขรอบเดียวด้านบนทั้งหมด)**
+
+รันจริง 01:15–06:29 น. = **5.2 ชม.** (ประมาณไว้ 5.1) สำเร็จ **180/180 run** (DL 11 variant × 3 seed × 5 fold = 165 + classical 3 โมเดล × 5 fold = 15), **error 0**, ไม่มี run ชนเพดาน 100 epoch, warning ใน log มีเพียง deprecation ของ sklearn (`SVC(probability=True)`) ผลดิบ `outputs/dl/multiseed_results.json`, สรุป `outputs/dl/multiseed_summary.json`, รายงาน `outputs/logs/overnight_report.txt` (log ไม่ขึ้น git) protocol: seed ล็อก + deterministic kernels (ตรวจแล้วว่าทำซ้ำได้ bit-identical, `outputs/dl/repro_test.json`), fold split คงที่, ภาพ raw, ไม่มี ensemble/focal loss
+
+**ตารางหลัก** (macro-F1 / accuracy = ค่าเฉลี่ยของ mean 5-fold ข้าม 3 seed; ± แรก = std ระหว่าง seed; "std ทุก run" = std ของ F1 ระดับ fold-run ทั้ง 15 ค่า สะท้อนความต่างระหว่าง fold + seed; per-class = F1 รวม out-of-fold เฉลี่ยข้าม seed)
+
+| Variant | Macro F1 | Accuracy | std ทุก run | Healthy / Internal / Surface F1 |
+|---|---|---|---|---|
+| RE only | 0.853 ± 0.007 | 90.6% | 0.032 | 0.949 / 0.806 / 0.803 |
+| NIR + SE (`nir_SE`) | 0.847 ± 0.008 | 90.6% | 0.034 | 0.953 / 0.790 / 0.798 |
+| NIR (RE+IR) | 0.843 ± 0.008 | 90.2% | 0.044 | 0.950 / 0.794 / 0.786 |
+| IR only | 0.843 ± 0.006 | 89.8% | 0.036 | 0.943 / 0.825 / 0.761 |
+| NIR ไม่มี augmentation | 0.818 ± 0.011 | 88.9% | 0.050 | 0.940 / 0.751 / 0.769 |
+| GR + NIR | 0.810 ± 0.009 | 88.4% | 0.044 | 0.938 / 0.729 / 0.765 |
+| full (4 แบนด์) | 0.754 ± 0.012 | 85.0% | 0.043 | 0.914 / 0.625 / 0.729 |
+| BL only | 0.752 ± 0.009 | 84.1% | 0.023 | 0.905 / 0.623 / 0.728 |
+| GR only | 0.752 ± 0.019 | 84.2% | 0.041 | 0.907 / 0.645 / 0.709 |
+| full + SE | 0.737 ± 0.026 | 83.2% | 0.031 | 0.903 / 0.614 / 0.699 |
+| visible (BL+GR) | 0.688 ± 0.015 | 80.3% | 0.042 | 0.885 / 0.526 / 0.651 |
+| classical RandomForest | 0.589 (1 run) | 71.3% | 0.045 | 0.809 / 0.552 / 0.406 |
+| classical SVM | 0.573 (1 run) | 66.9% | 0.063 | 0.771 / 0.530 / 0.417 |
+| classical LightGBM | 0.546 (1 run) | 72.3% | 0.049 | 0.826 / 0.524 / 0.290 |
+
+(classical deterministic จึงรันครั้งเดียวต่อ fold; Surface_Defect เป็น class ที่อ่อนที่สุดในทุกโมเดล)
+
+**การเปรียบเทียบรายคู่** (A − B ใน macro-F1, จับคู่ seed+fold, 15 คู่; CI 95% และเกณฑ์ "ต่างจริง" = CI ไม่คร่อม 0 และ ≥12/15 คู่เครื่องหมายเดียวกัน; คอลัมน์ "fold" = ตรวจซ้ำโดยเฉลี่ย 3 seed ต่อ fold แล้วนับ 5 fold เพราะ 15 คู่ใช้ 5 fold ร่วมกัน CI ของสคริปต์จึงแคบกว่าความจริง)
+
+| คู่ | ผลต่างเฉลี่ย | CI 95% (สคริปต์) | คู่ที่เครื่องหมายเดียวกัน | fold ที่เครื่องหมายเดียวกัน | สรุป |
+|---|---|---|---|---|---|
+| NIR − full | +0.089 | +0.066..+0.116 | 15/15 | 5/5 | **ต่างจริง** |
+| NIR − visible | +0.156 | +0.127..+0.182 | 15/15 | 5/5 | **ต่างจริง** |
+| RE − BL / IR − GR / NIR − GR (แบนด์เดี่ยว) | +0.101 / +0.091 / +0.091 | ไม่คร่อม 0 | 15/15, 14/15 | 5/5 | **ต่างจริง** (NIR band ≫ visible band) |
+| visible − BL only | −0.065 | — | — | 5/5 | BL+GR รวมกัน**แย่กว่า** BL เดี่ยว |
+| RE only − RandomForest (DL ดีสุด − classical ดีสุด) | +0.264 | +0.239..+0.290 | 15/15 | 5/5 | **ต่างจริง** (+0.19..+0.33 ทุก fold) |
+| RE − IR | +0.010 | −0.012..+0.030 | 10/15 | 4/5 | ไม่ต่างเกินความแกว่ง |
+| BL − GR | −0.000 | −0.020..+0.019 | 5/15 | — | ไม่ต่าง |
+| `nir_SE` − `nir` | +0.003 | −0.012..+0.018 | 7/15 | 3/5 | **ไม่ต่าง (SE ไม่ช่วย)** |
+| `nir` − `nir_no_aug` (augmentation) | +0.025 | −0.000..+0.047 | 12/15 | 4/5 (fold 0 = −0.013) | **ก้ำกึ่ง ยังไม่ยืนยัน** (CI แตะ 0; ระดับ fold CI −0.009..+0.059) |
+| GR+NIR − `nir` | −0.034 | −0.054..−0.012 | 12/15 | 4/5 (CI ระดับ fold −0.074..+0.007) | สัญญาณว่าเพิ่ม GR ทำให้แย่ลง แต่ **ยังไม่ใช่ข้อสรุป** |
+
+**ข้อสรุปสำหรับเล่ม/defense (ตัวเลขนี้แทนข้อสรุปเดิม)**
+1. **ยืนยันแล้ว**: (ก) NIR ดีกว่า visible และ full 4 แบนด์อย่างชัดเจนทุก fold (ข) แบนด์ NIR เดี่ยว (RE หรือ IR) ให้ผลระดับเดียวกับ RE+IR (≈0.84–0.85) และดีกว่า BL หรือ GR เดี่ยวราว +0.09–0.10 (ค) DL ดีกว่า classical ML (ที่ดีที่สุด RF 0.589) ราว +0.26 ทุก fold จึงตอบได้ว่า "ทำไมต้อง deep learning" ด้วยตัวเลขที่วัดด้วย protocol เดียวกัน
+2. **ตัดออก**: "SE block ช่วย" และ "nir_SE คือโมเดลที่ดีที่สุด (0.862)" — ไม่มีโมเดลไหนในกลุ่ม NIR (RE, IR, RE+IR, +SE) ที่ดีกว่ากันเกินความแกว่ง ตัวเลข 0.862 เป็นรอบเดียวที่โชคดี (เฉลี่ย 3 seed = 0.847) ถ้าต้องระบุ "โมเดลหลัก" ให้ใช้ `nir` (RE+IR) หรือ `nir_SE` พร้อม mean±std ของ 3 seed และบอกตรงๆ ว่าไม่ต่างจากแบนด์เดี่ยว; SE weight ใช้เป็นหลักฐานความสำคัญของแบนด์ไม่ได้ (ดูงานที่ 4)
+3. **ยังสรุปไม่ได้**: augmentation ช่วยหรือไม่ (แนวโน้มบวก +0.025 แต่ CI แตะ 0 และ fold 0 ย้อนทาง — เขียนเล่มว่า "แนวโน้มช่วยเล็กน้อย ยังไม่มีนัยสำคัญ" ไม่ใช่ "ช่วยจริง" ซึ่งเป็นข้อสรุปเดิมจาก ablation รอบเดียวที่ต้องแก้) และ GR ทำให้ NIR แย่ลงหรือไม่
+4. **ข้อสังเกตใหม่ที่ยังไม่ทราบสาเหตุ**: F1 ลดลงตามจำนวนช่อง — 1 ช่อง NIR 0.853 → 2 ช่อง 0.843 → 3 ช่อง (GR+NIR) 0.810 → 4 ช่อง 0.754 และ BL+GR (0.688) แย่กว่าแต่ละแบนด์เดี่ยว (0.752, 5/5 fold) สมมุติฐาน (**ยังไม่ได้ทดสอบ**): conv ชั้นแรกถูก init ด้วยน้ำหนัก RGB เฉลี่ยแล้วทำซ้ำข้ามช่อง ทำให้สเกลสัญญาณเข้าโตตามจำนวนช่อง หรืออาจเป็น overfitting จากข้อมูลน้อย — อย่าเขียนในเล่มเป็นข้อเท็จจริงจนกว่าจะทดสอบ (เช่น ปรับสเกล init เป็น 3/จำนวนช่อง)
+5. **ความแกว่งหลังล็อก seed ยังมีอยู่**: std ของ F1 ต่อ fold ข้าม 3 seed เฉลี่ย 0.020–0.036 (สูงสุด 0.061, `gr_only` fold 2) การล็อก seed ทำให้ทำซ้ำได้ ไม่ได้ทำให้ผลนิ่ง — ความต่างระหว่าง variant ที่เล็กกว่า ~0.03 อย่าเชื่อจากการรันครั้งเดียว และ F1 ระดับ fold-run มี std 0.03–0.06 (ต้องรายงานคู่กับค่าเฉลี่ย)
+6. ตัวเลข k-fold รอบเดียวเดิมใกล้เคียงค่าเฉลี่ย 3 seed (nir 0.843→0.843, nir_no_aug 0.817→0.818, ir_only 0.844→0.843, full_SE 0.734→0.737) ยกเว้นที่ได้ค่าสูง/ต่ำกว่าปกติ (nir_SE 0.862→0.847, re_only 0.839→0.853, full 0.724→0.754, visible 0.666→0.688)
+
+**ข้อจำกัด**: (ก) 3 seed × 5 fold บน 819 ภาพ; fold ถูกใช้ร่วมกันข้ามคู่ จึงตีความ CI ของสคริปต์ว่าเป็นค่าประมาณ (ข) classical รันครั้งเดียว (ค) ทำซ้ำได้ bit-identical ตรวจเพียง 5 epoch/1 fold/2 โครงสร้างบน GPU เครื่องนี้ (RTX 3050 Ti) ไม่รับประกันข้ามเครื่อง/เวอร์ชัน torch (ง) ขั้น E (Grad-CAM 14×14) ยังไม่ได้ทำ
+
+### หลังรันเสร็จ (ตอนเช้า) — ทำแล้ว
+
+commit + push ตาม workflow Version Control (ไม่ใช้ `git add -A`, ตรวจ `gh auth status` ว่า active เป็น Chinnawan) รวมการแก้ PROJECT_PLAN.md — ดู git log
+
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
 - [ ] เขียนเล่มวิทยานิพนธ์โดยใช้ผลลัพธ์ข้างต้น + รูป Grad-CAM + ตาราง SHAP + ผล k-fold (ปรับข้อสรุปเรื่อง SE block ตามผล k-fold ข้อ 2 ด้านบน) — **ห้ามเอาตัวเลข ensemble มาใช้เป็นผลหลัก เพราะมี data leakage (ดูหัวข้อ ensembling ด้านบน)**
@@ -582,7 +729,7 @@ Per-class F1 (pooled out-of-fold ทั้ง 819 ภาพ):
 - [x] Ensembling จาก 5-fold models (NIR-only, full_SE) — พบว่าทำไม่ได้อย่างยุติธรรมบน dataset นี้ (data leakage) สรุปว่ายังคงใช้ผล 5-fold CV เดิมเป็นหลัก ไม่ใช้ ensemble
 - [x] เช็ค Per-Class F1 — สรุปว่า NIR-only ไม่ต้องทำ Focal Loss เพิ่ม (full_SE ควรทำแต่ไม่ใช่โมเดลหลัก)
 - [x] Backup ผลลัพธ์ปัจจุบันไว้ที่ `backups/best_results_20260915_181726/` ก่อนรัน experiment ใหม่ + ตั้ง git repo push ขึ้น [github.com/Chinnawan/project_nir](https://github.com/Chinnawan/project_nir) (โค้ด+ผลตัวเลขเท่านั้น ไม่มี dataset — ดูหัวข้อ "Version Control + Backup" ด้านบน)
-- [x] รอบสุดท้าย — ทดลอง NIR-only + SE Block (`nir_SE`) ประเมินด้วย K-Fold — **ได้ผลดีที่สุดของโปรเจก: F1 0.862±0.025, acc 91.7%±2.1%** (ดูหัวข้อ "ผลลัพธ์ nir_SE" ด้านบน)
+- [x] รอบสุดท้าย — ทดลอง NIR-only + SE Block (`nir_SE`) ประเมินด้วย K-Fold — ~~ได้ผลดีที่สุดของโปรเจก 0.862~~ **แก้ 2026-10-13: เฉลี่ย 3 seed = 0.847±0.008 ไม่ต่างจาก `nir` 0.843±0.008 (SE ไม่ช่วย)**
 - [x] Ablation test — แยกผลของ K-Fold ออกจาก Augmentation (`nir_no_aug`) — **สรุป: augmentation ช่วยจริง (+0.026 F1), ตัวเลขรอบ 1-2 เป็นโชคจาก single-split** (ดูตาราง ablation ด้านบน)
 - [x] Commit + push ผลใหม่ (`nir_SE`, `nir_no_aug` ใน `kfold_results.json`) — **อยู่ใน commit แรก `74afa45` อยู่แล้ว** (ตรวจแล้วด้วย `git show 74afa45:outputs/dl/kfold_results.json`)
 - [x] งานที่ 1 — เทรน `nir_SE_ss` ด้วยภาพ SingleSpectra (flat-field corrected) — **F1 0.859±0.024, acc 90.9%±1.7% ไม่ต่างจาก `nir_SE` raw (0.862±0.025)** mapping ตรวจด้วยเนื้อภาพ 819/819 (ดูหัวข้อ "ใช้ข้อมูลใน CAPA ที่ยังไม่เคยใช้")
@@ -590,4 +737,6 @@ Per-class F1 (pooled out-of-fold ทั้ง 819 ภาพ):
 - [x] Commit งานชุด SingleSpectra + Grad-CAM mask eval (commit `7dca196`) — push แล้วพร้อมงานที่ 5
 - [x] งานที่ 4 — Single-band ablation (`re_only`, `ir_only`) — **RE-only 0.839±0.034 ≈ IR-only 0.844±0.049 ≈ RE+IR 0.843±0.023 → ไม่มีหลักฐานว่า RE สำคัญกว่า IR ต้องตัดข้อสรุปนี้ออก และเลิกใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์** (ดูหัวข้อ "ทดสอบความสำคัญของแบนด์แบบตรง")
 - [x] งานที่ 5 — Commit + push ขึ้น GitHub เสร็จ (2026-10-13): `7dca196` (SingleSpectra + Grad-CAM mask eval), `467e428` (แบนด์เดี่ยว), `55e25fd` — push ครั้งแรกล้มเหลว 403 เพราะ `gh` active account เป็น `onyourprai` แก้โดย `gh auth switch --user Chinnawan` (ผู้ใช้ล็อกอินบัญชี Chinnawan ไว้แล้ว) หมายเหตุ: ถ้าจะ push ต่อจากเครื่องนี้ ตรวจ `gh auth status` ว่า active เป็น Chinnawan
-- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว (nir_SE 0.862±0.025) แต่ต้องปรับ narrative 2 จุดก่อน: (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**
+- [x] รันข้ามคืน: ล็อก seed + multi-seed (3 seed) ทุก variant + แบนด์เดี่ยวครบ 4 + `gr_nir` + classical ML 5-fold — **เสร็จ 2026-10-13 (5.2 ชม., 180/180 run, error 0)** ผลหลัก: NIR ≫ visible/full, แบนด์ NIR เดี่ยว ≈ RE+IR ≫ BL/GR เดี่ยว, DL ≫ classical (+0.26), **SE ไม่ช่วย, augmentation ก้ำกึ่ง** (ดู "ผล multi-seed")
+- [ ] (ทางเลือก) ทดสอบสมมุติฐาน "F1 ลดตามจำนวนช่อง" ด้วยการปรับสเกล init ของ conv ชั้นแรก; ขั้น E Grad-CAM 14×14
+- [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว — ใช้ตาราง "ผล multi-seed" (NIR 0.843±0.008, nir_SE 0.847±0.008, RE-only 0.853±0.007; SE ไม่ช่วย) ไม่ใช่ 0.862 แต่ต้องปรับ narrative ก่อน (นอกจากข้อ SE ที่แก้แล้ว): (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**
