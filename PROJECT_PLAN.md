@@ -720,6 +720,90 @@ run_overnight.bat
 
 commit + push ตาม workflow Version Control (ไม่ใช้ `git add -A`, ตรวจ `gh auth status` ว่า active เป็น Chinnawan) รวมการแก้ PROJECT_PLAN.md — ดู git log
 
+## งานที่ต้องทำต่อ — รอบ 2: เพิ่มความแม่นยำ (รันข้ามคืน 2026-10-13 → 14)
+
+### เหตุผลและข้อมูลที่ใช้วางแผน (วิเคราะห์จาก prediction ใน `multiseed_results.json`)
+
+- **Ensemble ภายใน fold ได้ผลทันที (ไม่ leak)**: ทุกโมเดลที่โหวตมาจาก fold เดียวกัน เทรนด้วย training fold เดียวกัน ไม่มีตัวไหนเห็น test fold — ต่างจาก ensemble ข้าม fold ที่เคยพบ leakage: `nir` เดี่ยว 0.843 → 3-seed vote 0.857 → RE-only 3-seed vote 0.876 → **กลุ่ม NIR 12 โมเดล (nir, nir_SE, re_only, ir_only × 3 seed) vote = F1 0.888 / acc 92.9%** (เลือกกลุ่มหลังเห็นผล จึงอาจสูงเกินจริงเล็กน้อย ต้องยืนยันด้วย seed ใหม่)
+- **จุดที่ `nir` ผิด** (เฉลี่ย 3 seed): Rot ผิด 51% (ส่วนใหญ่ทาย Surface), Hail_damage_perf 27% (→ Internal), Other 27%, Russet 22% (→ Healthy), **Stem 7% (→ Surface 23 ครั้ง)**, Healthy 6% — มี 30 ภาพที่ `nir` (vote) ผิดแต่ `full` (vote) ถูก → visible มีข้อมูลที่ NIR ไม่มี
+- **ข้อสงสัยเรื่องวิธีรวมแบนด์**: `models._adapt_first_conv` ใช้ `mean_weight.repeat(1, C, 1, 1)` → ทุกแบนด์ได้ filter เหมือนกันเป๊ะและไม่ปรับสเกลตามจำนวนช่อง ตอนเริ่มเทรนโมเดลเห็นแค่ "ผลรวมของแบนด์" และพบว่า F1 ลดลงตามจำนวนช่อง (1 → 0.853, 2 → 0.843, 3 → 0.810, 4 → 0.754; BL+GR แย่กว่า BL/GR เดี่ยว 5/5 fold) — ต้องตรวจว่าข้อสรุป "NIR > Vis+NIR" ไม่ได้เกิดจากวิธี init นี้
+
+### Protocol (เหมือนรอบ multi-seed ทุกอย่าง)
+
+seed ล็อก + deterministic, seeds 0,1,2 × StratifiedKFold n=5 random_state=42 (fold เดิม), เขียนผลลง **ไฟล์ใหม่** `outputs/dl/round2_results.json` หลังจบทุก fold (resume ได้, error ไม่ล้ม batch), เก็บ prediction **และ softmax probability** ต่อภาพ (ใช้ทำ ensemble/TTA ภายหลัง), วัดผลบน **ภาพจริงเท่านั้น**, รายงาน 3 class เสมอ (Healthy/Internal/Surface) baseline เปรียบเทียบ = `nir` จาก `multiseed_results.json` (protocol เดียวกัน ไม่ต้องรันใหม่) ยกเว้นงานที่ใช้ภาพ SingleSpectra ให้เทียบกับ `nir_ss`
+
+### Variant ที่ต้องรัน (เปลี่ยนทีละอย่างจาก `nir` = RE+IR, aug, ไม่มี SE, 224, raw)
+
+| # | variant | เปลี่ยนอะไร | แก้ปัญหา |
+|---|---|---|---|
+| 1 | `nir_5cls` | เทรน 5 class (Healthy / Stem / Calix / Internal / Surface — label จาก `ss_mapping.json` tissue) ตอนทายรวม Healthy+Stem+Calix กลับเป็น Healthy (รวม prob ของ 3 class) | ขั้วผล/ก้นผลถูกทายเป็นตำหนิ |
+| 2 | `nir_ls` | label smoothing 0.1 ใน CrossEntropyLoss | overconfidence บนข้อมูลน้อย |
+| 3 | `nir_320` | input 320×320 (resize จาก raw quadrant ที่ความละเอียดสูงกว่า 224 — ต้องสร้าง `Processed_Dataset_320/` แยก ไม่ทับของเดิม) ถ้า VRAM 4GB ไม่พอให้ลด batch size และบันทึกไว้ | ตำหนิผิวขนาดเล็ก |
+| 4 | `nir_ss` | baseline บนภาพ SingleSpectra (= `nir` แต่ source=ss) | ตัวเทียบของ #5, #6 |
+| 5 | `nir_ss_plus` | เทรนด้วยภาพ raw **และ** SingleSpectra ของแอปเปิลลูกเดียวกัน (ภาพจริง 2 เวอร์ชันต่อลูก) ทดสอบบน raw — ใช้ `ss_mapping.json` ให้ทั้ง 2 เวอร์ชันอยู่ fold เดียวกันเสมอ | ข้อมูลจริงเพิ่มโดยไม่สังเคราะห์ (เทียบกับ `nir`) |
+| 6 | `nir_ss_cp` | **Defect Copy-Paste** บนภาพ SingleSpectra (เทียบกับ `nir_ss`) — ดูรายละเอียดด้านล่าง | ตำหนิมีตัวอย่างน้อย (Rot, Russet) |
+| 7 | `full_fix`, `visible_fix`, `nir_fix` | แก้ init conv แรก: (ก) สเกล weight × 3/C และ (ข) ให้แต่ละแบนด์มี filter ต่างกัน (เช่น ใช้ weight RGB ของ ImageNet วนตามช่อง R,G,B,R… หรือ mean + noise เล็กน้อย) — เลือก 1 วิธีที่สมเหตุสมผลที่สุดแล้วบันทึกเหตุผล | ตรวจว่า "NIR > Vis+NIR" มาจาก init หรือไม่ + ให้ visible ช่วย NIR ได้ |
+
+**TTA (ไม่ต้องเทรนเพิ่ม)**: ทุก run ให้ประเมินทั้งแบบปกติและแบบ TTA (เฉลี่ย softmax ของภาพเดิม + flip แนวนอน/แนวตั้ง + หมุน 90/180/270) แล้วเก็บผลทั้งคู่
+
+**Defect Copy-Paste (#6) — กฎ**:
+1. ทำบนภาพ SingleSpectra (mask อยู่ในเรขาคณิตนี้เท่านั้น) ใช้ตำหนิจาก `segmentations/.../SBW_DefectNNNN.bmp`
+2. **ตำหนิต้นทางและแอปเปิลปลายทางต้องมาจาก training fold เดียวกันเท่านั้น** (ห้ามใช้ภาพจาก val/test ของ fold นั้น)
+3. ปลายทาง = ภาพ Healthy (ไม่ใช้ Stem/Calix เป็นพื้น) วางในบริเวณผลที่ห่างขอบผล ≥ 20 px สุ่มตำแหน่ง/หมุน/ย่อขยาย 0.8–1.2
+4. วิธีวาง: คูณ "อัตราส่วนความเข้มของตำหนิต่อผิวรอบๆ ตำหนิในภาพต้นทาง" (ต่อแบนด์) ลงบนผิวปลายทาง + ขอบนุ่ม (Gaussian) — ทำทุกแบนด์ที่ตำแหน่งเดียวกัน (ต้นแบบที่ทดสอบแล้ว: `outputs/synthetic_demo/copy_paste_demo.png` ดูสมจริงในแบนด์ IR; แบนด์ visible มีปัญหาผิวสองสี ซึ่งไม่กระทบ #6 เพราะใช้แค่ RE+IR)
+5. label ภาพสังเคราะห์ = class ของตำหนิต้นทาง สร้างแบบ on-the-fly ด้วยความน่าจะเป็น ~0.3 ต่อภาพ Healthy ใน batch (ไม่ต้องเขียนไฟล์ภาพลงดิสก์) เพิ่มน้ำหนักให้ Rot/Russet/Other/Hail_damage_perf เป็น 2 เท่า
+6. ห้ามมีภาพสังเคราะห์ใน val (early stopping) และ test
+7. ก่อนรันจริง: เซฟตัวอย่างภาพสังเคราะห์ 12 ภาพ (IR band) ลง `outputs/synthetic_demo/` ให้ผู้ใช้ดู (อยู่ใน `.gitignore` แล้ว)
+
+### ลำดับใน batch (ถ้าเครื่องดับ ของสำคัญเสร็จก่อน)
+
+1. `nir_5cls`, `nir_ls` → 2. `full_fix`, `nir_fix`, `visible_fix` → 3. `nir_ss`, `nir_ss_cp`, `nir_ss_plus` → 4. `nir_320` → 5. (ถ้าเหลือเวลา) Grad-CAM 14×14 บน checkpoint `nir_SE_ss` เดิม → `outputs/dl/gradcam_mask_eval_14x14.json`
+
+### สคริปต์สรุป `src/round2_report.py` → `outputs/dl/round2_summary.json` + `outputs/logs/round2_report.txt`
+
+1. ตารางต่อ variant (ปกติ และ TTA): Macro F1 / acc (mean ± std ข้าม seed), per-class F1, และ **error rate ราย tissue** (Rot, Russet, Stem ฯลฯ)
+2. เทียบรายคู่กับ baseline ของตัวเอง (จับคู่ seed+fold, เกณฑ์ "ต่างจริง" เดิม: CI ไม่คร่อม 0 และ ≥12/15 คู่) + ตรวจระดับ fold (เฉลี่ย 3 seed แล้วนับ 5 fold)
+3. Ensemble ภายใน fold: 3-seed vote ของแต่ละ variant + soft-vote (เฉลี่ย probability) ของกลุ่มที่ผ่านเกณฑ์
+4. **ห้ามสรุปผลลง PROJECT_PLAN.md เอง** — รอสรุปกับผู้ใช้
+
+### หลังจากนี้ (พรุ่งนี้ ไม่อยู่ใน batch คืนนี้)
+
+รวมเทคนิคที่ "ต่างจริง" เป็นสูตรเดียว → **ล็อกสูตร** → รันยืนยันด้วย **seed ใหม่ 3, 4, 5** (ห้ามใช้เลือกสูตร) + ensemble ภายใน fold → ตัวเลขนั้นคือตัวเลขที่ใส่เล่ม
+
+### ขั้นตอนก่อนผู้ใช้กดรัน
+
+ทำโค้ดทั้งหมด + smoke test (ทุก variant × 1 seed × 1 fold × 2 epoch — ตรวจ VRAM ของ `nir_320`, ตรวจว่า copy-paste ใช้แค่ training fold) + ทดสอบ resume + ประเมินเวลาจริงจาก benchmark แล้วสร้าง `run_round2.bat` (แบบเดียวกับ `run_overnight.bat`) **ไม่ต้องรันจริงเอง** ให้ผู้ใช้เปิดรันใน terminal แยก แล้ว commit โค้ด (ห้าม `git add -A`)
+
+### สถานะการเตรียมรอบ 2 (2026-10-13): โค้ดครบ + smoke test ผ่านทุก variant — **ยังไม่ได้รัน batch จริง รอผู้ใช้เปิด `run_round2.bat` เอง**
+
+**ไฟล์ใหม่/ที่แก้**: `src/round2.py` (variant ทั้ง 9 + เทรน/ประเมินต่อ fold + TTA), `src/copy_paste.py`, `src/run_round2.py` (batch, smoke, self-check), `src/round2_report.py`, `src/preprocess_320.py`, `run_round2.bat`; แก้ `models.py` (ตัวเลือก `init="timm"` ค่าเริ่มต้น `legacy` ไม่เปลี่ยนพฤติกรรมเดิม), `train_dl_kfold.py` (source `320`), `gradcam_mask_eval.py` (`--layer/--out/--overlay-dir`), `.gitignore` (`Processed_Dataset_320/`, `outputs/dl/gradcam_mask_14x14/`) ข้อมูล: `Processed_Dataset_320/` (819 ไฟล์ 320×320×4 สร้างจาก quadrant ของ RawA ด้วย pipeline เดียวกับ 224 — ย่อกลับ 224 แล้วต่างจากของเดิมเฉลี่ย 0.25 ระดับเทา, 324 MB, mirror ชื่อ/split เดิม ไม่ทับ `Processed_Dataset/`)
+
+**การตัดสินใจออกแบบ (ที่แผนเปิดให้เลือกหรือไม่ได้ระบุ — บันทึกไว้เพื่อให้ตรวจสอบได้)**
+- **init conv แรก (#7)**: ใช้สูตรเดียวกับ `timm.adapt_input_conv` — วนใช้ filter RGB ของ ImageNet ตามช่อง (R,G,B,R,…) แล้วคูณ 3/จำนวนช่อง (1 ช่อง = ผลรวม 3 filter) เหตุผล: เป็นสูตรมาตรฐานที่ใช้กันแพร่หลาย ทำให้ (ก) แต่ละแบนด์ได้ filter ต่างกัน (ข) สเกลสัญญาณรวมตรงกับโครงข่าย RGB ที่ pretrain มา (เดิม `mean` ซ้ำทุกช่องโดยไม่ปรับสเกล — ตรวจแล้วผลรวม |น้ำหนัก| ของ nir เดิม 122.6 vs timm 283.1) ข้อจำกัด: `nir_fix` ให้ RE=filter R, IR=filter G (×1.5) การจับคู่แบนด์กับสีเป็นการเลือกโดยพลการ
+- **loss ตรวจ early stopping (val)** ใช้ cross-entropy ปกติ (ไม่ smooth) ทุก variant เพื่อให้กฎหยุดเทรนเหมือนกัน; label smoothing 0.1 ใช้กับ train loss เท่านั้น
+- **`nir_5cls`**: sampler ใช้น้ำหนักจากจำนวน 3 class จริงเหมือน baseline (สัดส่วนการสุ่ม Healthy:Internal:Surface ไม่เปลี่ยน มีแค่ label ละเอียดขึ้น) ทายโดยรวม prob Healthy+Stem+Calix; เก็บ prob 5 class ไว้ด้วย
+- **`nir_ss_plus`**: เทรนด้วยภาพ raw + SingleSpectra ของแอปเปิลชุดเดียวกัน (ใน training fold เท่านั้น) แต่ละ epoch สุ่มจำนวนเท่าเดิม (= จำนวน raw ใน train) เพื่อคุมงบเวลา/จำนวน step ให้เท่า `nir`; normalization ใช้สถิติของ raw train (ภาพที่ใช้ทดสอบ); val/test เป็นภาพ raw
+- **`nir_ss_cp`**: donor และเป้าหมายมาจาก **training ส่วนที่ใช้เทรนจริงเท่านั้น (ไม่รวม inner val)**; วางแบบ multiplicative ต่อแบนด์ `target*(1+alpha*(ratio-1))` (ratio = ความเข้มตำหนิ ÷ median ผิวรอบๆ), alpha = mask นุ่ม (Gaussian), ตำแหน่งสุ่มห่างขอบผล ≥ 20 พิกเซล, หมุน 0–360°, ย่อขยาย 0.8–1.2, p=0.3 ต่อภาพ Healthy-tissue ใน batch, donor Rot/Russet/Other/Hail_damage_perf น้ำหนัก ×2, label = class ของ donor; val/test ไม่มีภาพสังเคราะห์ ตัวอย่างภาพ 12 ภาพ (IR band, ซ้าย=ต้นฉบับ ขวา=สังเคราะห์) อยู่ที่ `outputs/synthetic_demo/round2_cp_samples.png` (อยู่ใน `.gitignore`) — จากภาพ ตำหนิดูสมจริงในแบนด์ IR; ข้อสังเกต: ตำหนิขนาดใหญ่วางบนผลเล็กไม่ได้ (ต้องห่างขอบ ≥ 20 px) สัดส่วน label ที่วางจริงจึงเป็น Internal ~27–34% / Surface ~66–73% (ตามน้ำหนัก donor ได้ 35%)
+- **TTA**: 6 มุมมอง (เดิม, พลิกแนวนอน, พลิกแนวตั้ง, หมุน 90/180/270) เฉลี่ย softmax ทุก run เก็บทั้งผลปกติและ TTA + softmax ต่อภาพ
+- ลำดับ batch ตามแผน (ข้อ 5 Grad-CAM 14×14 = `features[5]` ซึ่งยืนยันแล้วว่าให้แผนที่ 14×14 รันต่อท้ายใน `run_round2.bat` ถ้ายังไม่มี `gradcam_mask_eval_14x14.json` แล้วจึงรัน `round2_report`)
+
+**ผลตรวจสอบก่อนรัน (ผ่านทั้งหมด)** — `python -m src.run_round2 --selfcheck` / `--smoke`:
+- inner train/val split ของทุก variant ตรงกับ baseline `run_fold` ทุกรายการและทุกลำดับ (ตรวจ fold 0, 3) → เทียบแบบจับคู่กับ `nir`/`full`/`visible` ใน `multiseed_results.json` ได้
+- copy-paste: donor (162 ภาพ/fold) และเป้าหมายอยู่ใน training fold ทั้งหมด ไม่มีตัวไหนอยู่ใน val/test ของ fold นั้น ตรวจครบ **5/5 fold**; val/test dataset ไม่มี paster; อัตราวางจริง 26.0% จาก 400 ครั้ง (เป้า ~30%), หาตำแหน่งวางสำเร็จ 104/104; seed เดียวกันให้ภาพสังเคราะห์ตรงกันทุกพิกเซล
+- **smoke test**: ทุก variant × seed 0 × fold 0 × 2 epoch รันจบ 9/9, error 0, json ถูกต้อง (prob รวมเป็น 1, ไม่มี NaN), รันซ้ำแล้วข้ามทั้งหมด ("0 runs to do"), ทดสอบ fold ล้มแล้ว batch ไปต่อ (กลไกเดียวกับรอบ multi-seed) และทดสอบตัวสำรอง CUDA out-of-memory (จำลองข้อผิดพลาด → ลอง batch 8 อัตโนมัติ และบันทึกใน `batch_size`) ตัวเลข F1 ของ smoke (2 epoch) **ไม่มีความหมายเชิงผล** และถูกลบแล้ว
+- **VRAM**: `nir_320` peak **2.9 GB จาก 4 GB** ที่ batch 16 (พอ ไม่ต้องลด batch) ส่วน variant 224 ราว 1.5 GB
+- **ทำซ้ำได้**: `nir_ss_cp`, `nir_320`, `nir_5cls` รัน 2 ครั้งในโปรเซสแยก (3 epoch) ได้ softmax (ปกติ+TTA) และ best val loss ตรงกันแบบ bit-identical (hash เท่ากัน) และผลจากการรันผ่าน `run_round2.bat --smoke` ตรงกับรันตรงทุกตัวเลข
+- รายงาน (`round2_report`) ทดสอบกับข้อมูลไม่ครบ (แสดง INCOMPLETE ไม่พัง) และกับข้อมูลจำลองครบ 135 run ที่ฝังความต่างไว้ (การปรับปรุงที่ฝังไว้ถูกตัดสินว่า REAL, การทำให้แย่ลงที่ฝังไว้ถูกตัดสินว่า REAL ติดลบ, ที่ไม่ต่างถูกตัดสินว่าไม่เกินความแกว่ง); hard-vote 3 seed ของ `nir` จากสคริปต์ = **0.857** ตรงกับตัวเลขที่ใช้วางแผน (แปลว่ากติกาเสมอโหวตตรงกัน)
+
+**เวลาประมาณ** (วัดจริง วินาที/epoch: nir-type 4.3–4.8, full 5.1, copy-paste 5.2, ss_plus 5.1, **nir_320 9.3**; จำนวน epoch ใช้ค่าเฉลี่ยของ `nir`/`full`/`visible` ใน multi-seed แล้วคูณ 1.2 ให้ `nir_ss_cp` และ `nir_ss_plus` เพราะคาดว่าต้องเทรนนานขึ้น): 9 variant × 3 seed × 5 fold = 135 fold-run ≈ **5.2 ชั่วโมง** (ช่วง 4.3–6.3 ชม.) แยก: `nir_320` ~58 นาที, `nir_ss_cp` ~39, `nir_ss_plus` ~38, `full_fix` ~34, ที่เหลือ ~28 นาที/ตัว + Grad-CAM 14×14 ~2 นาที + report ~1 นาที (ตัวเลขของ `nir_ss_cp`/`ss_plus`/`nir_320` เป็นการคาด ไม่เคยรันเต็มมาก่อน)
+
+**คำสั่งเปิดรัน** (terminal แยก; รันซ้ำคำสั่งเดิมเพื่อทำต่อหลังเครื่องดับ; ผลลง `outputs/dl/round2_results.json`, log `outputs/logs/round2_YYYYMMDD.log`, รายงาน `outputs/logs/round2_report.txt`):
+```
+cd /d D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase
+run_round2.bat
+```
+ข้อควรรู้: เสียบปลั๊ก, โค้ดขอให้ Windows ไม่ idle-sleep ระหว่างรันแต่ปิดฝาเครื่องยังทำให้หลับ; **ยังไม่ได้ push** (commit ในเครื่องเท่านั้น)
+
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
 - [ ] เขียนเล่มวิทยานิพนธ์โดยใช้ผลลัพธ์ข้างต้น + รูป Grad-CAM + ตาราง SHAP + ผล k-fold (ปรับข้อสรุปเรื่อง SE block ตามผล k-fold ข้อ 2 ด้านบน) — **ห้ามเอาตัวเลข ensemble มาใช้เป็นผลหลัก เพราะมี data leakage (ดูหัวข้อ ensembling ด้านบน)**
@@ -739,4 +823,6 @@ commit + push ตาม workflow Version Control (ไม่ใช้ `git add -A
 - [x] งานที่ 5 — Commit + push ขึ้น GitHub เสร็จ (2026-10-13): `7dca196` (SingleSpectra + Grad-CAM mask eval), `467e428` (แบนด์เดี่ยว), `55e25fd` — push ครั้งแรกล้มเหลว 403 เพราะ `gh` active account เป็น `onyourprai` แก้โดย `gh auth switch --user Chinnawan` (ผู้ใช้ล็อกอินบัญชี Chinnawan ไว้แล้ว) หมายเหตุ: ถ้าจะ push ต่อจากเครื่องนี้ ตรวจ `gh auth status` ว่า active เป็น Chinnawan
 - [x] รันข้ามคืน: ล็อก seed + multi-seed (3 seed) ทุก variant + แบนด์เดี่ยวครบ 4 + `gr_nir` + classical ML 5-fold — **เสร็จ 2026-10-13 (5.2 ชม., 180/180 run, error 0)** ผลหลัก: NIR ≫ visible/full, แบนด์ NIR เดี่ยว ≈ RE+IR ≫ BL/GR เดี่ยว, DL ≫ classical (+0.26), **SE ไม่ช่วย, augmentation ก้ำกึ่ง** (ดู "ผล multi-seed")
 - [ ] (ทางเลือก) ทดสอบสมมุติฐาน "F1 ลดตามจำนวนช่อง" ด้วยการปรับสเกล init ของ conv ชั้นแรก; ขั้น E Grad-CAM 14×14
+- [ ] รอบ 2 เพิ่มความแม่นยำ (5 class, label smoothing, TTA, 320px, SingleSpectra เป็นภาพเพิ่ม, Defect Copy-Paste, แก้ init รวมแบนด์) + ensemble ภายใน fold — **เตรียมโค้ดครบ + smoke test ผ่านแล้ว (2026-10-13) รอผู้ใช้รัน `run_round2.bat` (~5.2 ชม.)** แล้วสรุปผลกับผู้ใช้ (ดูหัวข้อ "รอบ 2")
+- [ ] ล็อกสูตรสุดท้ายแล้วยืนยันด้วย seed 3,4,5
 - [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว — ใช้ตาราง "ผล multi-seed" (NIR 0.843±0.008, nir_SE 0.847±0.008, RE-only 0.853±0.007; SE ไม่ช่วย) ไม่ใช่ 0.862 แต่ต้องปรับ narrative ก่อน (นอกจากข้อ SE ที่แก้แล้ว): (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**

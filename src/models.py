@@ -10,7 +10,13 @@ from torchvision.models import EfficientNet_B0_Weights, efficientnet_b0
 from .config import CHANNEL_GROUPS
 
 
-def _adapt_first_conv(model, in_channels, pretrained):
+def _adapt_first_conv(model, in_channels, pretrained, init="legacy"):
+    """init="legacy": mean RGB filter repeated on every band (identical filters, no rescale) --
+    what every result up to round 1 used. init="timm": timm's adapt_input_conv recipe --
+    cycle the RGB filters over the bands (R,G,B,R,...) and rescale by 3/in_channels (1 band:
+    sum of the RGB filters), so bands get different filters and the total response scale
+    matches the pretrained RGB network."""
+    assert init in ("legacy", "timm"), init
     old_conv = model.features[0][0]
     if old_conv.in_channels == in_channels:
         return
@@ -21,15 +27,22 @@ def _adapt_first_conv(model, in_channels, pretrained):
     )
     if pretrained:
         with torch.no_grad():
-            mean_weight = old_conv.weight.mean(dim=1, keepdim=True)  # (out,1,k,k)
-            new_conv.weight.copy_(mean_weight.repeat(1, in_channels, 1, 1))
+            if init == "legacy":
+                mean_weight = old_conv.weight.mean(dim=1, keepdim=True)  # (out,1,k,k)
+                new_conv.weight.copy_(mean_weight.repeat(1, in_channels, 1, 1))
+            elif in_channels == 1:
+                new_conv.weight.copy_(old_conv.weight.sum(dim=1, keepdim=True))
+            else:
+                reps = -(-in_channels // 3)
+                w = old_conv.weight.repeat(1, reps, 1, 1)[:, :in_channels]
+                new_conv.weight.copy_(w * (3.0 / in_channels))
     model.features[0][0] = new_conv
 
 
-def build_efficientnet(in_channels, num_classes, pretrained=True):
+def build_efficientnet(in_channels, num_classes, pretrained=True, init="legacy"):
     weights = EfficientNet_B0_Weights.IMAGENET1K_V1 if pretrained else None
     model = efficientnet_b0(weights=weights)
-    _adapt_first_conv(model, in_channels, pretrained)
+    _adapt_first_conv(model, in_channels, pretrained, init)
     in_features = model.classifier[1].in_features
     model.classifier[1] = nn.Linear(in_features, num_classes)
     return model
@@ -56,10 +69,10 @@ class InputChannelSE(nn.Module):
 
 
 class EfficientNetWithChannelSE(nn.Module):
-    def __init__(self, in_channels, num_classes, pretrained=True, reduction=2):
+    def __init__(self, in_channels, num_classes, pretrained=True, reduction=2, init="legacy"):
         super().__init__()
         self.se = InputChannelSE(in_channels, reduction)
-        self.backbone = build_efficientnet(in_channels, num_classes, pretrained)
+        self.backbone = build_efficientnet(in_channels, num_classes, pretrained, init)
         self.last_channel_weights = None
 
     def forward(self, x):
@@ -68,11 +81,11 @@ class EfficientNetWithChannelSE(nn.Module):
         return self.backbone(x)
 
 
-def build_model(channel_group, num_classes=3, pretrained=True, use_se=False, se_reduction=2):
+def build_model(channel_group, num_classes=3, pretrained=True, use_se=False, se_reduction=2, init="legacy"):
     in_channels = len(CHANNEL_GROUPS[channel_group])
     if use_se:
-        return EfficientNetWithChannelSE(in_channels, num_classes, pretrained, se_reduction)
-    return build_efficientnet(in_channels, num_classes, pretrained)
+        return EfficientNetWithChannelSE(in_channels, num_classes, pretrained, se_reduction, init)
+    return build_efficientnet(in_channels, num_classes, pretrained, init)
 
 
 if __name__ == "__main__":

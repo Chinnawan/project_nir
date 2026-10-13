@@ -23,3 +23,10 @@ __pycache__/
 
 # --- logs of long runs (large, regenerated) ---
 outputs/logs/
+
+# demo synthetic images (contain dataset pixels)
+outputs/synthetic_demo/
+
+Processed_Dataset_320/
+
+outputs/dl/gradcam_mask_14x14/

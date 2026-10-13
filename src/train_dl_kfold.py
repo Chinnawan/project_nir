@@ -50,6 +50,8 @@ N_SPLITS = 5
 VAL_FRACTION_OF_TRAINVAL = 0.176  # matches the original ~70/15 train/val ratio
 
 SS_DIR = os.path.join(PROJECT_ROOT, "Processed_Dataset_SS")
+D320_DIR = os.path.join(PROJECT_ROOT, "Processed_Dataset_320")
+SOURCE_ROOTS = {"raw": None, "ss": SS_DIR, "320": D320_DIR}
 CKPT_DIR = os.path.join(OUT, "kfold_ckpt")
 
 # name -> (channel_group, use_se, augment_train, source, save_ckpt)
@@ -76,15 +78,15 @@ VARIANT_SPECS = {
 
 def build_pool(source="raw"):
     """All 819 images (train+val+test folders combined) as one (filepath, label) pool.
-    For source="ss" the pool has the identical order/labels as the raw pool, so
-    StratifiedKFold puts every apple in the same fold in both experiments."""
-    root = SS_DIR if source == "ss" else None
+    For the mirrored sources ("ss" = SingleSpectra, "320" = 320px raw) the pool has the
+    identical order/labels as the raw pool, so StratifiedKFold puts every apple in the
+    same fold in every experiment."""
+    root = SOURCE_ROOTS[source]
     pool = list_files("train", root) + list_files("val", root) + list_files("test", root)
     labels = np.array([label for _, label in pool])
-    if source == "ss":
+    if source != "raw":
         raw_pool = list_files("train") + list_files("val") + list_files("test")
-        assert [os.path.basename(f) for f, _ in pool] == [os.path.basename(f) for f, _ in raw_pool], \
-            "Processed_Dataset_SS does not mirror Processed_Dataset (run src.preprocess_ss)"
+        assert [os.path.basename(f) for f, _ in pool] == [os.path.basename(f) for f, _ in raw_pool],             f"Processed_Dataset for source {source!r} does not mirror Processed_Dataset"
     return pool, labels
 
 

@@ -20,6 +20,7 @@ mixes them is unfair to Surface). A real result must beat the matched null_cls.
 Usage: python -m src.gradcam_mask_eval
 Needs: outputs/dl/kfold_ckpt/nir_SE_ss_fold{0..4}.pt  (python -m src.train_dl_kfold --variant nir_SE_ss)
 """
+import argparse
 import json
 import os
 import re
@@ -134,6 +135,18 @@ def save_overlay(path, ir, cam, mask, peak, title):
 
 
 def main():
+    global OUT_JSON, OVERLAY_DIR
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--layer", type=int, default=-1,
+                    help="index into model.backbone.features used as the Grad-CAM layer: -1 = last block "
+                         "(7x7 map, default), 5 = last 14x14 block")
+    ap.add_argument("--out", default=None, help="results json (default outputs/dl/gradcam_mask_eval.json)")
+    ap.add_argument("--overlay-dir", default=None)
+    args = ap.parse_args()
+    if args.out:
+        OUT_JSON = args.out
+    if args.overlay_dir:
+        OVERLAY_DIR = args.overlay_dir
     ckpts = [os.path.join(CKPT_DIR, f"{VARIANT}_fold{f}.pt") for f in range(N_SPLITS)]
     missing = [c for c in ckpts if not os.path.exists(c)]
     if missing:
@@ -152,7 +165,7 @@ def main():
         model = build_model("nir", num_classes=len(CLASSES), pretrained=False, use_se=True).to(DEVICE)
         model.load_state_dict(ckpt["state_dict"])
         model.eval()
-        cam_algo = GradCAM(model=model, target_layers=[model.backbone.features[-1]])
+        cam_algo = GradCAM(model=model, target_layers=[model.backbone.features[args.layer]])
 
         for i in test_idx:
             fp, label = pool[i]
@@ -204,7 +217,7 @@ def main():
         return {str(k): summarize(v) for k, v in sorted(groups.items(), key=lambda kv: str(kv[0]))}
 
     results = {
-        "variant": VARIANT, "n_defect_images": n, "top_fraction": TOP_FRAC, "n_null_draws": N_NULL,
+        "variant": VARIANT, "gradcam_layer_index": args.layer, "n_defect_images": n, "top_fraction": TOP_FRAC, "n_null_draws": N_NULL,
         "overall": summarize(recs),
         "by_class": by(lambda r: r["cls"]),
         "by_kleynen_class": by(lambda r: f"{r['kleynen_class']} ({KLEYNEN_NAMES[r['kleynen_class']]})"),
