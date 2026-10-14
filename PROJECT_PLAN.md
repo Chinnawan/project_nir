@@ -804,6 +804,66 @@ run_round2.bat
 ```
 ข้อควรรู้: เสียบปลั๊ก, โค้ดขอให้ Windows ไม่ idle-sleep ระหว่างรันแต่ปิดฝาเครื่องยังทำให้หลับ; **ยังไม่ได้ push** (commit ในเครื่องเท่านั้น)
 
+## ผลรอบ 2 (รันเสร็จ 2026-10-14 00:54) — สรุปร่วมกับผู้ใช้ 2026-10-14
+
+135/135 run (9 variant × 3 seed × 5 fold), error 0 รายงาน: `outputs/logs/round2_report.txt`, สรุป `outputs/dl/round2_summary.json`, ผลดิบ `outputs/dl/round2_results.json` (baseline `nir`/`full`/`visible` = จาก `multiseed_results.json`, seed+fold เดียวกัน)
+
+| Variant | F1 (ปกติ) | Acc | F1 (TTA) | Acc TTA | เทียบ baseline | ผล |
+|---|---|---|---|---|---|---|
+| **`nir_ss`** (ภาพ SingleSpectra/flat-field, RE+IR) | **0.872 ± 0.012** | **91.9%** | **0.880 ± 0.013** | **92.5%** | vs `nir` +0.028 (13/15, CI +0.010..+0.046; ระดับ fold 4/5, CI −0.005..+0.061) | **ต่างจริง (ตัวเดียวที่ผ่านเกณฑ์)** |
+| `nir_ls` (label smoothing 0.1) | 0.861 ± 0.013 | 91.3% | 0.855 | 90.8% | vs `nir` +0.018 (11/15) | แนวโน้มบวก ยังไม่ผ่าน |
+| `nir_ss_cp` (copy-paste) | 0.859 ± 0.019 | 90.7% | 0.872 | 91.7% | vs `nir_ss` −0.013 (ระดับ fold ลบ 5/5) | **ไม่ช่วย แนวโน้มแย่ลง** |
+| `nir_ss_plus` (raw+SS เป็นภาพเพิ่ม) | 0.857 ± 0.009 | 90.9% | 0.861 | 91.1% | vs `nir` +0.013 (10/15) | ไม่ต่างเกิน noise |
+| `nir_5cls` (แยก Stem/Calix) | 0.848 ± 0.003 | 90.6% | 0.859 | 91.1% | vs `nir` +0.004 (7/15) | ไม่ต่าง |
+| `nir_fix` (init timm) | 0.838 ± 0.010 | 89.7% | 0.852 | 90.6% | vs `nir` −0.005 | ไม่ต่าง |
+| `nir_320` | 0.830 ± 0.007 | 89.2% | 0.852 | 90.5% | vs `nir` −0.014; TTA−plain +0.023 (ต่างจริง) | ไม่ช่วย (TTA ช่วยเฉพาะตัวนี้) |
+| `full_fix` (Vis+NIR, init timm) | 0.714 ± 0.014 | 82.2% | 0.732 | 83.6% | vs `full` −0.041 (ระดับ fold ลบ 5/5) | **แก้ init แล้ว full ไม่ดีขึ้น** |
+| `visible_fix` | 0.702 ± 0.016 | 80.6% | 0.708 | 81.2% | vs `visible` +0.014 | ไม่ต่าง |
+| (อ้างอิง) `nir` / `full` / `visible` | 0.843 / 0.754 / 0.688 | 90.2 / 85.0 / 80.3% | — | — | — | — |
+
+**Ensemble ภายใน fold (EXPLORATORY — เลือกกลุ่มหลังเห็นผล ต้องยืนยันด้วย seed ใหม่)**: `nir_ss` 3-seed soft vote 0.884 / 92.6%, **`nir_ss`[TTA] 3-seed soft vote 0.894 ± 0.034 / 93.3%** (สูงสุด), `nir` 3-seed hard vote 0.857 / 91.1%
+
+**Error ราย tissue**: `nir_ss` ลด Rot จาก 50.7% → 37.7% และ Scald 11.8% → 7.8%, Healthy 5.7% → 3.6%; copy-paste ลด Hail_damage_perf (21.5% → 15.1%) และ Bruise แต่ Other/Russet แย่ลง
+
+**Grad-CAM 14×14 (`features[5]`, โมเดล `nir_SE_ss` เดิม)**: Surface pointing hit 13.2% vs null 6.0% (7×7 เดิม: 24.3% vs 21.0%) → ละเอียดขึ้นแล้วชี้ตำหนิผิวได้เหนือ null ชัดกว่าเดิม (≈2.2 เท่าของ null) แต่ค่าสัมบูรณ์ยังต่ำ และ IoU ยังแทบเท่า null (0.033 vs 0.028); Internal 40.2% vs 30.7% (IoU 0.171 vs 0.146)
+
+**ข้อสรุป**
+1. **สูตรใหม่ที่ดีที่สุด = `nir_ss`** (ภาพที่ผ่าน flat-field correction ของผู้สร้าง dataset, RE+IR, augmentation, ไม่มี SE) — ข้อสรุปเดิมจากรอบเดียว (`nir_SE_ss` ≈ `nir_SE`, "flat-field ไม่ช่วย") **ถูกหักล้างโดย multi-seed** ข้อควรระวัง: SingleSpectra ต่างจาก raw ทั้ง flat-field และเรขาคณิต (crop/pad, แอปเปิลเล็กลง ~9%) จึงยังแยกไม่ได้ว่าปัจจัยไหนช่วย และ CI ระดับ fold แตะ 0
+2. **"NIR > Vis+NIR" ไม่ได้เกิดจากวิธี init conv แรก** — ใช้ init มาตรฐาน (timm: filter ต่างกันต่อแบนด์ + สเกล 3/C) แล้ว full ยังแย่กว่า nir (และแย่กว่า full เดิม) → ข้อสรุปหลักแข็งแรงขึ้น
+3. ไม่ช่วยเกิน noise: 5 class, 320 px, init ใหม่, ภาพ SS เป็นภาพเพิ่ม; label smoothing แนวโน้มบวกแต่ยังไม่ผ่าน; **copy-paste ไม่ช่วย** (ผลลบที่ต้องรายงานตรงๆ)
+4. TTA ช่วยเล็กน้อยแทบทุกตัว (+0.01) ผ่านเกณฑ์เฉพาะ `nir_320`
+
+## งานที่ต้องทำต่อ — ยืนยันสูตรสุดท้ายด้วย seed ใหม่ (confirmatory run)
+
+**ล็อกสูตรก่อนรัน (ห้ามเปลี่ยนหลังเห็นผล)**: `nir_ss` + TTA (6 แบบเดิม) + soft-vote 3 seed ภายใน fold
+1. รัน **seed ใหม่ 3, 4, 5** × 5 fold เดิม: `nir_ss` (สูตรสุดท้าย) และ `nir` (baseline, จับคู่ seed+fold) — เขียนลง `outputs/dl/confirm_results.json` (ไฟล์ใหม่, resume ได้, เก็บ probability)
+2. รายงาน (ไม่ใช้ seed 0–2 เลย): ต่อ variant mean ± std (ปกติ/TTA), per-class F1, เทียบรายคู่ `nir_ss` − `nir` ด้วยเกณฑ์เดิม, และ **ensemble 3-seed soft vote (+TTA) ของแต่ละ variant** → ตัวเลขเหล่านี้คือตัวเลขที่ใส่เล่ม
+3. (ทางเลือก, ระบุเป็น exploratory) `nir_ss_ls` = `nir_ss` + label smoothing 0.1 ด้วย seed 3–5 — ถ้าดีกว่าก็รายงานเป็นข้อสังเกต ไม่ใช่ผลหลัก
+4. เวลาโดยประมาณ ~1–1.5 ชม. (+30 นาทีถ้ารวมข้อ 3) ใช้ runner/protocol เดียวกับรอบ 2 สร้าง `run_confirm.bat` + smoke test แล้วให้ผู้ใช้เปิดรันเอง
+6. **เซฟ checkpoint ของ `nir_ss` ทุก fold × seed 3,4,5 (15 ไฟล์)** ลง `outputs/dl/confirm_ckpt/nir_ss_seed{S}_fold{K}.pt` (state_dict + mean/std ที่ใช้ normalize ของ fold นั้น) และเซฟ `outputs/dl/fold_assignment.json` = ภาพแต่ละภาพ (RawA id) อยู่ใน test ของ fold ไหน — ใช้กับ demo app; checkpoint อยู่ใน `.gitignore` (ไฟล์ใหญ่) ไม่ต้องเซฟ checkpoint ของ `nir`
+5. commit ผลรอบ 2 ที่ยังไม่ได้ commit (`round2_results.json`, `round2_summary.json`, `gradcam_mask_eval_14x14.json`, PROJECT_PLAN.md) ก่อนเริ่ม (ห้าม `git add -A`)
+
+## งานที่ต้องทำต่อ — Demo app สำหรับทดสอบเองและ defense (ทำหลัง confirmatory run เสร็จ)
+
+**เครื่องมือ**: Gradio (Python) รันบนเครื่องนี้ `.venv\Scripts\python.exe -m src.demo_app` เปิดที่ `http://127.0.0.1:7860` **ห้าม `share=True` / ห้ามเปิดออกนอกเครื่อง** (มีภาพจาก CAPA ติดลิขสิทธิ์ ULG) — เพิ่ม `run_demo.bat`
+
+**โหมด 1 — ทดสอบด้วยภาพ CAPA (out-of-fold, ซื่อสัตย์)**
+- เลือกภาพจาก dropdown (RawA id + ชนิดตำหนิจริง) หรือปุ่มสุ่ม
+- ใช้ `fold_assignment.json` หา fold ที่ภาพนั้นเป็น test → โหลด **เฉพาะโมเดล 3 seed ของ fold นั้น** (ไม่เคยเห็นภาพนี้) ห้ามใช้โมเดลของ fold อื่นกับภาพนี้
+- ทำนายด้วยสูตรที่ล็อกไว้: TTA 6 แบบ × 3 seed → soft vote
+
+**โหมด 2 — ภาพใหม่ (อัปโหลด)**: รับไฟล์ `.npy` (H×W×4 BL/GR/RE/IR) หรือ tif 4 แบนด์ ใช้ ensemble ทุก fold × seed (15 โมเดล) เพราะไม่มีปัญหา leakage กับภาพที่ไม่อยู่ใน CAPA ไม่แสดงคำตอบจริง ระบุบนหน้าจอว่าภาพจากกล้องอื่นอาจได้ผลต่างจาก CAPA (domain shift)
+
+**สิ่งที่แสดงบนหน้าจอ** (ตาม mockup ที่ตกลงกับผู้ใช้)
+1. ภาพแบนด์ RE (750 nm) และ IR (800 nm) ที่โมเดลใช้
+2. ผลทาย 3 class + แถบความน่าจะเป็น (ปกติ / ตำหนิภายใน / ตำหนิภายนอก) + การกระทำ: ปกติ → ขายผลสด, ตำหนิภายนอก → ส่งแปรรูป, ตำหนิภายใน → คัดทิ้ง
+3. (โหมด 1) คำตอบจริง + ชนิด tissue + ถูก/ผิด
+4. ตารางโหวต: แต่ละ seed ทายอะไร ความน่าจะเป็นเท่าไร และผล soft vote — ระบุว่าใช้โมเดล fold ไหน
+5. Grad-CAM ชั้น `features[5]` (14×14) ซ้อนภาพ IR + เส้นขอบ mask ตำหนิจริง (ถ้ามี mask) — มีข้อความกำกับว่า "heatmap บอกบริเวณคร่าวๆ เท่านั้น" (อ้างผลวัด Grad-CAM vs mask)
+6. **โหมดสายพาน**: สุ่ม N ภาพ (ค่าเริ่ม 50, โหมด 1 เท่านั้น) จัดเข้าถัง ขายผลสด / ส่งแปรรูป / คัดทิ้ง พร้อมนับทายถูก, confusion matrix 3×3 และรายการภาพที่ทายผิด
+
+**ข้อกำหนด**: โหลดโมเดลครั้งเดียวแล้ว cache, รันบน GPU ถ้ามี (CPU ก็ต้องทำงานได้), ไม่เขียนภาพ CAPA ลงนอกโฟลเดอร์ที่อยู่ใน `.gitignore`, ทดสอบว่าเปิดได้ + ทายภาพตัวอย่าง 3 ภาพ (Healthy / Bruise / Russet) ถูกโหลด fold ถูกต้อง แล้ว commit โค้ด (ห้าม `git add -A`)
+
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
 - [ ] เขียนเล่มวิทยานิพนธ์โดยใช้ผลลัพธ์ข้างต้น + รูป Grad-CAM + ตาราง SHAP + ผล k-fold (ปรับข้อสรุปเรื่อง SE block ตามผล k-fold ข้อ 2 ด้านบน) — **ห้ามเอาตัวเลข ensemble มาใช้เป็นผลหลัก เพราะมี data leakage (ดูหัวข้อ ensembling ด้านบน)**
@@ -825,4 +885,6 @@ run_round2.bat
 - [ ] (ทางเลือก) ทดสอบสมมุติฐาน "F1 ลดตามจำนวนช่อง" ด้วยการปรับสเกล init ของ conv ชั้นแรก; ขั้น E Grad-CAM 14×14
 - [ ] รอบ 2 เพิ่มความแม่นยำ (5 class, label smoothing, TTA, 320px, SingleSpectra เป็นภาพเพิ่ม, Defect Copy-Paste, แก้ init รวมแบนด์) + ensemble ภายใน fold — **เตรียมโค้ดครบ + smoke test ผ่านแล้ว (2026-10-13) รอผู้ใช้รัน `run_round2.bat` (~5.2 ชม.)** แล้วสรุปผลกับผู้ใช้ (ดูหัวข้อ "รอบ 2")
 - [ ] ล็อกสูตรสุดท้ายแล้วยืนยันด้วย seed 3,4,5
+- [ ] Confirmatory run (`nir_ss` vs `nir`, seed 3–5) + เซฟ checkpoint `nir_ss` — ดูหัวข้อ "ยืนยันสูตรสุดท้าย"
+- [ ] Demo app (Gradio) — ดูหัวข้อ "Demo app"
 - [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว — ใช้ตาราง "ผล multi-seed" (NIR 0.843±0.008, nir_SE 0.847±0.008, RE-only 0.853±0.007; SE ไม่ช่วย) ไม่ใช่ 0.862 แต่ต้องปรับ narrative ก่อน (นอกจากข้อ SE ที่แก้แล้ว): (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**
