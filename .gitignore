@@ -30,3 +30,6 @@ outputs/synthetic_demo/
 Processed_Dataset_320/
 
 outputs/dl/gradcam_mask_14x14/
+
+outputs/dl/confirm_ckpt/
+outputs/dl/confirm_ckpt_smoke/

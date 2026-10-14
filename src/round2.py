@@ -172,6 +172,7 @@ def make_fold_data(ctx, variant, fold, spec):
     w3 = 1.0 / np.bincount(ctx.labels[tr_idx], minlength=3)  # class-balanced on the 3 real classes, as the baseline
     weights = [float(w3[ctx.labels[i]]) for i in train_idx]
     return {"train_ds": train_ds, "val_ds": val_ds, "test_ds": test_ds, "weights": weights, "tr_idx": tr_idx,
+            "mean": mean, "std": std,
             "va_idx": va_idx, "te_idx": te, "n_epoch_samples": len(tr_idx) if spec["extra_train_source"] else len(train_items),
             "paster": paster, "donors": donors}
 
@@ -181,8 +182,10 @@ def per_class_and_cm(y_true, y_pred):
     return pc, confusion_matrix(y_true, y_pred, labels=[0, 1, 2]).tolist()
 
 
-def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None):
-    spec = {**DEFAULTS, **VARIANTS[variant]}
+def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None, variants=None, ckpt_path=None):
+    """variants: alternative {name: spec-overrides} table (confirmatory run); ckpt_path: save the best-val-loss
+    weights + the mean/std used to normalise this fold's images (needed by demo_app)."""
+    spec = {**DEFAULTS, **(variants or VARIANTS)[variant]}
     bs = batch_size or spec["batch_size"]
     set_seed(seed)
     if torch.cuda.is_available():
@@ -219,6 +222,12 @@ def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None):
                 print("  early stopping at epoch %d (no val-loss improvement for 10 epochs)" % epoch)
                 break
     model.load_state_dict(best_state)
+    if ckpt_path:
+        os.makedirs(os.path.dirname(ckpt_path), exist_ok=True)
+        torch.save({"state_dict": model.state_dict(), "mean": np.asarray(d["mean"]).tolist(),
+                    "std": np.asarray(d["std"]).tolist(), "variant": variant, "seed": seed, "fold": fold,
+                    "channels": spec["channels"], "source": spec["source"], "n_classes": spec["n_classes"],
+                    "init": spec["init"], "classes": CLASSES}, ckpt_path)
 
     p_plain, p_tta = predict_probs(model, test_loader)
     raw5 = (p_plain, p_tta) if spec["n_classes"] == 5 else None
