@@ -1664,5 +1664,763 @@
     }
    }
   }
+ },
+ "n5": {
+  "models": {
+   "nir_ss": {
+    "macro_f1": 0.8580344367422045,
+    "f1_std_of_seed_means": 0.0024692293177891685,
+    "accuracy": 0.9096513541822534,
+    "per_class_f1": [
+     0.95272000468641,
+     0.8406664372986205,
+     0.7807168682415825
+    ]
+   },
+   "visible_ss": {
+    "macro_f1": 0.7671583386716958,
+    "f1_std_of_seed_means": 0.009334611950887202,
+    "accuracy": 0.8530799541124244,
+    "per_class_f1": [
+     0.9144570657337091,
+     0.6667211569333971,
+     0.7202967933479815
+    ]
+   },
+   "full_ss": {
+    "macro_f1": 0.8416957248930926,
+    "f1_std_of_seed_means": 0.005557763450347534,
+    "accuracy": 0.9015112973215621,
+    "per_class_f1": [
+     0.9487241832323208,
+     0.8059819590885059,
+     0.7703810323584511
+    ]
+   },
+   "nir": {
+    "macro_f1": 0.8489627854836701,
+    "f1_std_of_seed_means": 0.00464319925171841,
+    "accuracy": 0.9043568257768467,
+    "per_class_f1": [
+     0.9479069962226461,
+     0.8042975439742667,
+     0.7946838162540978
+    ]
+   },
+   "visible": {
+    "macro_f1": 0.6777701677552511,
+    "f1_std_of_seed_means": 0.007807690136026097,
+    "accuracy": 0.7932241009526659,
+    "per_class_f1": [
+     0.8755685395510963,
+     0.505679353234379,
+     0.6520626104802788
+    ]
+   },
+   "full": {
+    "macro_f1": 0.7310163807746538,
+    "f1_std_of_seed_means": 0.015955272795582613,
+    "accuracy": 0.8298643323856553,
+    "per_class_f1": [
+     0.9014825779362556,
+     0.5945539110235648,
+     0.6970126533641409
+    ]
+   },
+   "late_ss w=0.5": {
+    "macro_f1": 0.8717527161309181,
+    "f1_std_of_seed_means": 0.010674518484860566,
+    "accuracy": 0.9214474537383411,
+    "per_class_f1": [
+     0.9591799952368274,
+     0.8309749163309536,
+     0.8251032368249728
+    ]
+   },
+   "nir_ss[TTA]": {
+    "macro_f1": 0.8691122750243258,
+    "f1_std_of_seed_means": 0.008236707193619339,
+    "accuracy": 0.9165793805177316,
+    "per_class_f1": [
+     0.9557829046567824,
+     0.8452682099922153,
+     0.8062857104239799
+    ]
+   },
+   "visible_ss[TTA]": {
+    "macro_f1": 0.7844720218708259,
+    "f1_std_of_seed_means": 0.01552427586689566,
+    "accuracy": 0.8661005536435733,
+    "per_class_f1": [
+     0.9232013197933531,
+     0.6864698655641128,
+     0.743744880255012
+    ]
+   },
+   "full_ss[TTA]": {
+    "macro_f1": 0.8526754824302649,
+    "f1_std_of_seed_means": 0.0024122140046497526,
+    "accuracy": 0.9096314030624968,
+    "per_class_f1": [
+     0.9528763341951267,
+     0.8238153363057086,
+     0.7813347767899594
+    ]
+   },
+   "nir[TTA]": {
+    "macro_f1": 0.8551568177863967,
+    "f1_std_of_seed_means": 0.0015616945447046577,
+    "accuracy": 0.908840839942142,
+    "per_class_f1": [
+     0.9513139228932287,
+     0.8125896479301613,
+     0.8015668825358004
+    ]
+   },
+   "visible[TTA]": {
+    "macro_f1": 0.7057366025223805,
+    "f1_std_of_seed_means": 0.009780825273786948,
+    "accuracy": 0.8148137064192726,
+    "per_class_f1": [
+     0.8908458594930131,
+     0.5421906715342073,
+     0.6841732765399213
+    ]
+   },
+   "full[TTA]": {
+    "macro_f1": 0.750655738829769,
+    "f1_std_of_seed_means": 0.004731984534666718,
+    "accuracy": 0.8457379420419969,
+    "per_class_f1": [
+     0.9127716981811016,
+     0.6164584937347084,
+     0.7227370245734972
+    ]
+   },
+   "late_ss w=0.5[TTA]": {
+    "macro_f1": 0.8837462285953829,
+    "f1_std_of_seed_means": 0.007555410219528954,
+    "accuracy": 0.9283679984039106,
+    "per_class_f1": [
+     0.9628975984905281,
+     0.8556447105741073,
+     0.8326963767215131
+    ]
+   },
+   "nir_ss[vote+TTA]": {
+    "macro_f1": 0.8852014082048693,
+    "accuracy": 0.9255189255189256
+   },
+   "visible_ss[vote+TTA]": {
+    "macro_f1": 0.7971793469313587,
+    "accuracy": 0.8754578754578755
+   },
+   "full_ss[vote+TTA]": {
+    "macro_f1": 0.8661672995451367,
+    "accuracy": 0.9206349206349206
+   },
+   "full[vote+TTA]": {
+    "macro_f1": 0.7620130988231576,
+    "accuracy": 0.8547008547008547
+   }
+  },
+  "interpretation": {
+   "main_claim_on_same_preprocessing": "holds",
+   "full_ss_vs_nir_ss": "full_ss >= nir_ss (or not clearly lower) -> raw full < nir was due to misalignment"
+  },
+  "paired": {
+   "nir_ss - visible_ss": {
+    "mean_diff": 0.09087609807050842,
+    "ci95": [
+     0.07162286102675956,
+     0.108638199148757
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   },
+   "nir_ss - full_ss": {
+    "mean_diff": 0.01633871184911168,
+    "ci95": [
+     -0.005167658298948578,
+     0.037580392520938734
+    ],
+    "same_sign_pairs": 9,
+    "real_difference": false,
+    "verdict": "not larger than training noise"
+   },
+   "full_ss - full": {
+    "mean_diff": 0.1106793441184388,
+    "ci95": [
+     0.08914477076666746,
+     0.13208161263139473
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   },
+   "visible_ss - visible": {
+    "mean_diff": 0.08938817091644458,
+    "ci95": [
+     0.06301341128175465,
+     0.11550623654129791
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   },
+   "nir_ss - nir": {
+    "mean_diff": 0.00907165125853416,
+    "ci95": [
+     -0.004339849847397793,
+     0.02383991468234598
+    ],
+    "same_sign_pairs": 8,
+    "real_difference": false,
+    "verdict": "not larger than training noise"
+   },
+   "full_ss - visible_ss": {
+    "mean_diff": 0.07453738622139676,
+    "ci95": [
+     0.05980415021096112,
+     0.08924092256055344
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   },
+   "late_ss w=0.5 - nir_ss": {
+    "mean_diff": 0.013718279388713535,
+    "ci95": [
+     0.004784187304794497,
+     0.022612923633123217
+    ],
+    "same_sign_pairs": 9,
+    "real_difference": false,
+    "verdict": "not larger than training noise"
+   },
+   "late_ss w=0.5 - full_ss": {
+    "mean_diff": 0.030056991237825216,
+    "ci95": [
+     0.010918072597480684,
+     0.05063190227193008
+    ],
+    "same_sign_pairs": 11,
+    "real_difference": false,
+    "verdict": "not larger than training noise"
+   },
+   "nir_ss[TTA] - visible_ss[TTA]": {
+    "mean_diff": 0.08464025315349986,
+    "ci95": [
+     0.0671538172829789,
+     0.1008812309630889
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   },
+   "nir_ss[TTA] - full_ss[TTA]": {
+    "mean_diff": 0.01643679259406079,
+    "ci95": [
+     -0.003984430738024574,
+     0.03629851169923373
+    ],
+    "same_sign_pairs": 10,
+    "real_difference": false,
+    "verdict": "not larger than training noise"
+   },
+   "full_ss[TTA] - full[TTA]": {
+    "mean_diff": 0.10201974360049594,
+    "ci95": [
+     0.08746848519697846,
+     0.11597168803595193
+    ],
+    "same_sign_pairs": 15,
+    "real_difference": true,
+    "verdict": "REAL"
+   }
+  }
+ },
+ "n8": {
+  "error_types": {
+   "a_defect_called_healthy": {
+    "n": 29,
+    "of": 246,
+    "mean_conf": 0.6829591954022989
+   },
+   "b_healthy_called_defect": {
+    "n": 19,
+    "of": 573,
+    "mean_conf": 0.6047836842105263
+   },
+   "c_wrong_defect_group": {
+    "n": 13,
+    "of": 246,
+    "mean_conf": 0.765678205128205,
+    "internal_called_surface": 12,
+    "surface_called_internal": 1
+   },
+   "total_errors": 61,
+   "accuracy": 0.9255189255189256
+  },
+  "per_tissue": {
+   "Bruise": {
+    "class": "Internal_Defect",
+    "n": 55,
+    "pred_H_I_S": [
+     4,
+     50,
+     1
+    ],
+    "recall": 0.9090909090909091,
+    "mean_conf_wrong": 0.528028
+   },
+   "Flesh_damage": {
+    "class": "Internal_Defect",
+    "n": 24,
+    "pred_H_I_S": [
+     1,
+     19,
+     4
+    ],
+    "recall": 0.7916666666666666,
+    "mean_conf_wrong": 0.8831453333333334
+   },
+   "Rot": {
+    "class": "Internal_Defect",
+    "n": 23,
+    "pred_H_I_S": [
+     3,
+     13,
+     7
+    ],
+    "recall": 0.5652173913043478,
+    "mean_conf_wrong": 0.7177473333333333
+   },
+   "Russet": {
+    "class": "Surface_Defect",
+    "n": 42,
+    "pred_H_I_S": [
+     7,
+     0,
+     35
+    ],
+    "recall": 0.8333333333333334,
+    "mean_conf_wrong": 0.7581590476190476
+   },
+   "Scald": {
+    "class": "Surface_Defect",
+    "n": 17,
+    "pred_H_I_S": [
+     2,
+     0,
+     15
+    ],
+    "recall": 0.8823529411764706,
+    "mean_conf_wrong": 0.751415
+   },
+   "Hail_damage": {
+    "class": "Surface_Defect",
+    "n": 16,
+    "pred_H_I_S": [
+     3,
+     1,
+     12
+    ],
+    "recall": 0.75,
+    "mean_conf_wrong": 0.6097291666666667
+   },
+   "Hail_damage_perf": {
+    "class": "Surface_Defect",
+    "n": 31,
+    "pred_H_I_S": [
+     2,
+     0,
+     29
+    ],
+    "recall": 0.9354838709677419,
+    "mean_conf_wrong": 0.618405
+   },
+   "Frost_damage": {
+    "class": "Surface_Defect",
+    "n": 11,
+    "pred_H_I_S": [
+     3,
+     0,
+     8
+    ],
+    "recall": 0.7272727272727273,
+    "mean_conf_wrong": 0.6579088888888888
+   },
+   "Limb_rub": {
+    "class": "Surface_Defect",
+    "n": 7,
+    "pred_H_I_S": [
+     0,
+     0,
+     7
+    ],
+    "recall": 1.0,
+    "mean_conf_wrong": null
+   },
+   "Other": {
+    "class": "Surface_Defect",
+    "n": 20,
+    "pred_H_I_S": [
+     4,
+     0,
+     16
+    ],
+    "recall": 0.8,
+    "mean_conf_wrong": 0.7667241666666667
+   },
+   "Stem": {
+    "class": "Healthy",
+    "n": 148,
+    "pred_H_I_S": [
+     139,
+     3,
+     6
+    ],
+    "recall": 0.9391891891891891,
+    "mean_conf_wrong": 0.5858551851851852
+   },
+   "Calix": {
+    "class": "Healthy",
+    "n": 145,
+    "pred_H_I_S": [
+     143,
+     1,
+     1
+    ],
+    "recall": 0.9862068965517241,
+    "mean_conf_wrong": 0.7343233333333334
+   },
+   "Healthy": {
+    "class": "Healthy",
+    "n": 280,
+    "pred_H_I_S": [
+     272,
+     2,
+     6
+    ],
+    "recall": 0.9714285714285714,
+    "mean_conf_wrong": 0.5936933333333333
+   }
+  },
+  "binary": {
+   "rule": "defective if P(Internal) + P(Surface) > 0.5",
+   "vote": {
+    "nir_ss": {
+     "accuracy": 0.9401709401709402,
+     "f1_defective": 0.8993839835728953,
+     "defect_recall": 0.8902439024390244,
+     "healthy_recall": 0.9616055846422339,
+     "defects_missed": 27,
+     "healthy_rejected": 22
+    },
+    "visible_ss": {
+     "accuracy": 0.9035409035409036,
+     "f1_defective": 0.8293736501079914,
+     "defect_recall": 0.7804878048780488,
+     "healthy_recall": 0.956369982547993,
+     "defects_missed": 54,
+     "healthy_rejected": 25
+    },
+    "full_ss": {
+     "accuracy": 0.9438339438339438,
+     "f1_defective": 0.9012875536480687,
+     "defect_recall": 0.8536585365853658,
+     "healthy_recall": 0.9825479930191972,
+     "defects_missed": 36,
+     "healthy_rejected": 10
+    },
+    "nir (raw)": {
+     "accuracy": 0.9304029304029304,
+     "f1_defective": 0.8814968814968815,
+     "defect_recall": 0.8617886178861789,
+     "healthy_recall": 0.9598603839441536,
+     "defects_missed": 34,
+     "healthy_rejected": 23
+    },
+    "visible (raw)": {
+     "accuracy": 0.8583638583638583,
+     "f1_defective": 0.7613168724279835,
+     "defect_recall": 0.7520325203252033,
+     "healthy_recall": 0.9040139616055847,
+     "defects_missed": 61,
+     "healthy_rejected": 55
+    },
+    "full (raw)": {
+     "accuracy": 0.8852258852258852,
+     "f1_defective": 0.8008474576271186,
+     "defect_recall": 0.7682926829268293,
+     "healthy_recall": 0.9354275741710296,
+     "defects_missed": 57,
+     "healthy_rejected": 37
+    }
+   },
+   "per_run_mean": {
+    "nir_ss": {
+     "f1": 0.8978768771522418,
+     "accuracy": 0.9385754900493791
+    },
+    "visible_ss": {
+     "f1": 0.810775459943701,
+     "accuracy": 0.8929572547259215
+    },
+    "full_ss": {
+     "f1": 0.8841503741624892,
+     "accuracy": 0.9340490797546012
+    },
+    "nir (raw)": {
+     "f1": 0.8810754205252879,
+     "accuracy": 0.9292134271035962
+    },
+    "visible (raw)": {
+     "f1": 0.7461025130904559,
+     "accuracy": 0.8465584318419872
+    },
+    "full (raw)": {
+     "f1": 0.7838616884770987,
+     "accuracy": 0.8730136166392338
+    }
+   },
+   "paired": {
+    "nir_ss - visible_ss|f1": {
+     "n_pairs": 15,
+     "mean_diff": 0.08710141720854057,
+     "ci95": [
+      0.06660083350459489,
+      0.10634653674926493
+     ],
+     "same_sign_pairs": 15,
+     "same_sign_needed": 12,
+     "real_difference": true,
+     "complete": true,
+     "diffs": [
+      0.10815602836879434,
+      0.07800511508951402,
+      0.006878582595101657,
+      0.08820160366552121,
+      0.13837965700768773,
+      0.0937663698271346,
+      0.014898632720414917,
+      0.056842105263157916,
+      0.1011214953271028,
+      0.09998891475446181,
+      0.1006066734074823,
+      0.08257847061301882,
+      0.07222222222222219,
+      0.09911616161616166,
+      0.16575922565033263
+     ],
+     "verdict": "REAL"
+    },
+    "nir_ss - visible_ss|accuracy": {
+     "n_pairs": 15,
+     "mean_diff": 0.04561823532345751,
+     "ci95": [
+      0.03498428849319167,
+      0.05590054366801332
+     ],
+     "same_sign_pairs": 14,
+     "same_sign_needed": 12,
+     "real_difference": true,
+     "complete": true,
+     "diffs": [
+      0.060975609756097504,
+      0.03658536585365857,
+      0.0,
+      0.04268292682926833,
+      0.0736196319018404,
+      0.04268292682926822,
+      0.012195121951219523,
+      0.030487804878048697,
+      0.054878048780487854,
+      0.06134969325153372,
+      0.04878048780487798,
+      0.04268292682926833,
+      0.03658536585365846,
+      0.054878048780487854,
+      0.08588957055214719
+     ],
+     "verdict": "REAL"
+    },
+    "nir_ss - full_ss|f1": {
+     "n_pairs": 15,
+     "mean_diff": 0.013726502989752502,
+     "ci95": [
+      -0.00758282527416254,
+      0.036588839046569566
+     ],
+     "same_sign_pairs": 9,
+     "same_sign_needed": 12,
+     "real_difference": false,
+     "complete": true,
+     "diffs": [
+      0.034946236559139754,
+      0.003232062055591456,
+      -0.0464108910891089,
+      0.052025893071205975,
+      0.06100478468899517,
+      -0.034324942791762014,
+      0.002200220022002264,
+      -0.03918367346938767,
+      0.007788161993769416,
+      0.11223118279569888,
+      0.03416149068322982,
+      -0.025577557755775526,
+      -0.022108843537415046,
+      -0.005050505050505083,
+      0.07096392667060902
+     ],
+     "verdict": "not larger than training noise"
+    },
+    "nir_ss - full_ss|accuracy": {
+     "n_pairs": 15,
+     "mean_diff": 0.0045264102947777905,
+     "ci95": [
+      -0.00810539179011421,
+      0.018392687914609192
+     ],
+     "same_sign_pairs": 6,
+     "same_sign_needed": 12,
+     "real_difference": false,
+     "complete": true,
+     "diffs": [
+      0.018292682926829174,
+      -0.0060975609756097615,
+      -0.030487804878048697,
+      0.018292682926829285,
+      0.030674846625766805,
+      -0.018292682926829285,
+      0.0,
+      -0.024390243902439046,
+      -0.0060975609756097615,
+      0.06748466257668717,
+      0.018292682926829174,
+      -0.018292682926829174,
+      -0.012195121951219523,
+      -0.0060975609756097615,
+      0.036809815950920255
+     ],
+     "verdict": "not larger than training noise"
+    },
+    "full_ss - full (raw)|f1": {
+     "n_pairs": 15,
+     "mean_diff": 0.1002886856853905,
+     "ci95": [
+      0.07777559695993591,
+      0.12290040085115046
+     ],
+     "same_sign_pairs": 15,
+     "same_sign_needed": 12,
+     "real_difference": true,
+     "complete": true,
+     "diffs": [
+      0.11767548628730218,
+      0.024954212454212477,
+      0.0803571428571429,
+      0.037254459245879445,
+      0.12347703842549207,
+      0.17992656058751522,
+      0.15621562156215618,
+      0.11514697622168124,
+      0.09546925566343045,
+      0.05163043478260865,
+      0.15384615384615374,
+      0.08520599250936323,
+      0.07008864151721295,
+      0.14102564102564108,
+      0.07205666829506596
+     ],
+     "verdict": "REAL"
+    },
+    "full_ss - full (raw)|accuracy": {
+     "n_pairs": 15,
+     "mean_diff": 0.061035463115367346,
+     "ci95": [
+      0.0484062796149434,
+      0.07398373983739837
+     ],
+     "same_sign_pairs": 15,
+     "same_sign_needed": 12,
+     "real_difference": true,
+     "complete": true,
+     "diffs": [
+      0.060975609756097615,
+      0.018292682926829285,
+      0.04268292682926822,
+      0.04268292682926833,
+      0.07975460122699385,
+      0.09146341463414631,
+      0.09756097560975618,
+      0.07926829268292679,
+      0.06707317073170738,
+      0.024539877300613466,
+      0.08536585365853666,
+      0.04268292682926822,
+      0.04268292682926822,
+      0.09756097560975607,
+      0.042944785276073594
+     ],
+     "verdict": "REAL"
+    }
+   },
+   "mcnemar_vote": {
+    "nir_ss - visible_ss": {
+     "table": [
+      [
+       710,
+       60
+      ],
+      [
+       30,
+       19
+      ]
+     ],
+     "only_a_correct": 60,
+     "only_b_correct": 30,
+     "p_value": 0.0022366244452098703
+    },
+    "nir_ss - full_ss": {
+     "table": [
+      [
+       742,
+       28
+      ],
+      [
+       31,
+       18
+      ]
+     ],
+     "only_a_correct": 28,
+     "only_b_correct": 31,
+     "p_value": 0.7945723486232792
+    },
+    "full_ss - full (raw)": {
+     "table": [
+      [
+       713,
+       60
+      ],
+      [
+       12,
+       34
+      ]
+     ],
+     "only_a_correct": 60,
+     "only_b_correct": 12,
+     "p_value": 3.0419822674941435e-08
+    }
+   },
+   "argmax_collapsed_nir_ss_accuracy": 0.9413919413919414
+  },
+  "wrong_group_examples": [
+   "RawA0115",
+   "RawA0528",
+   "RawA0203"
+  ]
  }
 }

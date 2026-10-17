@@ -277,5 +277,94 @@ def n4():
     print("saved -> outputs/dl/nir_proof_n4.json")
 
 
+# ----------------------------------------------------------------------------------------------- N5
+def n5():
+    """visible_ss / full_ss (aligned SingleSpectra, n5_results.json) vs nir_ss (confirm_results.json), seeds 3-5,
+    plus the raw counterparts (nir: confirm, visible/full: fusion_results.json) to isolate the effect of alignment."""
+    rng = np.random.RandomState(42)
+    ctx = Context()
+    y = ctx.labels
+    load = lambda f: json.load(open(os.path.join(DL, f), encoding="utf-8"))["runs"]
+    conf, fus, n5r = load("confirm_results.json"), load("fusion_results.json"), load("n5_results.json")
+    get = lambda runs, v: {(r["seed"], r["fold"]): r for r in runs.values() if r["variant"] == v}
+    T = {"nir_ss": get(conf, "nir_ss"), "visible_ss": get(n5r, "visible_ss"), "full_ss": get(n5r, "full_ss"),
+         "nir": get(conf, "nir"), "visible": get(fus, "visible"), "full": get(fus, "full")}
+    keys = sorted(set.intersection(*(set(t) for t in T.values())))
+    for k in keys:
+        assert all(T[v][k]["test_idx"] == T["nir_ss"][k]["test_idx"] for v in T)
+    print(f"N5  aligned SingleSpectra vs raw, seeds 3-5: {len(keys)} paired (seed, fold) runs")
+    out = {"n_pairs": len(keys), "models": {}, "paired": {}, "per_class": {}, "mcnemar_vote": {}}
+
+    def rec(p, k):
+        idx = np.array(T["nir_ss"][k]["test_idx"])
+        pred = p.argmax(1)
+        return {"test_macro_f1": float(f1_score(y[idx], pred, average="macro")), "test_accuracy": float(accuracy_score(y[idx], pred)),
+                "per_class_f1": f1_score(y[idx], pred, average=None, labels=[0, 1, 2]).tolist(), "pred": pred, "idx": idx}
+
+    tables = {}
+    for tag in ("", "tta_"):
+        sfx = "[TTA]" if tag else ""
+        for v in T:
+            tables[v + sfx] = {k: rec(np.array(T[v][k][tag + "test_probs"]), k) for k in keys}
+        tables["late_ss w=0.5" + sfx] = {k: rec(0.5 * np.array(T["nir_ss"][k][tag + "test_probs"]) +
+                                                0.5 * np.array(T["visible_ss"][k][tag + "test_probs"]), k) for k in keys}
+    print(f"  {'model':20s} {'macro-F1':>9s} {'accuracy':>9s}   F1 Healthy / Internal / Surface")
+    for name, t in tables.items():
+        f1 = float(np.mean([r["test_macro_f1"] for r in t.values()]))
+        acc = float(np.mean([r["test_accuracy"] for r in t.values()]))
+        pc = np.mean([r["per_class_f1"] for r in t.values()], axis=0)
+        sd = float(np.std([np.mean([t[k]["test_macro_f1"] for k in keys if k[0] == s]) for s in sorted({k[0] for k in keys})]))
+        out["models"][name] = {"macro_f1": f1, "f1_std_of_seed_means": sd, "accuracy": acc, "per_class_f1": pc.tolist()}
+        print(f"  {name:20s} {f1:9.3f} {acc * 100:8.1f}%   {pc[0]:.3f} / {pc[1]:.3f} / {pc[2]:.3f}")
+    print("\n  paired comparisons (primary: plain probabilities; [TTA] secondary)")
+    comps = [("nir_ss", "visible_ss"), ("nir_ss", "full_ss"), ("full_ss", "full"), ("visible_ss", "visible"),
+             ("nir_ss", "nir"), ("full_ss", "visible_ss"), ("late_ss w=0.5", "nir_ss"), ("late_ss w=0.5", "full_ss"),
+             ("nir_ss[TTA]", "visible_ss[TTA]"), ("nir_ss[TTA]", "full_ss[TTA]"), ("full_ss[TTA]", "full[TTA]")]
+    for a, b in comps:
+        r = paired(tables[a], tables[b], rng)
+        fc = fold_check({k: tables[a][k]["test_macro_f1"] - tables[b][k]["test_macro_f1"] for k in keys})
+        out["paired"][f"{a} - {b}"] = {**r, "fold_level": fc, "verdict": verdict(r)}
+        print(f"  {a:16s} - {b:16s} {r['mean_diff']:+.3f} CI [{r['ci95'][0]:+.3f},{r['ci95'][1]:+.3f}] "
+              f"{r['same_sign_pairs']}/{r['n_pairs']}, folds {fc['same_sign_folds']}/5 -> {verdict(r)}")
+    print("\n  per-class F1 (paired, plain)")
+    for a, b in (("nir_ss", "visible_ss"), ("nir_ss", "full_ss"), ("full_ss", "full")):
+        for c, cname in enumerate(CLASSES):
+            ta = {k: {"test_macro_f1": tables[a][k]["per_class_f1"][c]} for k in keys}
+            tb = {k: {"test_macro_f1": tables[b][k]["per_class_f1"][c]} for k in keys}
+            r = paired(ta, tb, rng)
+            out["per_class"][f"{a} - {b}|{cname}"] = {**r, "verdict": verdict(r)}
+            print(f"  {a:10s} - {b:10s} {cname:16s} {r['mean_diff']:+.3f} CI [{r['ci95'][0]:+.3f},{r['ci95'][1]:+.3f}] "
+                  f"{r['same_sign_pairs']}/{r['n_pairs']} -> {verdict(r)}")
+    # McNemar on the pooled out-of-fold 3-seed soft vote with TTA (the locked final-formula style), 819 apples
+    n = len(y)
+
+    def vote(v):
+        p = np.zeros((n, 3))
+        for k in keys:
+            p[np.array(T[v][k]["test_idx"])] += np.array(T[v][k]["tta_test_probs"])
+        return p.argmax(1)
+    V = {v: vote(v) for v in ("nir_ss", "visible_ss", "full_ss", "full")}
+    print("\n  McNemar, 3-seed soft vote + TTA, pooled out-of-fold (819 apples)")
+    for v in V:
+        out["models"][v + "[vote+TTA]"] = {"macro_f1": float(f1_score(y, V[v], average="macro")), "accuracy": float(accuracy_score(y, V[v]))}
+        print(f"  {v + '[vote+TTA]':20s} macro-F1 {out['models'][v + '[vote+TTA]']['macro_f1']:.3f}   accuracy {out['models'][v + '[vote+TTA]']['accuracy'] * 100:.1f}%")
+    for a, b in (("nir_ss", "visible_ss"), ("nir_ss", "full_ss"), ("full_ss", "full")):
+        m = mcnemar_exact(y, V[a], V[b])
+        out["mcnemar_vote"][f"{a} - {b}"] = m
+        print(f"  {a:10s} vs {b:10s} only-{a} correct {m['only_a_correct']:3d}, only-{b} correct {m['only_b_correct']:3d}, p = {m['p_value']:.1e}")
+    # interpretation rules locked in PROJECT_PLAN.md before the run
+    nv, nf = out["paired"]["nir_ss - visible_ss"], out["paired"]["nir_ss - full_ss"]
+    out["interpretation"] = {
+        "main_claim_on_same_preprocessing": "holds" if nv["real_difference"] and nv["mean_diff"] > 0 else "does NOT hold",
+        "full_ss_vs_nir_ss": ("full_ss < nir_ss clearly -> visible makes it worse even with aligned bands"
+                              if nf["real_difference"] and nf["mean_diff"] > 0 else
+                              "full_ss >= nir_ss (or not clearly lower) -> raw full < nir was due to misalignment")}
+    print("\n  interpretation (rules locked before the run):")
+    for k, v in out["interpretation"].items():
+        print(f"  {k}: {v}")
+    json.dump(out, open(os.path.join(DL, "nir_proof_n5.json"), "w", encoding="utf-8"), indent=1)
+    print("saved -> outputs/dl/nir_proof_n5.json")
+
+
 if __name__ == "__main__":
-    {"n2": n2, "n3": n3, "n4": n4}[sys.argv[1]]()
+    {"n2": n2, "n3": n3, "n4": n4, "n5": n5}[sys.argv[1]]()

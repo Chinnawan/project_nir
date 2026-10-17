@@ -3,6 +3,7 @@
   python -m src.nir_proof_report  ->  outputs/logs/nir_proof_report.txt, outputs/dl/nir_proof_summary.json
 Inputs: outputs/dl/nir_proof_n1.json (band contrast), nir_proof_n2.json (per class/tissue + McNemar),
         nir_proof_n3.json (classical ML), nir_proof_n4.json (late vs early fusion + band alignment),
+        nir_proof_n5.json (visible_ss / full_ss vs nir_ss on aligned images), n8_error_analysis.json (errors + 2 groups),
         multiseed_summary.json (single-band results for the headline table).
 """
 import io
@@ -31,8 +32,9 @@ def section(title):
 
 
 def main():
-    n1, n2, n3, n4, ms = (load(f) for f in ("nir_proof_n1.json", "nir_proof_n2.json", "nir_proof_n3.json",
-                                              "nir_proof_n4.json", "multiseed_summary.json"))
+    n1, n2, n3, n4, n5, n8, ms = (load(f) for f in ("nir_proof_n1.json", "nir_proof_n2.json", "nir_proof_n3.json",
+                                                      "nir_proof_n4.json", "nir_proof_n5.json", "n8_error_analysis.json",
+                                                      "multiseed_summary.json"))
     summary = {}
     buf = io.StringIO()
     with redirect_stdout(buf):
@@ -127,6 +129,64 @@ def main():
                 print(f"  {k:12s} median {v['median_shift_px224']:5.2f} px  mean {v['mean_shift_px224']:5.2f}  max {v['max_shift_px224']:5.2f}"
                       f"  (mean dx {v['mean_dx']:+.2f}, dy {v['mean_dy']:+.2f})")
             summary["n4"] = n4
+
+        if n5:
+            section("N5) Same preprocessing for every band set: aligned SingleSpectra images (visible_ss / full_ss vs nir_ss)")
+            print(f"  seeds 3-5, {n5['n_pairs']} paired runs (nir_ss: confirm_results.json, visible_ss/full_ss: n5_results.json,"
+                  " raw nir/visible/full for comparison)")
+            print(f"  {'model':22s} {'macro-F1':>9s} {'accuracy':>9s}   F1 Healthy / Internal / Surface")
+            for k, r in n5["models"].items():
+                pc = " / ".join(f"{x:.3f}" for x in r["per_class_f1"]) if "per_class_f1" in r else ""
+                print(f"  {k:22s} {r['macro_f1']:9.3f} {pct(r['accuracy']):>9s}   {pc}")
+            print()
+            for k, r in n5["paired"].items():
+                print(f"  {k:36s} {r['mean_diff']:+.3f} CI [{r['ci95'][0]:+.3f},{r['ci95'][1]:+.3f}] {r['same_sign_pairs']}/{r['n_pairs']}, "
+                      f"folds {r['fold_level']['same_sign_folds']}/5 -> {r['verdict']}")
+            print("\n  per-class F1")
+            for k, r in n5["per_class"].items():
+                print(f"  {k:44s} {r['mean_diff']:+.3f} CI [{r['ci95'][0]:+.3f},{r['ci95'][1]:+.3f}] {r['same_sign_pairs']}/{r['n_pairs']} -> {r['verdict']}")
+            print("\n  McNemar (3-seed soft vote + TTA, pooled out-of-fold, 819 apples)")
+            for k, r in n5["mcnemar_vote"].items():
+                print(f"  {k:24s} only-first correct {r['only_a_correct']:3d}  only-second correct {r['only_b_correct']:3d}  p = {r['p_value']:.1e}")
+            print("\n  interpretation (rules locked in PROJECT_PLAN.md before the run):")
+            for k, v in n5["interpretation"].items():
+                print(f"  {k}: {v}")
+            summary["n5"] = {k: n5[k] for k in ("models", "interpretation")} | {
+                "paired": {k: {x: r[x] for x in ("mean_diff", "ci95", "same_sign_pairs", "real_difference", "verdict")}
+                           for k, r in n5["paired"].items()}}
+
+        if n8:
+            section("N8) Error analysis of the final formula (nir_ss + TTA + 3-seed vote, 819 apples) + 2-group results")
+            e = n8["error_types"]
+            print(f"  accuracy {pct(e['accuracy'])}, {e['total_errors']} errors")
+            print(f"  (a) defective apple called healthy   {e['a_defect_called_healthy']['n']:3d} / {e['a_defect_called_healthy']['of']}"
+                  f"   mean confidence {e['a_defect_called_healthy']['mean_conf']:.2f}")
+            print(f"  (b) healthy apple called defective   {e['b_healthy_called_defect']['n']:3d} / {e['b_healthy_called_defect']['of']}"
+                  f"   mean confidence {e['b_healthy_called_defect']['mean_conf']:.2f}")
+            c = e["c_wrong_defect_group"]
+            print(f"  (c) defect found, wrong group        {c['n']:3d}   (Internal->Surface {c['internal_called_surface']}, "
+                  f"Surface->Internal {c['surface_called_internal']})   mean confidence {c['mean_conf']:.2f}")
+            print(f"  mean confidence when correct {n8['mean_conf_correct']:.2f}")
+            print(f"\n  {'tissue':17s} {'class':16s} {'n':>4s}   pred H   I   S   correct   mean conf when wrong")
+            for t, r in n8["per_tissue"].items():
+                mc = f"{r['mean_conf_wrong']:.2f}" if r["mean_conf_wrong"] is not None else "  -"
+                print(f"  {t:17s} {r['class']:16s} {r['n']:4d}   {r['pred_H_I_S'][0]:6d} {r['pred_H_I_S'][1]:3d} {r['pred_H_I_S'][2]:3d}"
+                      f"   {pct(r['recall']):>6s}   {mc}")
+            b = n8["binary"]
+            print(f"\n  2 groups (healthy vs defective, {b['rule']}), 3-seed vote + TTA, 819 apples")
+            print(f"  {'model':14s} {'accuracy':>9s} {'F1 defect':>10s} {'defect recall':>14s} {'healthy recall':>15s}   missed / rejected")
+            for k, r in b["vote"].items():
+                print(f"  {k:14s} {pct(r['accuracy']):>9s} {r['f1_defective']:10.3f} {pct(r['defect_recall']):>14s} {pct(r['healthy_recall']):>15s}"
+                      f"   {r['defects_missed']:3d} / {r['healthy_rejected']:3d}")
+            print(f"  (final formula, argmax of 3 classes collapsed to 2 groups: accuracy {pct(b['argmax_collapsed_nir_ss_accuracy'])})")
+            for k, r in b["paired"].items():
+                print(f"  {k:32s} {r['mean_diff']:+.3f} CI [{r['ci95'][0]:+.3f},{r['ci95'][1]:+.3f}] {r['same_sign_pairs']}/{r['n_pairs']} -> {r['verdict']}")
+            for k, r in b["mcnemar_vote"].items():
+                print(f"  McNemar {k:24s} only-first correct {r['only_a_correct']:3d}  only-second correct {r['only_b_correct']:3d}  p = {r['p_value']:.1e}")
+            hits = sum(r["peak_on_mask"] for r in n8["wrong_group_cases"])
+            print(f"\n  type (c) cases: {len(n8['wrong_group_cases'])}, Grad-CAM peak on the real defect in {hits}; "
+                  f"examples (figure kept local, dataset pixels): {', '.join(n8['wrong_group_examples'])}")
+            summary["n8"] = {k: n8[k] for k in ("error_types", "per_tissue", "binary", "wrong_group_examples")}
     text = buf.getvalue()
     print(text)
     os.makedirs(os.path.dirname(REPORT), exist_ok=True)

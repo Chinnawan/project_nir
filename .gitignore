@@ -35,3 +35,6 @@ outputs/dl/confirm_ckpt/
 outputs/dl/confirm_ckpt_smoke/
 
 outputs/demo_cache/
+
+# dataset-pixel figures (overlays, Grad-CAM examples): never commit
+outputs/figures/private/

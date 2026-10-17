@@ -7,7 +7,10 @@ leave the machine. Gradio's temp/cache folder is moved to outputs/demo_cache/ (g
 
 Mode 1 - CAPA image (out-of-fold, honest): the checkpoints of the 3 seeds of the fold in which the image
          was a TEST image (fold_assignment.json) -> these models never saw the image. Models of other folds
-         are never used for it.
+         are never used for it. A model switch (N7) picks NIR (final formula) / Visible (BL+GR) / all 4 bands,
+         all trained on the same SingleSpectra images (visible_ss, full_ss from run_n5); "compare all models"
+         shows every model on the same apple with its Grad-CAM; presentation examples are picked
+         automatically from the recorded out-of-fold predictions.
 Mode 2 - new image (upload): all 15 checkpoints (5 folds x 3 seeds).
 Belt   - N random CAPA images (mode 1 rule per image) sorted into sell fresh / processing / reject.
 """
@@ -46,6 +49,16 @@ BIN_ORDER = ["Healthy", "Surface_Defect", "Internal_Defect"]
 GRADCAM_LAYER = 5  # model.features[5]: last 14x14 block
 CAM_NOTE = ("heatmap บอกบริเวณคร่าวๆ เท่านั้น ไม่ใช่ตำแหน่งตำหนิที่แม่นยำ — เมื่อวัดกับ mask ตำหนิจริง (โมเดล nir_SE_ss, "
             "ชั้น 14×14) ตำหนิภายนอกชี้ถูกจุด 13% เทียบกับสุ่ม 6% และตำหนิภายในชี้ถูกจุด 40% เทียบกับสุ่ม 31%")
+# mode-1 model switch (N7): all on SingleSpectra images, seeds 3-5, TTA + soft vote, always the image's own test fold
+MODELS = {
+    "nir_ss": {"label": "NIR (RE+IR) — สูตรสุดท้าย", "short": "NIR (RE+IR)", "results": "confirm_results.json",
+               "bands": [(2, "แบนด์ RE (750 nm)"), (3, "แบนด์ IR (800 nm)")], "cam_band": (3, "IR")},
+    "visible_ss": {"label": "Visible (BL+GR)", "short": "Visible (BL+GR)", "results": "n5_results.json",
+                   "bands": [(0, "แบนด์ BL (450 nm)"), (1, "แบนด์ GR (500 nm)")], "cam_band": (1, "GR")},
+    "full_ss": {"label": "4 แบนด์ (BL+GR+RE+IR)", "short": "4 แบนด์", "results": "n5_results.json",
+                "bands": [(1, "แบนด์ GR (500 nm)"), (3, "แบนด์ IR (800 nm)")], "cam_band": (3, "IR")},
+}
+DEFAULT_MODEL = "nir_ss"
 DOMAIN_NOTE = ("ภาพที่อัปโหลดจากกล้อง/แสง/สายพันธุ์อื่นอาจให้ผลต่างจากที่วัดบน CAPA (domain shift) — "
                "ผลนี้ไม่ใช่การรับรองความแม่นยำบนภาพของคุณ")
 
@@ -58,43 +71,49 @@ class Demo:
         self.paths = {os.path.basename(fp).replace(".npy", ""): fp
                       for split in ("train", "val", "test") for fp, _ in list_files(split, SS_DIR)}
         assert set(self.paths) == set(self.images)
-        self._cache = {}
+        self._cache = {}  # (variant, seed, fold) -> (model, meta)
+        self._oof = None
 
     # ---- models -------------------------------------------------------------------------------
-    def ckpt_path(self, seed, fold):
-        return os.path.join(self.ckpt_dir, f"nir_ss_seed{seed}_fold{fold}.pt")
+    def ckpt_path(self, seed, fold, variant=DEFAULT_MODEL):
+        return os.path.join(self.ckpt_dir, f"{variant}_seed{seed}_fold{fold}.pt")
 
-    def available(self):
-        return [(s, f) for f in FOLDS for s in SEEDS if os.path.exists(self.ckpt_path(s, f))]
+    def available(self, variant=DEFAULT_MODEL):
+        return [(s, f) for f in FOLDS for s in SEEDS if os.path.exists(self.ckpt_path(s, f, variant))]
 
-    def get(self, seed, fold):
-        if (seed, fold) not in self._cache:
-            model, meta = load_checkpoint(self.ckpt_path(seed, fold))
-            assert meta["seed"] == seed and meta["fold"] == fold and meta["variant"] == "nir_ss", meta
-            self._cache[(seed, fold)] = (model, meta)
-        return self._cache[(seed, fold)]
+    def variants(self):
+        """models with all 15 checkpoints (the default model first)"""
+        return [v for v in MODELS if len(self.available(v)) == len(SEEDS) * len(FOLDS)]
+
+    def get(self, seed, fold, variant=DEFAULT_MODEL):
+        if (variant, seed, fold) not in self._cache:
+            model, meta = load_checkpoint(self.ckpt_path(seed, fold, variant))
+            assert meta["seed"] == seed and meta["fold"] == fold and meta["variant"] == variant, meta
+            self._cache[(variant, seed, fold)] = (model, meta)
+        return self._cache[(variant, seed, fold)]
 
     # ---- prediction ---------------------------------------------------------------------------
-    def vote(self, cube, keys):
+    def vote(self, cube, keys, variant=DEFAULT_MODEL):
         rows = []
         for seed, fold in keys:
-            model, meta = self.get(seed, fold)
+            model, meta = self.get(seed, fold, variant)
             rows.append({"seed": seed, "fold": fold, "probs": predict_probs(model, meta, cube, tta=True)})
         p = np.mean([r["probs"] for r in rows], axis=0)
         return rows, p, int(p.argmax())
 
-    def keys_for_known(self, rawid):
+    def keys_for_known(self, rawid, variant=DEFAULT_MODEL):
         fold = self.images[rawid]["fold"]
         keys = [(s, fold) for s in SEEDS]
-        missing = [k for k in keys if not os.path.exists(self.ckpt_path(*k))]
+        missing = [k for k in keys if not os.path.exists(self.ckpt_path(*k, variant))]
         if missing:
-            raise FileNotFoundError(f"missing checkpoints for fold {fold}: {missing} (run run_confirm.bat first)")
+            raise FileNotFoundError(f"missing {variant} checkpoints for fold {fold}: {missing} "
+                                    f"(run {'run_confirm.bat' if variant == 'nir_ss' else 'run_n5.bat'} first)")
         assert all(f == fold for _, f in keys)  # never a model that saw this image
         return keys
 
-    def predict_known(self, rawid):
+    def predict_known(self, rawid, variant=DEFAULT_MODEL):
         cube = np.load(self.paths[rawid])
-        rows, p, pred = self.vote(cube, self.keys_for_known(rawid))
+        rows, p, pred = self.vote(cube, self.keys_for_known(rawid, variant), variant)
         return cube, rows, p, pred
 
     def predict_new(self, cube):
@@ -104,11 +123,60 @@ class Demo:
         rows, p, pred = self.vote(cube, keys)
         return rows, p, pred
 
+    # ---- recorded out-of-fold results (model summary numbers + presentation examples) ------------
+    def oof(self):
+        """{variant: {rawid: 3-seed mean of the recorded TTA probabilities}} from the result files"""
+        if self._oof is None:
+            from .round2 import Context
+            names = [os.path.basename(fp).replace(".npy", "") for fp, _ in Context().pool_raw]
+            self._oof = {}
+            for v, spec in MODELS.items():
+                path = os.path.join(OUTPUT_DIR, "dl", spec["results"])
+                if not os.path.exists(path):
+                    continue
+                acc = {}
+                for r in json.load(open(path, encoding="utf-8"))["runs"].values():
+                    if r["variant"] == v and r["seed"] in SEEDS:
+                        for i, p in zip(r["test_idx"], r["tta_test_probs"]):
+                            acc.setdefault(names[i], []).append(p)
+                if len(acc) == len(self.images) and all(len(p) == len(SEEDS) for p in acc.values()):
+                    self._oof[v] = {k: np.mean(p, axis=0) for k, p in acc.items()}
+        return self._oof
+
+    def model_summary(self, variant):
+        o = self.oof().get(variant)
+        if o is None:
+            return None
+        truth = np.array([CLASSES.index(self.images[k]["label"]) for k in sorted(o)])
+        pred = np.array([int(o[k].argmax()) for k in sorted(o)])
+        f1 = np.mean([2 * np.sum((pred == c) & (truth == c)) / (np.sum(pred == c) + np.sum(truth == c)) for c in range(3)])
+        return {"accuracy": float(np.mean(pred == truth)), "macro_f1": float(f1)}
+
+    def examples(self, n_max=5):
+        """presentation examples picked automatically from the recorded out-of-fold predictions:
+        (a) Bruise: NIR right, Visible wrong  (b) every model wrong  (c) Visible right, NIR wrong (for honesty)"""
+        o = self.oof()
+        if not {"nir_ss", "visible_ss"} <= set(o):
+            return []
+        ok = {v: {k: CLASSES[int(p.argmax())] == self.images[k]["label"] for k, p in o[v].items()} for v in o}
+        ids = sorted(self.images)
+        groups = [("(ก) Bruise: NIR ถูก / Visible ผิด", [k for k in ids if self.images[k]["tissue"] == "Bruise"
+                                                       and ok["nir_ss"][k] and not ok["visible_ss"][k]]),
+                  ("(ข) ทุกโมเดลผิด", [k for k in ids if not any(ok[v][k] for v in ok)]),
+                  ("(ค) Visible ถูก / NIR ผิด", [k for k in ids if ok["visible_ss"][k] and not ok["nir_ss"][k]])]
+        out = []
+        for title, members in groups:
+            # the most convincing first: highest recorded confidence of the model that is right (or, for (b), of the final model)
+            ref = "visible_ss" if title.startswith("(ค)") else "nir_ss"
+            members = sorted(members, key=lambda k: -o[ref][k].max())[:n_max]
+            out += [(f"{title} — {k} {self.images[k]['tissue']} (จริง: {TH[self.images[k]['label']]})", k) for k in members]
+        return out
+
     # ---- Grad-CAM -----------------------------------------------------------------------------
-    def cam(self, cube, keys, class_idx):
+    def cam(self, cube, keys, class_idx, variant=DEFAULT_MODEL):
         cams = []
         for seed, fold in keys:
-            model, meta = self.get(seed, fold)
+            model, meta = self.get(seed, fold, variant)
             x = preprocess(cube, meta).to(DEVICE)
             with GradCAM(model=model, target_layers=[model.features[GRADCAM_LAYER]]) as cam:
                 cams.append(cam(input_tensor=x, targets=[ClassifierOutputTarget(class_idx)])[0])
@@ -217,18 +285,59 @@ def final_formula_note():
 
 
 # ----------------------------------------------------------------------------- UI callbacks
-def classify_known(demo, rawid):
+def model_note(demo, variant):
+    s = demo.model_summary(variant)
+    nums = (f"ผลรวมของโมเดลนี้ (out-of-fold ทั้ง 819 ภาพ, 3 seed + TTA): accuracy **{s['accuracy'] * 100:.1f}%**, "
+            f"macro-F1 **{s['macro_f1']:.3f}**") if s else "ผลรวมของโมเดลนี้: ยังไม่มีไฟล์ผล"
+    return f"**โมเดล: {MODELS[variant]['label']}** — ภาพ SingleSpectra · {nums}"
+
+
+def classify_known(demo, rawid, variant=DEFAULT_MODEL):
     if not rawid:
         raise ValueError("เลือกภาพก่อน")
     info = demo.images[rawid]
-    cube, rows, p, pred = demo.predict_known(rawid)
-    keys = demo.keys_for_known(rawid)
+    cube, rows, p, pred = demo.predict_known(rawid, variant)
+    keys = demo.keys_for_known(rawid, variant)
     mask = load_defect_mask(info["defect_no"]) if info["defect_no"] is not None else None
-    cam = demo.cam(cube, keys, pred)
+    cam = demo.cam(cube, keys, pred, variant)
+    (b1, _), (b2, _) = MODELS[variant]["bands"]
+    cb, cname = MODELS[variant]["cam_band"]
     fold_note = f"ใช้เฉพาะโมเดล fold {info['fold']} (ภาพนี้เป็น test ของ fold นี้ โมเดลไม่เคยเห็น)"
-    return (to_gray_rgb(cube[..., 2]), to_gray_rgb(cube[..., 3]), result_card(p, pred, info),
+    return (to_gray_rgb(cube[..., b1]), to_gray_rgb(cube[..., b2]), result_card(p, pred, info),
             {TH[c]: float(p[i]) for i, c in enumerate(CLASSES)}, prob_table(rows, p, fold_note),
-            overlay(cube[..., 3], cam, mask), CAM_NOTE + ("  (เส้นเขียว = ขอบตำหนิจริง)" if mask is not None else ""))
+            overlay(cube[..., cb], cam, mask),
+            model_note(demo, variant) + f"  \nGrad-CAM ซ้อนบนแบนด์ {cname} · " + CAM_NOTE +
+            ("  (เส้นเขียว = ขอบตำหนิจริง)" if mask is not None else ""))
+
+
+def compare_all(demo, rawid):
+    """Same apple, every available model (each with its own fold-matched checkpoints): table + Grad-CAM side by side."""
+    if not rawid:
+        raise ValueError("เลือกภาพก่อน")
+    info = demo.images[rawid]
+    mask = load_defect_mask(info["defect_no"]) if info["defect_no"] is not None else None
+    rows_html, cams, table = "", [], []
+    for v in MODELS:
+        if v not in demo.variants():
+            cams.append(None)
+            rows_html += f"<tr><td style='padding:8px 12px'>{MODELS[v]['label']}</td><td colspan='3'>ยังไม่มี checkpoint</td></tr>"
+            continue
+        cube, _, p, pred = demo.predict_known(rawid, v)
+        cb, cname = MODELS[v]["cam_band"]
+        cams.append(overlay(cube[..., cb], demo.cam(cube, demo.keys_for_known(rawid, v), pred, v), mask, size=336))
+        ok = CLASSES[pred] == info["label"]
+        bg, mark = ("#1a7f37", "&#10004; ถูก") if ok else ("#c62828", "&#10008; ผิด")
+        table.append({"model": v, "pred": CLASSES[pred], "conf": float(p[pred]), "correct": ok})
+        rows_html += (f"<tr style='font-size:20px'><td style='padding:8px 12px;font-weight:700'>{MODELS[v]['label']}</td>"
+                      f"<td style='padding:8px 12px'>{TH[CLASSES[pred]]}</td>"
+                      f"<td style='padding:8px 12px;font-size:28px;font-weight:800'>{p[pred] * 100:.1f}%</td>"
+                      f"<td style='padding:8px 16px;background:{bg};color:#fff;font-size:24px;font-weight:800;text-align:center'>{mark}</td></tr>")
+    html = (f"<div style='font-size:18px;margin-bottom:6px'>{rawid} · คำตอบจริง: <b>{TH[info['label']]}</b> · ชนิด: {info['tissue']} · "
+            f"ทุกโมเดลใช้เฉพาะ fold {info['fold']} (ไม่เคยเห็นภาพนี้)</div>"
+            f"<table style='border-collapse:collapse;width:100%'><tr style='text-align:left;opacity:0.8'><th style='padding:6px 12px'>โมเดล</th>"
+            f"<th style='padding:6px 12px'>คำทาย</th><th style='padding:6px 12px'>ความมั่นใจ</th><th style='padding:6px 12px'>ถูก/ผิด</th></tr>"
+            f"{rows_html}</table>")
+    return (html, *cams, table)
 
 
 def classify_upload(demo, files):
@@ -296,17 +405,42 @@ def build_ui(demo):
                                                                                    "ตำหนิภายนอก": "Surface_Defect"}[kind]]
         return random.choice(pool)
 
+    variants = demo.variants() or [DEFAULT_MODEL]
+    model_choices = [(MODELS[v]["label"], v) for v in variants]
+    examples = demo.examples()
+
+    def classify_ui(rawid, variant):
+        out = list(classify_known(demo, rawid, variant))
+        (_, l1), (_, l2) = MODELS[variant]["bands"]
+        out[0] = gr.Image(value=out[0], label=l1)
+        out[1] = gr.Image(value=out[1], label=l2)
+        out[5] = gr.Image(value=out[5], label=f"Grad-CAM (14×14) ซ้อนแบนด์ {MODELS[variant]['cam_band'][1]}")
+        return out
+
+    def classify_if_picked(rawid, variant):
+        if not rawid:  # clearing the dropdown or switching model before picking an image: nothing to do
+            return [gr.skip()] * 7
+        return classify_ui(rawid, variant)
+
     with gr.Blocks(title="Apple quality grading demo") as ui:
         gr.Markdown("## ระบบคัดคุณภาพแอปเปิลด้วยภาพ NIR (RE 750 nm + IR 800 nm)\n"
                     "สูตรที่ล็อกไว้: โมเดล EfficientNet-B0 บนภาพ SingleSpectra · TTA 6 มุมมอง × 3 seed → โหวตเฉลี่ยความน่าจะเป็น  \n"
-                    f"{final_formula_note()}  \nรันบนเครื่องนี้เท่านั้น (ข้อมูล CAPA มีลิขสิทธิ์ ULG)")
+                    f"{final_formula_note()}  \nโหมด 1 สลับเป็นโมเดล Visible / 4 แบนด์ เพื่อเทียบได้ (ภาพเดียวกัน preprocessing เดียวกัน)  \n"
+                    "รันบนเครื่องนี้เท่านั้น (ข้อมูล CAPA มีลิขสิทธิ์ ULG)")
         with gr.Tabs():
             with gr.Tab("โหมด 1 — ภาพ CAPA (ซื่อสัตย์: โมเดลไม่เคยเห็นภาพนี้)"):
+                with gr.Row():
+                    model_dd = gr.Dropdown(model_choices, value=variants[0], label="โมเดล", scale=2)
+                    # empty first choice: Gradio pre-selects the first choice, and re-picking it would fire no change event
+                    ex_dd = gr.Dropdown([("— เลือกตัวอย่าง —", "")] + examples, value="",
+                                        label="ตัวอย่างสำหรับพรีเซนต์ (คัดอัตโนมัติจากผล out-of-fold)", scale=4,
+                                        interactive=bool(examples))
                 with gr.Row():
                     dd = gr.Dropdown(choices, label="เลือกภาพ (RawA id — ชนิดตำหนิจริง)", filterable=True, scale=4)
                     kind = gr.Dropdown(["ทุกประเภท", "ปกติ", "ตำหนิภายใน", "ตำหนิภายนอก"], value="ทุกประเภท", label="สุ่มจาก", scale=1)
                     rnd = gr.Button("สุ่มภาพ", scale=1)
                     go = gr.Button("ทำนาย", variant="primary", scale=1)
+                    cmp_btn = gr.Button("เทียบทุกโมเดล", variant="secondary", scale=1)
                 card = gr.HTML()
                 with gr.Row():
                     re_img = gr.Image(label="แบนด์ RE (750 nm)", interactive=False)
@@ -316,10 +450,21 @@ def build_ui(demo):
                     lab = gr.Label(label="ความน่าจะเป็น (โหวตรวม)", num_top_classes=3)
                     tbl = gr.Dataframe(headers=out_cols, label="ตารางโหวต", interactive=False)
                 cam_note = gr.Markdown()
+                with gr.Accordion("เทียบทุกโมเดลบนแอปเปิลลูกนี้", open=True):
+                    cmp_html = gr.HTML()
+                    with gr.Row():
+                        cmp_cams = [gr.Image(label=f"Grad-CAM — {MODELS[v]['short']} (ซ้อนแบนด์ {MODELS[v]['cam_band'][1]})",
+                                             interactive=False) for v in MODELS]
+                    cmp_state = gr.JSON(visible=False)
                 outs = [re_img, ir_img, card, lab, tbl, cam_img, cam_note]
                 rnd.click(pick_random, kind, dd, api_name="random_pick")
-                go.click(_guard(lambda r: classify_known(demo, r)), dd, outs, api_name="predict_known")
-                dd.change(_guard(lambda r: classify_known(demo, r)), dd, outs, api_name=False)
+                go.click(_guard(classify_ui), [dd, model_dd], outs, api_name="predict_known")
+                dd.change(_guard(classify_if_picked), [dd, model_dd], outs, api_name=False)
+                model_dd.change(_guard(classify_if_picked), [dd, model_dd], outs, api_name=False)
+                cmp_btn.click(_guard(lambda r: compare_all(demo, r)), dd, [cmp_html, *cmp_cams, cmp_state], api_name="compare_all")
+                ex_dd.change(lambda r: r or gr.skip(), ex_dd, dd, api_name=False).then(
+                    _guard(lambda r: compare_all(demo, r) if r else [gr.skip()] * (len(MODELS) + 2)), dd,
+                    [cmp_html, *cmp_cams, cmp_state], api_name=False)
             with gr.Tab("โหมด 2 — อัปโหลดภาพใหม่"):
                 gr.Markdown(f"อัปโหลด `.npy` (H×W×4: BL,GR,RE,IR) หรือภาพแบนด์เดี่ยว 4 ไฟล์ที่ชื่อลงท้าย `_BL _GR _RE _IR`  \n**{DOMAIN_NOTE}**")
                 up = gr.File(file_count="multiple", label="ไฟล์ภาพ")
@@ -353,8 +498,9 @@ def build_ui(demo):
 
 def main():
     demo = Demo()
-    have = demo.available()
-    print(f"checkpoints found: {len(have)}/15 in {demo.ckpt_dir}; device: {DEVICE}")
+    for v in MODELS:
+        print(f"{v}: checkpoints found {len(demo.available(v))}/15 in {demo.ckpt_dir}")
+    print(f"device: {DEVICE}")
     ui = build_ui(demo)
     ui.queue().launch(server_name="127.0.0.1", server_port=7860, share=False, inbrowser=True,
                       allowed_paths=[_CACHE])

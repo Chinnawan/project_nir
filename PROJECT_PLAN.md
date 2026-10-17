@@ -987,7 +987,7 @@ run_round2.bat
 | full | ทั้ง 4 | 0.754 ± 0.012 | 85.0% | 0.914 / 0.625 / 0.729 |
 | nir | RE750+IR800 | 0.843 ± 0.008 | 90.2% | 0.950 / 0.794 / 0.786 |
 - nir − visible = +0.156 CI [+0.127,+0.182] 15/15 → REAL; nir − full = +0.089 15/15 → REAL
-- single band: re/ir (~0.85) > bl/gr (~0.75) ทุกคู่ REAL; init fix ยืนยันว่าไม่ใช่ artifact (**แต่ 2026-10-18 พบว่าแบนด์ใน raw เหลื่อมกัน ~15–22 px → nir − full อาจมาจาก misregistration ดู "ผล N1–N4"**)
+- single band: re/ir (~0.85) > bl/gr (~0.75) ทุกคู่ REAL; init fix ยืนยันว่าไม่ใช่ artifact (**แต่ 2026-10-18 พบว่าแบนด์ใน raw เหลื่อมกัน ~15–22 px → N5 ยืนยัน: บนภาพ SS ที่ตรงกัน full_ss ≈ nir_ss และ nir_ss − visible_ss = +0.091 ดู "ผล N5"**)
 - ช่องว่างใหญ่สุดที่ Internal (+0.27) → สอดคล้องกับสมมติฐาน "NIR ทะลุผิวเห็นรอยช้ำใต้ผิว"
 
 ### ข้อจำกัดที่ต้องเขียนในเล่ม (ห้ามลืม)
@@ -1014,7 +1014,39 @@ run_round2.bat
 - ถ้า late fusion ≤ nir → visible ไม่เพิ่มข้อมูล; ถ้า > nir แต่ full (early fusion) < nir → ปัญหาอยู่ที่วิธีรวมแบนด์ (เขียนเป็น discussion)
 - ตรวจด้วยว่าภาพแบนด์ visible กับ NIR ของลูกเดียวกัน align กันไหม (ถ้าเหลื่อมกันอาจอธิบาย full < nir) — วัด shift ด้วย phase correlation บนตัวอย่าง 50 ภาพ
 
-**N5. (ถ้ามีเวลา) ความเป็นธรรมของ preprocessing** — เทรน `visible_ss` (SingleSpectra) 3 seeds x 5 folds เทียบ nir_ss เพื่อให้สูตรสุดท้ายเทียบกับ visible บน preprocessing เดียวกัน (~1-1.5 ชม. รันข้ามคืนได้)
+**N5 (ขยาย 2026-10-18 — รันข้ามคืน) visible_ss + full_ss บนภาพ SingleSpectra + บันทึก checkpoint ให้ demo**
+- เหตุผลใหม่จาก N4: ภาพ raw (Processed) แต่ละแบนด์เหลื่อมกัน ~14-22 px (ที่ 224px) ส่วน SingleSpectra เหลื่อม < 1 px (median) → full (raw) < nir อาจเป็นเพราะภาพซ้อนไม่ตรง ไม่ใช่เพราะ visible ไม่มีข้อมูล
+- ก่อนรัน: ตรวจด้วยตาว่าการเหลื่อมใน raw เป็นจริง (overlay BL/RE ของ 3 ลูก บันทึกไว้ใน outputs/figures/ — gitignored เพราะเป็นภาพจาก dataset) เพื่อกันว่าเป็น artifact ของ phase correlation
+- เทรน `visible_ss` (BL+GR) และ `full_ss` (4 แบนด์) seeds 3-5 x 5 folds pipeline เดียวกับ nir_ss ของ confirm run (TTA ด้วย) **และบันทึก checkpoint** ไปที่ `outputs/dl/confirm_ckpt/{variant}_seed{S}_fold{K}.pt` + เก็บ test_probs/tta_test_probs
+- เปรียบเทียบแบบ paired (seed+fold) กับ `nir_ss` ของ confirm run: nir_ss − visible_ss, nir_ss − full_ss, full_ss − full(raw, จาก fusion_results), late fusion w=0.5 บน ss
+- การตีความที่ล็อกไว้ก่อนรัน:
+  - nir_ss > visible_ss ยังชัด → ข้อสรุปหลักแข็งแรงบน preprocessing เดียวกัน
+  - full_ss ≈/> nir_ss → "4 แบนด์แย่กว่า" ใน raw มาจาก misalignment (เขียนเป็น discussion); full_ss < nir_ss ชัด → visible ทำให้แย่ลงจริงแม้ภาพตรงกัน
+- เพิ่มผลเข้า `nir_proof_report.txt` (หัวข้อ N5) และหัวข้อ "ผล" ในแผนนี้ แล้ว commit/push (กฎเดิม)
+- รันผ่าน `run_n5.bat` (เวลาโดยประมาณ 2-3 ชม.)
+
+**N7. Demo: สลับโมเดล (ทำหลัง N5 เสร็จ ใช้ checkpoint จาก N5 ไม่ต้องเทรนเพิ่ม)** — ปลดพักบางส่วนของ "Demo app รอบ 2"
+- โหมด 1 เพิ่ม dropdown: `NIR (RE+IR, สูตรสุดท้าย)` / `Visible (BL+GR)` / `4 แบนด์` — ทุกตัวเป็น ss, seeds 3-5 ของ fold ที่ลูกนั้นอยู่ (out-of-fold เสมอ), TTA + soft vote
+- ปุ่ม "เทียบทุกโมเดล": ตาราง 3 แถว (โมเดล / คำทาย / ความมั่นใจ / ถูก-ผิด) + Grad-CAM ของแต่ละโมเดลข้างกัน
+- dropdown "ตัวอย่างสำหรับพรีเซนต์": (ก) Bruise ที่ NIR ถูก Visible ผิด (ข) ลูกที่ทุกโมเดลผิด (ค) ลูกที่ Visible ถูก NIR ผิด (ต้องมีเพื่อความซื่อตรง) — คัดจาก out-of-fold predictions อัตโนมัติ
+- ไม่ทำ: ถัง "ไม่แน่ใจ", Random Forest ใน demo, belt mode ใหม่
+- อัปเดต demo_selftest (assert ว่าคำทายใน demo ตรงกับ test_predictions ใน json) แล้ว commit/push
+
+**N8. Error analysis + ผลแบบ 2 กลุ่ม (ทำหลัง N5; ไม่ต้องเทรน — ใช้ json ที่มี)** — `src/error_analysis.py` → เพิ่มหัวข้อใน `nir_proof_report.txt`
+- แยกความผิดของสูตรสุดท้าย (nir_ss TTA 3-seed soft vote, pooled OOF 819) เป็น 3 แบบ: (ก) มีตำหนิแต่ทายว่าดี (ข) ลูกดีถูกหาว่ามีตำหนิ (ค) เจอตำหนิแต่ใส่ผิดกลุ่ม — ค่าที่คำนวณเบื้องต้น 2026-10-18: ก=29/246, ข=19/573, ค=13 (รวม 61)
+- ตาราง per-tissue: จำนวนที่ทายเป็น H/I/S (เบื้องต้น: Rot 23 → 3/13/7, Flesh_damage 24 → 1/19/4, Bruise 55 → 4/50/1) + ความมั่นใจเฉลี่ยตอนผิด
+- ผลแบบ 2 กลุ่ม (ดี vs มีตำหนิ = รวม prob Internal+Surface): accuracy/F1/recall ตำหนิ ของ nir_ss เทียบ **visible_ss และ full_ss (จาก N5, seeds 3-5, ss เหมือนกัน → แฟร์)** + McNemar; เบื้องต้น nir_ss binary acc 94.1%
+- คัดตัวอย่างภาพ "เจอตำหนิแต่ผิดกลุ่ม" 3 ลูก (Grad-CAM ตรง mask) ไว้ใน outputs/figures/ (gitignored)
+- ห้าม: จูนโมเดลให้ลูกเหล่านี้ถูก / ย้าย Rot ไปกลุ่ม Surface หลังเห็นผล
+
+### เหตุผลสำหรับเล่ม (Discussion): ทำไม 4 แบนด์ < NIR — สรุป 2026-10-18 (ข้อ 4 รอผล N5)
+1. Visible ไม่มีข้อมูลใหม่ (late fusion +0.004 n.s.; visible ถูก/NIR ผิด 4.2%) — ยืนยันแล้ว
+2. Visible พาความแปรปรวนสีผิวมา (null contrast visible ≈5× NIR) — Kleynen et al. 2003: 500 nm ใช้แยก blush/ground colour; bruise เห็นชัดสุดที่ 700–920 nm
+3. ข้อมูลน้อย + แบนด์มาก (819 ภาพ; 0.843 → 0.810 → 0.754) — สอดคล้อง Hughes 1968
+4. ภาพ raw ซ้อนไม่ตรง 14–22 px — Kleynen et al. 2005: MultiSpec Agro-Imager ฉาย 4 sub-images บน CCD เดียว "pixel coordinates did not match perfectly, alignment was necessary"; Zhang et al. 2019 (ICCV): shift 6 px → miss rate 15.18→25.10 — **ผล N5 (2026-10-18): บนภาพ SS ที่ตรงกัน full_ss 0.842 ≈ nir_ss 0.858 (ไม่ต่าง) และ full_ss − full(raw) = +0.111 REAL → นี่คือเหตุผลหลักที่ 4 แบนด์ < NIR ในภาพ raw** (ข้อจำกัด: SS แก้ทั้งการเหลื่อมและ flat-field พร้อมกัน แยกไม่ได้ 100%) → ข้อ 3 (Hughes) อ่อนลง: เมื่อภาพตรงกัน การเพิ่มแบนด์ไม่ได้ทำให้แย่ลง; ข้อ 1–2 ยังใช้อธิบายว่าทำไมการเพิ่ม visible ไม่ได้ช่วย
+- ตัดออกแล้ว: init ของ conv แรก (full_fix 0.714 ยังแย่)
+- อ้างอิง: Kleynen 2003 doi:10.1016/S0925-5214(03)00112-1; Kleynen 2005 doi:10.1016/j.jfoodeng.2004.07.008; Hughes 1968 IEEE TIT 14(1) doi:10.1109/TIT.1968.1054102; Zhang et al. ICCV 2019 (arXiv 1901.02645)
+- ข้อจำกัดที่ต้องเขียน: Visible = 450/500 เท่านั้น (ไม่มีแดง), dataset เดียว, ภาพ CAPA ในเล่มต้องเครดิต ULG
 
 **N6. สรุป** — `src/nir_proof_report.py` → `outputs/logs/nir_proof_report.txt` รวม N1-N5 เป็นตารางพร้อมใส่เล่ม และบันทึกผลกลับลงหัวข้อนี้ (หัวข้อย่อย "ผล") รวม % accuracy ทุกที่ที่มี F1
 - commit เฉพาะ src/*.py, PROJECT_PLAN.md, outputs/logs/*.txt, json สรุป (ห้าม `git add -A`, ห้าม commit ภาพจาก dataset/figure ที่มีภาพแอปเปิล; กราฟตัวเลขล้วนได้) แล้ว push หลังเช็ค `gh auth status` เป็น Chinnawan
@@ -1095,7 +1127,7 @@ run_round2.bat
 1. **จริง** — CNN: nir 0.843–0.849 (90.2–90.4%) vs visible 0.678–0.688 (79.3–80.3%) REAL 15/15 ใน seed สองชุดแยกกัน (0–2 และ 3–5), McNemar p < 1e-9; แบนด์เดี่ยว RE/IR > BL/GR ทุกคู่
 2. **ไม่ใช่ artifact ของ CNN** — classical ML ทั้ง 3 โมเดลทิศทางเดียวกัน (แรงน้อยกว่า), และ **ฟิสิกส์ของภาพดิบ** (N1) ให้ AUC NIR > visible โดยไม่ใช้โมเดลเลย
 3. **เพราะอะไร** — (ก) ผิวปกติใน NIR สม่ำเสมอกว่า ~5 เท่า (ไม่มีลายสีผิว) ตำหนิจึงโดดเด่นจากพื้นหลัง (ข) รอยช้ำใต้ผิวเห็นชัดใน NIR (AUC +0.084, recall +53 จุด) — ช่องว่าง F1 ใหญ่สุดที่ Internal_Defect (+0.27) มาจากตรงนี้
-4. **visible ไม่เพิ่มข้อมูล** เหนือ NIR (late fusion ≈ nir) ส่วนที่ full < nir อาจมาจาก misregistration ของภาพ raw — ยังพิสูจน์ไม่ได้จนกว่าจะทำ N5 (`full_ss`)
+4. **visible ไม่เพิ่มข้อมูล** เหนือ NIR (late fusion ≈ nir) ส่วนที่ full < nir อาจมาจาก misregistration ของภาพ raw — ~~ยังพิสูจน์ไม่ได้จนกว่าจะทำ N5~~ **N5 ยืนยันแล้ว: full_ss ≈ nir_ss ดู "ผล N5"; และช่องว่าง NIR − visible บนภาพเดียวกัน = +0.091 (ไม่ใช่ +0.17)**
 5. ข้อจำกัด: visible = 450/500 nm (ไม่มีแดง), dataset เดียว, Internal ใน N1 ก้ำกึ่ง (CI แตะ 0), ตำหนิบางชนิด (Flesh_damage, Russet) visible เห็นพอๆ กัน
 
 ### การตัดสินใจระหว่างทำ N1–N6 (2026-10-17/18 — เลือกเองตามคำสั่งผู้ใช้ "เลือกทางที่สมเหตุสมผลแล้วบันทึก")
@@ -1108,6 +1140,84 @@ run_round2.bat
 7. alignment วัดบนภาพ gradient (ไม่ใช่ intensity) เพราะความสว่างแต่ละแบนด์ต่างกันมาก; สุ่ม 50 ลูกด้วย seed 42
 8. `outputs/logs/` อยู่ใน .gitignore → ใช้ `git add -f outputs/logs/nir_proof_report.txt` เฉพาะไฟล์นี้
 9. N5 ยังไม่ทำ (ผู้ใช้สั่ง) แต่ **แนะนำให้ทำเป็นลำดับถัดไป และขยายเป็น `visible_ss` + `full_ss`** เพราะข้อค้นพบ alignment
+
+### ผล N5 (ขยาย) + N7 + N8 + N6 รอบ 2 (ทำเสร็จ 2026-10-18)
+รายงานรวม `outputs/logs/nir_proof_report.txt` (เพิ่มหัวข้อ N5, N8), ผลดิบ `outputs/dl/n5_results.json` (30/30 run, error 0, ~71 นาที), วิเคราะห์ `outputs/dl/nir_proof_n5.json`, `outputs/dl/n8_error_analysis.json`; checkpoint `outputs/dl/confirm_ckpt/{visible_ss,full_ss}_seed{3,4,5}_fold{0-4}.pt` (30 ไฟล์, gitignored)
+
+**ตรวจ alignment ด้วยตาก่อนเทรน** (`src/alignment_visual.py` → `outputs/figures/private/alignment_overlay.png`, gitignored เพราะเป็นภาพ dataset) — overlay BL (ม่วง) กับ RE (เขียว) ของภาพ input จริงที่ใช้เทรน (npy 224×224) 3 ลูก (RawA0004, RawA0076, RawA0500):
+- ภาพ raw: **ขอบม่วง/เขียวซ้อนเหลื่อมชัดเจนทุกลูก** ~16.5 px ทางแนวนอน (BL→RE shift −16.6/−16.6/−16.3 px) — เลื่อน RE กลับตามค่าที่ phase correlation วัดได้แล้วขอบหายหมด → shift เป็นของจริง ไม่ใช่ artifact ของ phase correlation; RE–IR ใน raw ก็เหลื่อมชัด (แนวทแยง)
+- ภาพ SingleSpectra: ซ้อนตรงกันด้วยตา (shift ≤ 0.7 px)
+
+**N5 — visible_ss / full_ss บนภาพ SingleSpectra (align แล้ว) เทียบ nir_ss** seed 3–5, 15 คู่ (seed, fold), recipe เดียวกับ nir_ss ทุกอย่าง (ต่างกันแค่แบนด์)
+
+| โมเดล | ภาพ | macro-F1 | accuracy | F1 Healthy / Internal / Surface |
+|---|---|---|---|---|
+| **nir_ss** (RE+IR) | SS | **0.858** | **91.0%** | 0.953 / 0.841 / 0.781 |
+| visible_ss (BL+GR) | SS | 0.767 | 85.3% | 0.914 / 0.667 / 0.720 |
+| full_ss (4 แบนด์) | SS | 0.842 | 90.2% | 0.949 / 0.806 / 0.770 |
+| nir | raw | 0.849 | 90.4% | 0.948 / 0.804 / 0.795 |
+| visible | raw | 0.678 | 79.3% | 0.876 / 0.506 / 0.652 |
+| full | raw | 0.731 | 83.0% | 0.901 / 0.595 / 0.697 |
+| late fusion nir_ss+visible_ss w=0.5 | SS | 0.872 | 92.1% | 0.959 / 0.831 / 0.825 |
+| 3-seed vote + TTA: nir_ss / visible_ss / full_ss / full(raw) | | 0.885 / 0.797 / 0.866 / 0.762 | 92.6% / 87.5% / 92.1% / 85.5% | |
+
+| เปรียบเทียบ (paired, plain probs) | ผลต่าง F1 [95% CI] | คู่ทิศเดียวกัน | ผล |
+|---|---|---|---|
+| nir_ss − visible_ss | **+0.091 [+0.072, +0.109]** | 15/15, fold 5/5 | **REAL** (McNemar vote p = 3.4e-5) |
+| nir_ss − full_ss | +0.016 [−0.005, +0.038] | 9/15 | ไม่ต่าง (McNemar p = 0.71) |
+| full_ss − full (raw) | **+0.111 [+0.089, +0.132]** | 15/15 | **REAL** (McNemar p = 1.2e-9) |
+| visible_ss − visible (raw) | **+0.089 [+0.063, +0.116]** | 15/15 | **REAL** |
+| nir_ss − nir (raw) | +0.009 [−0.004, +0.024] | 8/15 | ไม่ต่าง (ตรงกับ confirm run) |
+| full_ss − visible_ss | +0.075 | 15/15 | REAL |
+| late_ss w=0.5 − nir_ss | +0.014 [+0.005, +0.023] | 9/15 | ไม่ผ่านเกณฑ์ (CI ไม่คร่อม 0 แต่ทิศไม่สม่ำเสมอ) |
+| TTA: nir_ss − visible_ss / nir_ss − full_ss | +0.085 REAL / +0.016 ไม่ต่าง | | |
+- per-class nir_ss − visible_ss: Healthy +0.038, **Internal +0.174**, Surface +0.060 — REAL ทุกคลาส; nir_ss − full_ss ไม่ต่างทุกคลาส; full_ss − full: Internal +0.211 REAL
+- **ตีความตามกฎที่ล็อกไว้ก่อนรัน:**
+  1. **nir_ss > visible_ss ยังชัด → ข้อสรุปหลัก "NIR > visible" แข็งแรงบน preprocessing เดียวกัน** (+0.091 F1, accuracy 91.0% vs 85.3%)
+  2. **full_ss ≈ nir_ss → "4 แบนด์แย่กว่า NIR" ในภาพ raw มาจากภาพ raw (การเหลื่อมของแบนด์) ไม่ใช่เพราะ visible ทำให้แย่** — เขียนเป็น discussion
+- ⚠️ ข้อควรระวัง (ต้องเขียนในเล่ม):
+  - **ช่องว่าง NIR − visible บนภาพเดียวกันคือ +0.091 ไม่ใช่ +0.16/+0.17** (ตัวเลข raw พองเพราะภาพ raw ทำร้าย visible มากกว่า: visible ได้ +0.089 จาก SS แต่ NIR ได้แค่ +0.009) → ใช้ตัวเลข SS เป็นตัวเลขเทียบที่ยุติธรรมที่สุด แล้วรายงาน raw คู่กัน
+  - SingleSpectra ต่างจาก raw **2 อย่าง** (geometric correction = แก้การเหลื่อม + flat-field correction = แก้แสงไม่สม่ำเสมอ) → ผลนี้แยกไม่ได้ว่าส่วนไหนมาจากอะไร; ข้อสังเกต: RE–IR ใน raw เหลื่อม ~21 px พอๆ กับ BL–GR (~23 px) แต่ NIR แทบไม่ได้อะไรจาก SS — อธิบายได้ว่า RE กับ IR ข้อมูลเกือบซ้ำกัน การเหลื่อมจึงเสียหายน้อย หรือ flat-field สำคัญกับ visible มากกว่า (ยังพิสูจน์ไม่ได้)
+  - ถ้าต้องการแยก (ทางเลือก ไม่ได้ทำ): เทรนแบนด์เดี่ยว `bl_ss`/`gr_ss` เทียบ `bl_only`/`gr_only` raw (แบนด์เดี่ยวไม่มีปัญหาการเหลื่อม → ถ้ายังได้เพิ่มมาก = ผลของ flat-field) ~1 ชม.
+  - late fusion บน SS (+0.014, CI ไม่คร่อม 0 แต่ 9/15) — มีสัญญาณอ่อนๆ ว่า visible อาจเพิ่มข้อมูลเล็กน้อยเมื่อภาพตรงกัน แต่ไม่ผ่านเกณฑ์
+- checkpoint verification: ทุก checkpoint + mean/std ให้ prob ตรงกับที่บันทึก (batch-16 path ต่างสูงสุด 5e-6) และ path ภาพเดียวของ demo ให้คำทายตรงกันทั้งหมด ยกเว้น 2 ภาพที่ prob ที่บันทึกไว้ **เสมอกันพอดี** (RawA0796 0.4957/0.4957, RawA0165 0.4709/0.4710 → ปัดเศษ GPU batch-1 vs batch-16 พลิกได้) และ full_ss seed5 fold3 ต่าง prob 2.3e-2 (เกินเกณฑ์ 2e-2 นิดเดียว) แต่คำทายไม่เปลี่ยนเลย → ยอมรับ บันทึกไว้
+
+**N7 — Demo สลับโมเดล** (`src/demo_app.py`; ทดสอบ `src/demo_selftest.py` ALL PASSED + ตรวจในเบราว์เซอร์)
+- โหมด 1 มี dropdown "โมเดล": NIR (RE+IR) — สูตรสุดท้าย / Visible (BL+GR) / 4 แบนด์ — ทุกตัวเป็นภาพ SS, seed 3–5 ของ fold ที่ลูกนั้นเป็น test (out-of-fold เสมอ), TTA + soft vote; ภาพแบนด์เปลี่ยนตามโมเดล (Visible → BL/GR, 4 แบนด์ → GR/IR) และแสดงผลรวม out-of-fold ของโมเดลนั้น (NIR 92.6%/0.885, Visible 87.5%/0.797, 4 แบนด์ 92.1%/0.866)
+- ปุ่ม "เทียบทุกโมเดล": ตาราง 3 แถว (โมเดล / คำทาย / ความมั่นใจ / ✔ ถูก เขียว · ✘ ผิด แดง) + Grad-CAM ของทั้ง 3 โมเดลข้างกัน
+- dropdown "ตัวอย่างสำหรับพรีเซนต์" (คัดอัตโนมัติจากผล out-of-fold ที่บันทึกไว้, กลุ่มละ ≤5 เรียงตามความมั่นใจของโมเดลที่ถูก): (ก) Bruise NIR ถูก/Visible ผิด: RawA0550, 0784, 0787, 0647, 0243 · (ข) ทุกโมเดลผิด: RawA0091 (Other), 0203 (Rot), 0442, 0467 (Flesh_damage), 0141 (Rot) · (ค) Visible ถูก/NIR ผิด: RawA0158, 0288, 0267 (Russet), 0450, 0343 (Healthy) — เลือกแล้วจะเทียบทุกโมเดลให้ทันที
+- selftest ใหม่: ทั้ง 3 โมเดล 30 ภาพสุ่ม → คำทายรายseed ตรง `tta_test_predictions` ใน json 90/90 และ vote ตรง 30/30 ทุกโมเดล; compare_all ตรงกับ vote; ตัวอย่างทุกตัวตรงกฎของกลุ่ม; API `/compare_all` ตอบ; server bind 127.0.0.1 เท่านั้น
+- **ต้องปิดแล้วเปิด `run_demo.bat` ใหม่ถึงจะเห็น**
+
+**N8 — Error analysis + ผลแบบ 2 กลุ่ม** (`src/error_analysis.py`) สูตรสุดท้าย nir_ss TTA 3-seed vote, 819 ลูก (assert ว่าตรง `confirm_summary.json`)
+- ผิด 61 ลูก (accuracy 92.6%): (ก) มีตำหนิแต่ทายว่าดี **29/246** (ความมั่นใจเฉลี่ย 0.68) · (ข) ลูกดีถูกหาว่ามีตำหนิ **19/573** (0.60) · (ค) เจอตำหนิแต่ผิดกลุ่ม **13** (Internal→Surface 12, Surface→Internal 1; 0.77) — ตอนทายถูกความมั่นใจเฉลี่ย 0.92 → ทายผิดส่วนใหญ่มั่นใจต่ำ (ยกเว้นกลุ่ม ค)
+- per tissue (ทายเป็น H/I/S): Bruise 55 → 4/50/1 (90.9%) · Flesh_damage 24 → 1/19/4 (79.2%, ผิดแบบมั่นใจสูง 0.88) · **Rot 23 → 3/13/7 (56.5% — แย่สุด, ส่วนใหญ่ถูกทายเป็น Surface)** · Russet 42 → 7/0/35 · Frost 11 → 3/0/8 · Hail 16 → 3/1/12 · Stem 148 → 139/3/6 · Calix 98.6% · Healthy 97.1%
+- **ผลแบบ 2 กลุ่ม (ดี vs มีตำหนิ, P(Internal)+P(Surface) > 0.5), 3-seed vote + TTA:**
+
+| โมเดล | accuracy | F1 (มีตำหนิ) | recall ตำหนิ | recall ลูกดี | ตำหนิหลุด / ลูกดีถูกคัดทิ้ง |
+|---|---|---|---|---|---|
+| **nir_ss** | **94.0%** | **0.899** | 89.0% | 96.2% | 27 / 22 |
+| visible_ss | 90.4% | 0.829 | 78.0% | 95.6% | 54 / 25 |
+| full_ss | 94.4% | 0.901 | 85.4% | 98.3% | 36 / 10 |
+| nir / visible / full (raw) | 93.0 / 85.8 / 88.5% | 0.881 / 0.761 / 0.801 | 86.2 / 75.2 / 76.8% | 96.0 / 90.4 / 93.5% | |
+- paired 15 run: nir_ss − visible_ss F1 +0.087 REAL (15/15), accuracy +0.046 REAL, McNemar p = 2.2e-3 · nir_ss − full_ss ไม่ต่าง (p = 0.79; full_ss คัดลูกดีทิ้งน้อยกว่าแต่ปล่อยตำหนิหลุดมากกว่า) · full_ss − full(raw) REAL
+- ตัวอย่าง "เจอตำหนิแต่ผิดกลุ่ม" ที่ Grad-CAM ชี้ตรงตำหนิจริง: 4 จาก 13 ลูก (peak อยู่ใน mask) → เลือก **RawA0115 (Rot), RawA0528 (Flesh_damage), RawA0203 (Rot)** ทั้งหมด Internal ถูกทายเป็น Surface ความมั่นใจ 0.81–0.95 → `outputs/figures/private/n8_wrong_group_examples.png` (gitignored) — สื่อว่าโมเดล "เห็น" ตำหนิถูกที่ แต่แยก "ภายใน vs ผิว" ไม่ได้สำหรับ Rot/Flesh_damage ที่ลามถึงผิว
+- ไม่ได้จูนโมเดลให้ลูกเหล่านี้ถูก และไม่ได้ย้าย Rot ไปกลุ่ม Surface (ตามกฎในแผน)
+
+**ข้อสรุปรวมที่ปรับแล้ว (แทนข้อ 1 และ 4 ของ "ข้อสรุปรวม" ใน ผล N1–N4)**
+1. **NIR > visible จริง แม้ใช้ภาพ preprocessing เดียวกัน (SS):** +0.091 F1 (91.0% vs 85.3%), REAL 15/15, McNemar p = 3.4e-5; Internal +0.17; แบบ 2 กลุ่ม 94.0% vs 90.4% — ตัวเลข raw (+0.17) ใหญ่เกินจริงเพราะภาพ raw ทำร้าย visible มากกว่า
+2. **4 แบนด์ ≈ NIR เมื่อภาพตรงกัน** (0.842 vs 0.858, ไม่ต่าง) → ที่ full < nir ในภาพ raw มาจากภาพ raw ไม่ใช่ visible ทำให้แย่ — แต่การรวม visible ก็ **ไม่ได้ช่วยเพิ่มอย่างมีนัยสำคัญ** (full_ss ไม่ดีกว่า nir_ss, late fusion +0.014 ไม่ผ่านเกณฑ์) → NIR อย่างเดียวพอ (ใช้ 2 แบนด์แทน 4)
+3. ความผิดพลาดหลักของสูตรสุดท้ายคือ Rot (56.5%) และตำหนิที่หลุดเป็น "ดี" 29 ลูก
+
+### การตัดสินใจระหว่างทำ N5 / N7 / N8 / N6 รอบ 2 (2026-10-18 — เลือกเองตามคำสั่งผู้ใช้)
+1. ตรวจ alignment ด้วยตาบน **npy 224×224 ที่ใช้เทรนจริง** (ไม่ใช่ tif ต้นฉบับ) เพราะคำถามคือ "โมเดลเห็นภาพเหลื่อมไหม"; 3 ลูกเลือกล่วงหน้า (2 ลูกที่ใช้ทดสอบ demo มาก่อน + 1 ลูกกลางชุด) ไม่ได้เลือกจากผล; เพิ่ม `outputs/figures/private/` ใน .gitignore สำหรับรูปที่มีพิกเซล dataset
+2. N5 ใช้ recipe เดียวกับ nir_ss เป๊ะ (legacy init, aug, ไม่มี SE, 224, 3 class, TTA) เพื่อให้ต่างกันแค่แบนด์; รัน full_ss ก่อน (ตอบคำถามหลัก); เขียน `run_n5.bat` ไว้ด้วยแต่รันผ่าน python โดยตรงเพราะทำในรอบนี้เลย (~71 นาที ไม่ต้องข้ามคืน)
+3. ผลหลักใช้ plain probabilities (สอดคล้อง N4/multiseed), TTA เป็นผลรอง; McNemar ใช้ 3-seed vote + TTA (รูปแบบเดียวกับสูตรสุดท้าย)
+4. เกณฑ์ verify checkpoint: คำทายพลิกบนภาพที่ prob บันทึกไว้เสมอกัน (margin < 0.02 = ระดับ noise GPU เดียวกับเกณฑ์ 2e-2 ของ run_confirm) ไม่นับเป็น fail; full_ss seed5 fold3 เกินเกณฑ์ prob 2e-2 เล็กน้อย (2.3e-2) แต่คำทายไม่เปลี่ยน → ยอมรับและบันทึก (ไม่แก้เกณฑ์ให้ผ่าน)
+5. ตีความ N5 ตามกฎที่ล็อกไว้ แต่บันทึกข้อจำกัดว่า SS = แก้การเหลื่อม + flat-field พร้อมกัน แยกไม่ได้ และเสนอการทดลองแยก (แบนด์เดี่ยว SS) เป็นทางเลือก
+6. N7: ภาพแบนด์และพื้นของ Grad-CAM เปลี่ยนตามโมเดล (Visible ซ้อนบน GR, อื่นๆ ซ้อนบน IR); โหมดอัปโหลดและสายพานยังใช้สูตรสุดท้ายอย่างเดียว (ตามแผน: ไม่ทำ belt mode ใหม่); ตัวอย่างพรีเซนต์ กลุ่มละ ≤5 เรียงตามความมั่นใจของโมเดลที่ถูก, กลุ่ม (ข) "ทุกโมเดลผิด" = ทั้ง 3 โมเดล SS; ใส่ตัวเลือกว่างเป็นค่าเริ่มของ dropdown ตัวอย่าง (Gradio เลือกตัวแรกให้อัตโนมัติ → เลือกตัวแรกซ้ำจะไม่ทำงาน — พบตอนทดสอบในเบราว์เซอร์)
+7. N8: กฎ 2 กลุ่มใช้ P(Internal)+P(Surface) > 0.5 ตามแผน = 94.0%; ตัวเลขเบื้องต้น 94.1% ในแผนเป็นแบบ argmax 3 คลาสแล้วยุบ — รายงานทั้งคู่; ตัวอย่าง Grad-CAM ใช้ Grad-CAM แบบเดียวกับ demo (ชั้น 14×14, เฉลี่ย 3 seed, target = คลาสที่ทาย), "ตรง mask" = peak อยู่ใน mask ที่ขยาย 9×9 px (ที่ 224) เรียงด้วยสัดส่วน top-10% CAM ใน mask
+8. commit `n5_results.json` (prob ของ 30 run, ตัวเลขล้วน ~350 KB เหมือน fusion_results.json) เพื่อให้ demo/N8 คำนวณซ้ำได้; ไม่ commit checkpoint และรูปใน `outputs/figures/private/`
 
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
@@ -1135,5 +1245,8 @@ run_round2.bat
 - [ ] Demo รอบ 2: ถัง "ไม่แน่ใจ → ส่งคนตรวจ" + สลับ/เทียบโมเดล + ภาพตัวอย่างพรีเซนต์ — ดูหัวข้อ "Demo app รอบ 2"
 - [x] Demo UI: % ความมั่นใจใหญ่ชัด + กล่องเฉลยขวา (✔ เขียว / ✘ แดง) — เสร็จ 2026-10-18
 - [x] พิสูจน์ NIR > Visible: N1 ฟิสิกส์ (AUC NIR−vis +0.036 REAL, Bruise +0.084), N2 per-class/tissue (Bruise recall +53 จุด, McNemar p<1e-9), N3 classical (ทิศทางเดียวกัน 3/3), N4 late fusion ≈ nir (visible ไม่เพิ่มข้อมูล) + **พบแบนด์ raw เหลื่อม ~15–22 px**, N6 รายงาน `outputs/logs/nir_proof_report.txt` — เสร็จ 2026-10-18 (ดู "ผล N1–N4 + N6")
-- [ ] N5 (ขยาย): เทรน `visible_ss` + `full_ss` บนภาพ SingleSpectra ที่ align แล้ว (~1.5 ชม.) เพื่อแยกว่า full < nir มาจาก misregistration หรือไม่
+- [x] N5 (ขยาย): ตรวจ alignment ด้วยตา (ยืนยันเหลื่อม ~16 px ใน raw) + เทรน `visible_ss` + `full_ss` (30/30, ~71 นาที, checkpoint 30 ไฟล์) — **nir_ss − visible_ss +0.091 REAL (91.0% vs 85.3%); full_ss 0.842 ≈ nir_ss 0.858 → full < nir ใน raw มาจากภาพ raw** — เสร็จ 2026-10-18 (ดู "ผล N5")
+- [x] N7: demo สลับโมเดล NIR / Visible / 4 แบนด์ + ปุ่มเทียบทุกโมเดล + ตัวอย่างพรีเซนต์อัตโนมัติ — selftest ALL PASSED — เสร็จ 2026-10-18 (ต้องเปิด `run_demo.bat` ใหม่)
+- [x] N8: error analysis (ผิด 61: ตำหนิหลุด 29, ลูกดีถูกคัด 19, ผิดกลุ่ม 13; Rot แย่สุด 56.5%) + ผล 2 กลุ่ม (nir_ss 94.0% vs visible_ss 90.4% REAL, ≈ full_ss 94.4%) — เสร็จ 2026-10-18
+- [ ] (ทางเลือก) แยกผลของ flat-field ออกจากการแก้เหลื่อม: เทรนแบนด์เดี่ยว `bl_ss`/`gr_ss` เทียบ `bl_only`/`gr_only` raw (~1 ชม.)
 - [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว — ใช้ตาราง "ผล multi-seed" (NIR 0.843±0.008, nir_SE 0.847±0.008, RE-only 0.853±0.007; SE ไม่ช่วย) ไม่ใช่ 0.862 แต่ต้องปรับ narrative ก่อน (นอกจากข้อ SE ที่แก้แล้ว): (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**
