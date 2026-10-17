@@ -181,16 +181,30 @@ def prob_table(rows, p, fold_note):
 
 
 def result_card(p, pred, truth=None):
+    """Left: prediction, action and a large confidence number with a bar. Right (mode 1 only): the answer key --
+    big check mark on green if correct, big X on red if wrong."""
     cls = CLASSES[pred]
-    colour = {"Healthy": "#1a7f37", "Surface_Defect": "#b26a00", "Internal_Defect": "#b3261e"}[cls]
-    html = (f"<div style='padding:12px;border-radius:8px;border:2px solid {colour}'>"
-            f"<div style='font-size:22px;font-weight:600;color:{colour}'>ทำนาย: {TH[cls]}  →  {ACTION[cls]}</div>"
-            f"<div>ความมั่นใจ {p[pred] * 100:.1f}%</div>")
-    if truth is not None:
-        ok = truth["label"] == cls
-        html += (f"<div style='margin-top:6px'>คำตอบจริง: <b>{TH[truth['label']]}</b> (ชนิด: {truth['tissue']}) — "
-                 f"<b style='color:{'#1a7f37' if ok else '#b3261e'}'>{'ถูก' if ok else 'ผิด'}</b></div>")
-    return html + "</div>"
+    # class colours avoid green/red, which are reserved for correct/wrong in the answer box
+    colour = {"Healthy": "#2f80ed", "Surface_Defect": "#e08a00", "Internal_Defect": "#9b51e0"}[cls]
+    conf = p[pred] * 100
+    left = (f"<div style='flex:1;padding:14px 18px;border-radius:10px;border:3px solid {colour}'>"
+            f"<div style='font-size:24px;font-weight:700;color:{colour}'>ทำนาย: {TH[cls]} → {ACTION[cls]}</div>"
+            f"<div style='display:flex;align-items:baseline;gap:12px;margin-top:6px'>"
+            f"<span style='font-size:20px'>ความมั่นใจ</span>"
+            f"<span style='font-size:56px;font-weight:800;line-height:1;color:{colour}'>{conf:.1f}%</span></div>"
+            f"<div style='margin-top:10px;height:14px;border-radius:7px;background:#3a3a3a;overflow:hidden'>"
+            f"<div style='width:{conf:.1f}%;height:100%;background:{colour}'></div></div></div>")
+    if truth is None:
+        return f"<div style='display:flex;gap:14px'>{left}</div>"
+    ok = truth["label"] == cls
+    bg, mark, word = ("#1a7f37", "&#10004;", "ถูก") if ok else ("#c62828", "&#10008;", "ผิด")
+    right = (f"<div style='flex:0 0 340px;display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:10px;"
+             f"background:{bg};color:#ffffff'>"
+             f"<div style='font-size:84px;font-weight:900;line-height:1'>{mark}</div>"
+             f"<div><div style='font-size:40px;font-weight:800;line-height:1.1'>{word}</div>"
+             f"<div style='font-size:17px;margin-top:6px'>คำตอบจริง: <b>{TH[truth['label']]}</b></div>"
+             f"<div style='font-size:15px;opacity:0.9'>ชนิด: {truth['tissue']}</div></div></div>")
+    return f"<div style='display:flex;gap:14px;align-items:stretch'>{left}{right}</div>"
 
 
 def final_formula_note():

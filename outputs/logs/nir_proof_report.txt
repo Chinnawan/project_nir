@@ -1,0 +1,130 @@
+PROVING 'NIR (RE 750 + IR 800 nm) > VISIBLE (BL 450 + GR 500 nm)' -- evidence report
+Visible here = blue + green only (CAPA has no red band); claims are about 450/500 vs 750/800 nm, not RGB cameras.
+
+====================================================================================================
+0) Headline numbers (multi-seed: 3 seeds x 5 folds, same pipeline for every variant)
+====================================================================================================
+  input                            macro-F1  accuracy
+  NIR  RE+IR               0.843 +- 0.008      90.2%
+  NIR  RE only             0.853 +- 0.007      90.6%
+  NIR  IR only             0.843 +- 0.006      89.8%
+  VIS  BL+GR               0.688 +- 0.015      80.3%
+  VIS  BL only             0.752 +- 0.009      84.1%
+  VIS  GR only             0.752 +- 0.019      84.2%
+  ALL  4 bands             0.754 +- 0.012      85.0%
+  GR + NIR                 0.810 +- 0.009      88.4%
+  RE+IR - BL+GR            +0.156 CI [+0.127,+0.182] same sign 15/15 -> REAL
+  RE - BL                  +0.101 CI [+0.089,+0.113] same sign 15/15 -> REAL
+  RE - GR                  +0.101 CI [+0.081,+0.120] same sign 15/15 -> REAL
+  IR - BL                  +0.091 CI [+0.072,+0.111] same sign 15/15 -> REAL
+  IR - GR                  +0.091 CI [+0.066,+0.118] same sign 14/15 -> REAL
+  RE+IR - all 4            +0.089 CI [+0.066,+0.116] same sign 15/15 -> REAL
+
+====================================================================================================
+N1) Physics without any CNN: defect visibility per band (244 defect images, pixel masks)
+====================================================================================================
+  |c| = |contrast| defect vs surrounding skin; null = same mask laid on healthy apples (natural skin variation);
+  AUC = how well the defect contrast separates from normal-skin contrast (0.5 = indistinguishable)
+  group                 n        |c| BL  GR  RE  IR          null BL  GR  RE  IR       AUC BL  GR  RE  IR   AUC NIR-vis [95% CI]
+  ALL defects         244  0.128 0.185 0.078 0.061   0.027 0.035 0.006 0.006   0.90 0.92 0.96 0.93   +0.036 [+0.013,+0.061]
+  Internal_Defect     100  0.141 0.183 0.055 0.044   0.034 0.043 0.008 0.009   0.92 0.88 0.95 0.92   +0.038 [-0.002,+0.083]
+  Surface_Defect      144  0.119 0.186 0.094 0.073   0.022 0.030 0.004 0.004   0.89 0.94 0.98 0.93   +0.039 [+0.010,+0.069]
+  Bruise               55  0.088 0.100 0.029 0.023   0.039 0.048 0.010 0.010   0.85 0.78 0.92 0.88   +0.084 [+0.012,+0.161]
+  Flesh_damage         24  0.206 0.277 0.049 0.042   0.028 0.035 0.006 0.006   0.97 0.96 0.94 0.95   -0.019 [-0.104,+0.057]
+  Rot                  21  0.204 0.292 0.128 0.104   0.029 0.036 0.007 0.008   0.97 0.98 1.00 0.98   +0.013 [-0.019,+0.061]
+  Russet               42  0.068 0.122 0.020 0.013   0.025 0.034 0.004 0.004   0.85 0.89 0.92 0.81   -0.008 [-0.085,+0.068]
+  Scald                17  0.075 0.159 0.051 0.037   0.022 0.026 0.003 0.004   0.86 0.97 1.00 0.98   +0.075 [+0.004,+0.167]
+  Hail_damage          16  0.118 0.155 0.050 0.031   0.022 0.027 0.004 0.004   0.94 0.98 1.00 0.98   +0.030 [-0.006,+0.089]
+  Hail_damage_perf     31  0.188 0.280 0.213 0.173   0.021 0.027 0.003 0.003   0.97 0.98 1.00 1.00   +0.023 [+0.000,+0.056]
+  Frost_damage         11  0.184 0.233 0.095 0.078   0.024 0.027 0.003 0.003   0.99 1.00 1.00 0.96   -0.016 [-0.048,+0.015]
+  Limb_rub              7  0.251 0.343 0.195 0.144   0.025 0.037 0.005 0.005   1.00 0.98 1.00 1.00   +0.014 [+0.000,+0.041]
+  Other                20  0.073 0.145 0.101 0.077   0.020 0.028 0.004 0.004   0.75 0.86 0.98 0.93   +0.149 [+0.050,+0.254]
+
+====================================================================================================
+N2) Which classes / defect types does NIR win? (multi-seed, nir vs visible and nir vs full)
+====================================================================================================
+  nir-visible|Healthy              F1 0.950 vs 0.886  diff +0.064 CI [+0.053,+0.075] 15/15, folds 5/5 -> REAL
+  nir-visible|Internal_Defect      F1 0.796 vs 0.528  diff +0.268 CI [+0.215,+0.312] 14/15, folds 5/5 -> REAL
+  nir-visible|Surface_Defect       F1 0.785 vs 0.649  diff +0.136 CI [+0.098,+0.170] 14/15, folds 5/5 -> REAL
+  nir-full|Healthy                 F1 0.950 vs 0.914  diff +0.036 CI [+0.026,+0.045] 14/15, folds 5/5 -> REAL
+  nir-full|Internal_Defect         F1 0.796 vs 0.622  diff +0.174 CI [+0.134,+0.224] 15/15, folds 5/5 -> REAL
+  nir-full|Surface_Defect          F1 0.785 vs 0.727  diff +0.058 CI [+0.023,+0.091] 11/15, folds 5/5 -> not larger than noise
+
+  recall per tissue (correct class), mean over 3 seeds; CI bootstrap over apples
+  Bruise            n= 55  NIR  90.3%  visible  37.0%  all-4  53.3%   NIR-vis  +53.3 pts [+41.2,+64.8] NIR better
+  Flesh_damage      n= 24  NIR  81.9%  visible  81.9%  all-4  80.6%   NIR-vis   +0.0 pts [-12.5,+12.5] 
+  Rot               n= 23  NIR  49.3%  visible  40.6%  all-4  47.8%   NIR-vis   +8.7 pts [-7.2,+24.6] 
+  Russet            n= 42  NIR  77.8%  visible  66.7%  all-4  63.5%   NIR-vis  +11.1 pts [-3.2,+24.6] 
+  Scald             n= 17  NIR  88.2%  visible  74.5%  all-4  76.5%   NIR-vis  +13.7 pts [-3.9,+33.3] 
+  Hail_damage       n= 16  NIR  89.6%  visible  68.8%  all-4  68.8%   NIR-vis  +20.8 pts [+0.0,+41.7] 
+  Hail_damage_perf  n= 31  NIR  73.1%  visible  65.6%  all-4  76.3%   NIR-vis   +7.5 pts [-8.6,+24.7] 
+  Frost_damage      n= 11  NIR  78.8%  visible  60.6%  all-4  78.8%   NIR-vis  +18.2 pts [-3.0,+42.4] 
+  Limb_rub          n=  7  NIR  81.0%  visible  71.4%  all-4  71.4%   NIR-vis   +9.5 pts [-28.6,+52.4] 
+  Other             n= 20  NIR  73.3%  visible  48.3%  all-4  51.7%   NIR-vis  +25.0 pts [+6.7,+43.3] NIR better
+  Stem              n=148  NIR  92.6%  visible  87.6%  all-4  92.8%   NIR-vis   +5.0 pts [+0.0,+9.9] 
+  Calix             n=145  NIR  98.6%  visible  97.0%  all-4  97.0%   NIR-vis   +1.6 pts [-0.2,+3.7] 
+  Healthy           n=280  NIR  94.3%  visible  87.5%  all-4  92.9%   NIR-vis   +6.8 pts [+3.1,+10.5] NIR better
+
+  McNemar (pooled out-of-fold predictions, 819 apples, each seed)
+  nir-visible|seed0      only-first correct 120  only-second correct  39  p = 2.2e-10
+  nir-visible|seed1      only-first correct 118  only-second correct  39  p = 4.8e-10
+  nir-visible|seed2      only-first correct 125  only-second correct  44  p = 7.6e-10
+  nir-full|seed0         only-first correct  93  only-second correct  37  p = 1.4e-06
+  nir-full|seed1         only-first correct  82  only-second correct  38  p = 8.7e-05
+  nir-full|seed2         only-first correct  74  only-second correct  47  p = 1.8e-02
+
+====================================================================================================
+N3) Not a CNN artefact? Classical ML on visible-only vs NIR-only hand-crafted features (same folds)
+====================================================================================================
+  SVM           visible  macro-F1 0.483 +- 0.040   accuracy 57.8%
+  SVM           nir      macro-F1 0.553 +- 0.057   accuracy 63.1%
+  SVM           all      macro-F1 0.573 +- 0.063   accuracy 66.9%
+  SVM           NIR - visible +0.071 (fold t-CI [-0.007,+0.148], 4/5 folds), McNemar p = 2.1e-02
+  RandomForest  visible  macro-F1 0.520 +- 0.019   accuracy 66.5%
+  RandomForest  nir      macro-F1 0.556 +- 0.052   accuracy 68.4%
+  RandomForest  all      macro-F1 0.589 +- 0.045   accuracy 71.3%
+  RandomForest  NIR - visible +0.036 (fold t-CI [-0.038,+0.111], 4/5 folds), McNemar p = 3.7e-01
+  LightGBM      visible  macro-F1 0.487 +- 0.035   accuracy 68.4%
+  LightGBM      nir      macro-F1 0.545 +- 0.052   accuracy 72.3%
+  LightGBM      all      macro-F1 0.546 +- 0.049   accuracy 72.3%
+  LightGBM      NIR - visible +0.058 (fold t-CI [-0.037,+0.154], 4/5 folds), McNemar p = 1.9e-02
+
+====================================================================================================
+N4) Does visible add information? Late fusion (average of separate NIR and visible networks) vs early fusion
+====================================================================================================
+  seeds 3-5, 15 paired runs (nir from confirm_results.json, visible/full from fusion_results.json)
+  nir                macro-F1 0.849   accuracy 90.4%
+  visible            macro-F1 0.678   accuracy 79.3%
+  full               macro-F1 0.731   accuracy 83.0%
+  late w=0.1         macro-F1 0.851   accuracy 90.7%
+  late w=0.2         macro-F1 0.852   accuracy 90.8%
+  late w=0.3         macro-F1 0.855   accuracy 91.0%
+  late w=0.4         macro-F1 0.861   accuracy 91.4%
+  late w=0.5         macro-F1 0.853   accuracy 90.9%
+  nir[TTA]           macro-F1 0.855   accuracy 90.9%
+  visible[TTA]       macro-F1 0.706   accuracy 81.5%
+  full[TTA]          macro-F1 0.751   accuracy 84.6%
+  late w=0.5[TTA]    macro-F1 0.871   accuracy 91.9%
+
+  late w=0.5 - nir               +0.004 CI [-0.015,+0.023] 8/15, folds 3/5 -> not larger than training noise
+  late w=0.5 - full              +0.122 CI [+0.100,+0.143] 15/15, folds 5/5 -> REAL
+  nir - full                     +0.118 CI [+0.094,+0.141] 15/15, folds 5/5 -> REAL
+  nir - visible                  +0.171 CI [+0.151,+0.189] 15/15, folds 5/5 -> REAL
+  late w=0.5[TTA] - nir[TTA]     +0.016 CI [-0.000,+0.031] 10/15, folds 4/5 -> not larger than training noise
+  full - visible                 +0.053 CI [+0.027,+0.081] 12/15, folds 5/5 -> REAL
+
+  complementarity: NIR wrong & visible right 4.2%, NIR right & visible wrong 15.3%, both wrong 5.4%
+
+  band alignment, 50 apples (phase correlation of gradient images; shift in px at 224x224):
+  raw|BL-RE    median 17.17 px  mean 17.98  max 54.54  (mean dx -17.15, dy +0.61)
+  raw|BL-IR    median 15.49 px  mean 16.89  max 84.41  (mean dx -0.61, dy +13.81)
+  raw|GR-RE    median 14.43 px  mean 15.52  max 60.98  (mean dx +0.09, dy -14.77)
+  raw|GR-IR    median 14.04 px  mean 15.33  max 45.87  (mean dx +14.27, dy +0.64)
+  raw|BL-GR    median 22.59 px  mean 22.63  max 23.11  (mean dx -15.80, dy +16.20)
+  raw|RE-IR    median 20.72 px  mean 20.73  max 21.43  (mean dx +15.59, dy +13.67)
+  ss|BL-RE     median  0.61 px  mean  2.48  max 56.49  (mean dx +0.76, dy -0.60)
+  ss|BL-IR     median  0.35 px  mean  3.06  max 57.69  (mean dx +0.88, dy -1.54)
+  ss|GR-RE     median  0.57 px  mean  2.10  max 73.32  (mean dx -0.94, dy -1.80)
+  ss|GR-IR     median  0.47 px  mean  1.34  max 39.18  (mean dx -0.88, dy -0.84)
+  ss|BL-GR     median  0.41 px  mean  0.41  max  0.57  (mean dx +0.06, dy +0.38)
+  ss|RE-IR     median  0.37 px  mean  0.36  max  0.78  (mean dx +0.28, dy +0.10)

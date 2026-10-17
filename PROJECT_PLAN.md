@@ -939,6 +939,176 @@ run_round2.bat
 - **ข้อสังเกตจาก Grad-CAM ในตัวอย่าง Russet**: จุดร้อนสุดอยู่ที่ก้านและขอบภาพ (พื้นที่ pad สีดำ) ไม่ใช่ที่ตำหนิ — สอดคล้องกับผลวัดว่าชี้ตำแหน่งตำหนิได้ต่ำ และบ่งว่า heatmap ที่ชั้นนี้มีผลของขอบภาพปนอยู่ ยังไม่ได้ตรวจเพิ่ม (อาจ mask พื้นหลังออกในอนาคต แต่จะเป็นการแก้หลักฐาน จึงไม่ทำโดยพลการ)
 - เหตุการณ์ที่ควรรู้: หน้าต่าง `run_confirm.bat` ที่เปิดไว้ค้างอยู่ที่ `pause` (รอกดปุ่ม) กดปุ่มใดก็ได้เพื่อปิด
 
+## (พักไว้ 2026-10-17 — ไม่ต้องทำ) — Demo app รอบ 2: สลับโมเดล + ถัง "ไม่แน่ใจ" (โฟกัสโหมด 1) (2026-10-17)
+
+### ข้อมูลที่ใช้ตัดสินใจ (คำนวณจาก `confirm_results.json`, สูตรสุดท้าย nir_ss TTA 3-seed soft vote, 819 ภาพ out-of-fold)
+
+ผู้ใช้ทดลองสุ่มแล้วเจอความมั่นใจ ~60% บ่อย ตรวจแล้วไม่ใช่ bug: ความมั่นใจ (max prob) median 0.958; <0.6 = 5.9% ของภาพ (ถูก 58%), 0.6–0.7 = 4.8% (ถูก 64%), 0.7–0.8 = 6.0% (76%), 0.8–0.9 = 12.8% (92%), 0.9–0.95 = 15.6% (97%), ≥0.95 = 54.9% (99.3%) — ความมั่นใจสะท้อนความถูกต้องจริง (calibrated ดี) ภาพความมั่นใจต่ำกระจุกในตำหนิ: Surface 27% มี conf<0.7, Internal 18%, Healthy 5% (median 0.89 / 0.94 / 0.97) — ถ้าสุ่มเฉพาะตำหนิจะเจอบ่อย ค่าเฉลี่ย 3 seed ต่ำลงเมื่อโมเดลเห็นไม่ตรงกัน (โมเดลเดี่ยว median 0.981)
+
+### งาน A — ถัง "ไม่แน่ใจ → ส่งคนตรวจ" (ไม่ต้องเทรน)
+
+1. โหมด 1 และโหมดสายพาน: เพิ่ม slider เกณฑ์ความมั่นใจ (ค่าเริ่ม 0.70, ช่วง 0.50–0.95) ถ้า max prob < เกณฑ์ → ผลเป็น "ไม่แน่ใจ — ส่งคนตรวจ" (ยังแสดงคลาสที่โหวตชนะไว้เป็นข้อมูลรอง)
+2. โหมดสายพาน: เพิ่มถังที่ 4 "ส่งคนตรวจ" แสดง % ที่ส่งคนตรวจ และความแม่นยำของส่วนที่โมเดลตัดสินเอง
+3. เพิ่มกราฟ/ตาราง (คำนวณจาก `confirm_results.json` ทั้ง 819 ภาพ ไม่ใช่แค่ภาพที่สุ่ม): ที่เกณฑ์ต่างๆ (0.5, 0.6, 0.7, 0.8, 0.9) → % ส่งคนตรวจ vs accuracy และ macro-F1 ของส่วนที่ตัดสินเอง + จำนวนตำหนิที่หลุดไปถังขายผลสด — คาดที่ 0.70: ส่งคนตรวจ ~10.7%, accuracy ส่วนที่เหลือ ~96% (ให้คำนวณจริงแล้วรายงาน)
+4. บันทึกตัวเลขในข้อ 3 ลงหัวข้อนี้ (เป็นผลเชิงปฏิบัติสำหรับเล่ม — ระบุว่าเกณฑ์ 0.70 เลือกล่วงหน้า ไม่ได้ปรับจากผล)
+
+### งาน B — สลับโมเดลในโหมด 1 (เทียบโมเดลบนแอปเปิลลูกเดียวกัน)
+
+**กฎ**: ทุกโมเดลต้อง out-of-fold เหมือนเดิม (ใช้ fold split เดิม StratifiedKFold n=5 random_state=42 → ใช้ `fold_assignment.json` เดียวกัน) ห้ามใช้ `*_best.pt` ของ single-split เดิม (คนละ split)
+
+1. **เทรนเพิ่มพร้อมเซฟ checkpoint** ด้วย protocol multi-seed เดิม **seed 0** (deterministic → ต้องได้ prediction ตรงกับ `multiseed_results.json` seed 0 ทุกภาพ ให้ assert ตรวจ): `visible`, `full`, `nir` (raw) → `outputs/dl/demo_ckpt/{variant}_seed0_fold{K}.pt` (~30 นาที, อยู่ใน `.gitignore`) — ถ้าไม่ตรงเป๊ะ ให้บันทึกความต่างและใช้ผลจาก checkpoint ใหม่เป็นตัวเลขของ demo พร้อมหมายเหตุ
+2. **Classical**: เทรน RandomForest ต่อ fold ด้วย hyperparameter/feature เดิมของรอบ multi-seed (deterministic) → `outputs/dl/demo_ckpt/rf_fold{K}.joblib` ตรวจว่า prediction ตรงกับ `multiseed_results.json`
+3. Dropdown "โมเดล" ในโหมด 1 (ค่าเริ่ม = สูตรสุดท้าย):
+   - สูตรสุดท้าย: NIR (RE+IR) ภาพ SingleSpectra + TTA + 3 seed (มีอยู่แล้ว)
+   - NIR (RE+IR) โมเดลเดี่ยว (`nir` seed 0)
+   - Visible (BL+GR) (`visible` seed 0)
+   - Vis+NIR 4 แบนด์ (`full` seed 0)
+   - Classical: Random Forest บนฟีเจอร์ที่สกัดเอง (แสดง top SHAP features ของภาพนั้นแทน Grad-CAM ถ้าทำได้ง่าย ไม่งั้นแสดงแค่ผล)
+   - แต่ละตัวแสดงชื่อ/แบนด์ที่ใช้ และตัวเลขผลรวมของโมเดลนั้นจากไฟล์ผล (macro-F1/acc) บนการ์ด
+   - ภาพที่แสดงต้องเปลี่ยนตามแบนด์ของโมเดล (visible → BL/GR, ภาพ raw สำหรับโมเดล raw)
+4. ปุ่ม **"เทียบทุกโมเดล"**: แอปเปิลลูกเดียวกัน → ตาราง 1 แถวต่อโมเดล (ผลทาย, ความมั่นใจ, ถูก/ผิด) — ไว้โชว์ว่าลูกเดียวกัน Visible ทายผิดแต่ NIR ทายถูก
+5. **ภาพตัวอย่างสำหรับพรีเซนต์**: สคริปต์หา RawA ที่ (ก) สูตรสุดท้ายถูก + Visible ผิด (โดยเฉพาะ Bruise/Flesh_damage) 5 ภาพ (ข) ทุกโมเดลผิด (ภาพยากจริง เช่น Rot) 3 ภาพ (ค) สูตรสุดท้ายความมั่นใจต่ำ <0.6 3 ภาพ → บันทึกรายการ id + เหตุผลลงหัวข้อนี้ และทำ dropdown "ภาพตัวอย่างสำหรับพรีเซนต์"
+
+### ทั่วไป
+
+- ไม่เปลี่ยนตัวเลขผลหลักในเล่ม (demo อ่านจากไฟล์ผลเดิม) · ยังห้ามเปิดแอปออกนอกเครื่อง
+- อัปเดต `src/demo_selftest.py` ให้ทดสอบทุกโมเดล + ถังไม่แน่ใจ แล้วรัน
+- commit (ห้าม `git add -A`) แล้ว **push** (ตอนนี้ค้าง 4 commit) ตรวจ `gh auth status` เป็น Chinnawan
+
+## งานที่ต้องทำต่อ — พิสูจน์ "NIR ดีกว่า Visible" ให้แน่น (โฟกัสหลักของธีสิส) (2026-10-17)
+
+> ผู้ใช้ตัดสินใจ 2026-10-17: เป้าหมายธีสิสคือ **พิสูจน์ว่า NIR ดีกว่า Visible จริงหรือไม่ และเพราะอะไร** ไม่ใช่ทำระบบใช้งานจริง
+> → หัวข้อ "Demo app รอบ 2" ด้านบน **พักไว้** (ไม่ต้องทำ) ใช้ demo เดิมพอ
+
+### หลักฐานที่มีแล้ว (multiseed, 3 seeds x 5 folds, pipeline เดียวกันทุกอย่าง)
+| variant | แบนด์ | Macro F1 | Acc | F1 Healthy / Internal / Surface |
+|---|---|---|---|---|
+| visible | BL450+GR500 | 0.688 ± 0.015 | 80.3% | 0.885 / 0.526 / 0.651 |
+| full | ทั้ง 4 | 0.754 ± 0.012 | 85.0% | 0.914 / 0.625 / 0.729 |
+| nir | RE750+IR800 | 0.843 ± 0.008 | 90.2% | 0.950 / 0.794 / 0.786 |
+- nir − visible = +0.156 CI [+0.127,+0.182] 15/15 → REAL; nir − full = +0.089 15/15 → REAL
+- single band: re/ir (~0.85) > bl/gr (~0.75) ทุกคู่ REAL; init fix ยืนยันว่าไม่ใช่ artifact (**แต่ 2026-10-18 พบว่าแบนด์ใน raw เหลื่อมกัน ~15–22 px → nir − full อาจมาจาก misregistration ดู "ผล N1–N4"**)
+- ช่องว่างใหญ่สุดที่ Internal (+0.27) → สอดคล้องกับสมมติฐาน "NIR ทะลุผิวเห็นรอยช้ำใต้ผิว"
+
+### ข้อจำกัดที่ต้องเขียนในเล่ม (ห้ามลืม)
+- CAPA ไม่มีแบนด์สีแดง → "Visible" ของเราคือ **น้ำเงิน+เขียว (450/500)** ไม่ใช่ RGB เต็ม claim ต้องเขียนว่า "NIR 750/800 nm ดีกว่า visible 450/500 nm" ไม่ใช่ "ดีกว่ากล้อง RGB"
+- ข้อมูลชุดเดียว (CAPA, 819 ลูก) ไม่มี external test (ค้นแล้ว 2026-10-17 ไม่มี dataset สาธารณะที่ใช้ร่วมได้)
+
+### งาน (เรียงตามลำดับ; ส่วนใหญ่ไม่ต้องเทรนใหม่ — ใช้ json ที่มีอยู่)
+**N1. หลักฐานทางฟิสิกส์ (ไม่ใช้ CNN เลย)** — สคริปต์ `src/band_contrast.py`
+- ใช้ defect masks 246 ภาพ (`segmentations/.../SBW_DefectNNNN.bmp`) จับคู่กับภาพแต่ละแบนด์ (ตรวจ alignment/ขนาดก่อน ถ้า mask ไม่ตรงภาพให้บันทึกและใช้เฉพาะที่ตรง)
+- ต่อภาพ ต่อแบนด์: mean intensity ใน defect vs ผิวดีรอบๆ (ring dilate mask, ตัดพื้นหลังออก) → contrast = (healthy−defect)/(healthy+defect) และ Cohen's d
+- สรุปแยกตามชนิดตำหนิ (Bruise, Rot, Flesh_damage, Russet, Scald, Hail, ...) ต่อแบนด์ → ตาราง + กราฟแท่ง `outputs/figures/band_contrast.png`
+- paired test ต่อภาพ: contrast(RE/IR) − contrast(BL/GR) bootstrap CI แยก Internal vs Surface
+- คาดหวัง: Internal (โดยเฉพาะ Bruise) contrast ที่ NIR สูงกว่า visible ชัด; ถ้าไม่เป็นแบบนั้นให้รายงานตามจริง
+
+**N2. per-class / per-tissue nir vs visible** — จาก `multiseed_results.json` (seeds 0-2)
+- paired (seed+fold) F1 ต่อคลาส + recall ต่อ tissue (Bruise, Rot, Flesh_damage, ...) ของ nir vs visible พร้อม CI
+- McNemar test บน pooled out-of-fold predictions (ต่อ seed) nir vs visible และ nir vs full (paper ใช้ McNemar)
+
+**N3. ไม่ขึ้นกับชนิดโมเดล** — classical ML (RF, SVM; LightGBM ถ้ามี) ด้วย feature ชุดเดิมแต่แยก visible-only vs nir-only, fold เดิม (`fold_assignment.json`)
+- ถ้า NIR > visible ทั้งใน CNN และ classical → ข้อสรุปมาจากข้อมูล ไม่ใช่จาก CNN
+
+**N4. Visible มีข้อมูลเสริมไหม? (อธิบายว่าทำไม full < nir)** — จาก json ที่มี ไม่ต้องเทรน
+- late fusion ภายใน fold เดียวกัน: softmax เฉลี่ย nir+visible (seed+fold เดียวกัน) และแบบถ่วงน้ำหนัก w∈{0.1..0.5} (เลือก w ด้วย inner rule ห้ามดู test; ถ้าทำไม่ได้ให้รายงานเฉพาะ w=0.5 กับ curve แบบ exploratory)
+- ถ้า late fusion ≤ nir → visible ไม่เพิ่มข้อมูล; ถ้า > nir แต่ full (early fusion) < nir → ปัญหาอยู่ที่วิธีรวมแบนด์ (เขียนเป็น discussion)
+- ตรวจด้วยว่าภาพแบนด์ visible กับ NIR ของลูกเดียวกัน align กันไหม (ถ้าเหลื่อมกันอาจอธิบาย full < nir) — วัด shift ด้วย phase correlation บนตัวอย่าง 50 ภาพ
+
+**N5. (ถ้ามีเวลา) ความเป็นธรรมของ preprocessing** — เทรน `visible_ss` (SingleSpectra) 3 seeds x 5 folds เทียบ nir_ss เพื่อให้สูตรสุดท้ายเทียบกับ visible บน preprocessing เดียวกัน (~1-1.5 ชม. รันข้ามคืนได้)
+
+**N6. สรุป** — `src/nir_proof_report.py` → `outputs/logs/nir_proof_report.txt` รวม N1-N5 เป็นตารางพร้อมใส่เล่ม และบันทึกผลกลับลงหัวข้อนี้ (หัวข้อย่อย "ผล") รวม % accuracy ทุกที่ที่มี F1
+- commit เฉพาะ src/*.py, PROJECT_PLAN.md, outputs/logs/*.txt, json สรุป (ห้าม `git add -A`, ห้าม commit ภาพจาก dataset/figure ที่มีภาพแอปเปิล; กราฟตัวเลขล้วนได้) แล้ว push หลังเช็ค `gh auth status` เป็น Chinnawan
+
+### ผล N1–N4 + N6 (ทำเสร็จ 2026-10-18; N5 ยังไม่ทำตามที่ผู้ใช้สั่ง)
+รายงานรวม `outputs/logs/nir_proof_report.txt` (สร้างด้วย `python -m src.nir_proof_report`), สรุป `outputs/dl/nir_proof_summary.json`, ผลดิบ `outputs/dl/nir_proof_n1..n4.json`, กราฟ `outputs/figures/band_contrast.png` (ตัวเลขล้วน ไม่มีภาพแอปเปิล)
+
+**N1 — ฟิสิกส์ (ไม่ใช้ CNN)** `src/band_contrast.py` — 244 ภาพตำหนิ (ข้าม 2 ภาพ mask เล็กเกิน, mask ไม่ตรงภาพ 0 ภาพ) ภาพ SingleSpectra ความละเอียดเต็ม
+- **contrast ดิบ (|c|) visible สูงกว่า NIR** (NIR−vis = −0.087; NIR สูงกว่าแค่ 14.3% ของภาพ) — แต่เป็นเพราะผิว Jonagold สองสีในแบนด์ visible: วาง mask เดียวกันบนแอปเปิลปกติ (null) ได้ |c| visible ≈ 0.031 vs NIR ≈ 0.006 → **ผิวปกติใน visible แปรปรวนมากกว่า ~5 เท่า** contrast ดิบจึงวัด "การมองเห็นตำหนิ" ไม่ได้
+- ตัววัดหลัก = **AUC แยก contrast ของตำหนิออกจาก contrast ของผิวปกติ** (0.5 = แยกไม่ได้)
+
+| กลุ่ม | n | AUC BL | GR | RE | IR | AUC(NIR) − AUC(vis) [95% CI] |
+|---|---|---|---|---|---|---|
+| ตำหนิทั้งหมด | 244 | 0.90 | 0.92 | 0.96 | 0.93 | **+0.036 [+0.013, +0.061]** ✓ |
+| Internal_Defect | 100 | 0.92 | 0.88 | 0.95 | 0.92 | +0.038 [−0.002, +0.083] (ก้ำกึ่ง) |
+| Surface_Defect | 144 | 0.89 | 0.94 | 0.98 | 0.93 | **+0.039 [+0.010, +0.069]** ✓ |
+| Bruise (ช้ำ) | 55 | 0.85 | 0.78 | 0.92 | 0.88 | **+0.084 [+0.012, +0.161]** ✓ |
+| Scald | 17 | 0.86 | 0.97 | 1.00 | 0.98 | **+0.075 [+0.004, +0.167]** ✓ |
+| Other | 20 | 0.75 | 0.86 | 0.98 | 0.93 | **+0.149 [+0.050, +0.254]** ✓ |
+| Flesh_damage | 24 | 0.97 | 0.96 | 0.94 | 0.95 | −0.019 (ไม่ต่าง) |
+| Russet | 42 | 0.85 | 0.89 | 0.92 | 0.81 | −0.008 (ไม่ต่าง) |
+| Rot / Hail / Frost / Limb_rub | — | ≥0.94 ทุกแบนด์ | | | | ไม่ต่าง (เพดาน ~1.0) |
+- Cohen's d (NIR−vis, ส่วนเกินจาก null): รวม −0.05 (ไม่ต่าง), **Bruise +0.50 [+0.34,+0.66]**, Other +0.97, แต่ Flesh_damage −1.76 และ Russet −0.45 (visible ชัดกว่า — Russet เป็นตำหนิสี/ผิว คาดได้)
+- **สรุป N1:** ข้อมูลดิบยืนยันว่า NIR แยกตำหนิออกจากผิวปกติได้ดีกว่า โดยเฉพาะ **รอยช้ำ (Bruise)** ซึ่งตรงกับสมมติฐาน "NIR ทะลุผิว เห็นเนื้อช้ำใต้ผิว" — เหตุผลหลักคือผิวปกติใน NIR สม่ำเสมอ (ไม่มีลายสี anthocyanin/chlorophyll) ไม่ใช่เพราะตำหนิ "เข้ม" กว่า; ตำหนิบางชนิด (Flesh_damage, Russet) visible เห็นพอๆ กันหรือดีกว่า
+
+**N2 — คลาส/ชนิดตำหนิที่ NIR ชนะ** (multiseed seeds 0–2; nir 0.843 / 90.2%, visible 0.688 / 80.3%, full 0.754 / 85.0%)
+
+| คลาส | F1 nir | F1 visible | nir − visible | nir − full |
+|---|---|---|---|---|
+| Healthy | 0.950 | 0.886 | +0.064 REAL (15/15) | +0.036 REAL |
+| Internal_Defect | 0.796 | 0.528 | **+0.268 REAL** (14/15) | +0.174 REAL |
+| Surface_Defect | 0.785 | 0.649 | +0.136 REAL (14/15) | +0.058 (11/15 ไม่ผ่านเกณฑ์) |
+
+- recall ต่อชนิด (เฉลี่ย 3 seed, CI bootstrap ข้ามลูก): **Bruise NIR 90.3% vs visible 37.0% (+53.3 จุด [+41.2,+64.8])**, Other +25.0 จุด [+6.7,+43.3], Healthy 94.3% vs 87.5% (+6.8 [+3.1,+10.5]) — ชนิดอื่นเป็นบวกทุกตัวแต่ CI คร่อม 0 (n น้อย); Flesh_damage 81.9% = 81.9% (เท่ากันพอดี สอดคล้อง N1)
+- McNemar (819 ลูก out-of-fold ต่อ seed): nir vs visible p = 2.2e-10, 4.8e-10, 7.6e-10 (nir ถูกคนเดียว ~120 ลูก vs visible ถูกคนเดียว ~40 ลูก); nir vs full p = 1.4e-6, 8.7e-5, 0.018
+- **สรุป N2:** ช่องว่างมาจาก Internal_Defect และเจาะจงคือ **รอยช้ำ** — ตรงกับ N1 (ฟิสิกส์) ทั้งทิศทางและชนิดตำหนิ
+
+**N3 — ไม่ขึ้นกับชนิดโมเดล (classical ML, feature ทำมือ, fold เดิม)** — feature visible = BL_*/GR_* + NDI_BL_GR (31 ตัว), NIR = RE_*/IR_* + NDI_RE_IR (31 ตัว), all = 66 ตัว (ชุด all ได้ตัวเลขตรงกับ multiseed classical เดิมเป๊ะ)
+
+| โมเดล | visible F1 (acc) | NIR F1 (acc) | all F1 (acc) | NIR − vis | fold ที่ NIR ชนะ | McNemar p |
+|---|---|---|---|---|---|---|
+| SVM | 0.483 (57.8%) | 0.553 (63.1%) | 0.573 (66.9%) | +0.071 [−0.007,+0.148] | 4/5 | **0.021** |
+| RandomForest | 0.520 (66.5%) | 0.556 (68.4%) | 0.589 (71.3%) | +0.036 [−0.038,+0.111] | 4/5 | 0.37 |
+| LightGBM | 0.487 (68.4%) | 0.545 (72.3%) | 0.546 (72.3%) | +0.058 [−0.037,+0.154] | 4/5 | **0.019** |
+- **สรุป N3:** NIR > visible ทั้ง 3 โมเดล (ทิศทางเดียวกับ CNN; McNemar มีนัยสำคัญ 2/3) แต่ fold t-CI (5 fold) คร่อม 0 ทุกตัว → หลักฐาน "ทิศทางสอดคล้อง" ไม่ใช่หลักฐานหลัก; ต่างจาก CNN ตรงที่ใน classical การรวม 4 แบนด์ (all) ไม่แย่กว่า NIR
+
+**N4 — visible เพิ่มข้อมูลไหม? (late fusion vs early fusion)** seed 3–5, 15 คู่ (nir จาก `confirm_results.json`, visible/full เทรนใหม่ → `fusion_results.json` 30/30 run error 0)
+
+| วิธี | macro-F1 | accuracy |
+|---|---|---|
+| nir | 0.849 | 90.4% |
+| visible | 0.678 | 79.3% |
+| full (early fusion, 4 แบนด์ซ้อนกัน) | 0.731 | 83.0% |
+| late fusion w=0.5 (หลัก) | 0.853 | 90.9% |
+| late w=0.1 / 0.2 / 0.3 / 0.4 (exploratory) | 0.851 / 0.852 / 0.855 / 0.861 | 90.7 / 90.8 / 91.0 / 91.4% |
+| nir [TTA] / late w=0.5 [TTA] | 0.855 / 0.871 | 90.9% / 91.9% |
+- late w=0.5 − nir = +0.004 [−0.015,+0.023] 8/15 → **ไม่ต่าง**; แบบ TTA +0.016 10/15 → ไม่ผ่านเกณฑ์
+- late w=0.5 − full = +0.122 REAL 15/15; nir − full = **+0.118 REAL 15/15** (ยืนยัน nir > full ด้วย seed ใหม่); nir − visible = +0.171 REAL 15/15; full − visible = +0.053 REAL
+- complementarity: NIR ผิดแต่ visible ถูก 4.2% ของลูก, NIR ถูกแต่ visible ผิด 15.3%, ผิดทั้งคู่ 5.4%
+- **สรุป N4:** visible **ไม่ได้เพิ่มข้อมูลที่ใช้ได้** เหนือ NIR (late fusion ≈ nir) — และ early fusion (full) แย่กว่าทั้ง nir และ late fusion ชัด → ปัญหาของ full อยู่ที่ **วิธีรวมแบนด์** (ดูข้อค้นพบ alignment ต่อไป)
+
+**N4 (ต่อ) — ⚠️ ข้อค้นพบสำคัญ: แบนด์ในภาพ raw ไม่ตรงกัน (misregistration)** — phase correlation ของภาพ gradient, 50 ลูกสุ่ม, หน่วย px ที่ 224×224
+
+| คู่แบนด์ | raw (4 quadrant) median shift | SingleSpectra median shift |
+|---|---|---|
+| BL–GR | 22.6 px (dx −15.8, dy +16.2) | 0.4 px |
+| RE–IR | 20.7 px (dx +15.6, dy +13.7) | 0.4 px |
+| BL–RE / BL–IR / GR–RE / GR–IR | 14–17 px | 0.4–0.6 px |
+- shift ใน raw **เป็นระบบ** (ค่าเกือบคงที่ทุกลูก max ≈ median สำหรับคู่ BL–GR, RE–IR) — เกิดจากการตัด 4 quadrant ของภาพเดียวที่เลนส์แต่ละแบนด์มองจากตำแหน่งต่างกัน; SingleSpectra (ผ่าน geometric correction) ตรงกันในระดับ <1 px (max สูงบางภาพเป็นจุดที่ phase correlation ล้มเหลว ไม่ใช่ภาพเหลื่อมจริง)
+- ผลกระทบต่อข้อสรุป:
+  1. **การเทียบแบนด์เดี่ยว (RE/IR > BL/GR, REAL ทุกคู่) ไม่ได้รับผลกระทบ** — หลักฐานหลักของ "NIR > visible" ยังแน่น
+  2. **nir vs visible (2 แบนด์ทั้งคู่) ยุติธรรม** — ทั้งสองคู่เหลื่อม ~21–23 px พอๆ กัน
+  3. **nir > full และ "F1 ลดตามจำนวนช่อง" อาจเป็นผลจาก misregistration** (ตำหนิเดียวไปอยู่คนละตำแหน่งในแต่ละช่อง) ไม่ใช่เพราะ visible "รบกวน" — ข้อสรุปเดิม "NIR > Vis+NIR ไม่ใช่ artifact ของ init" ยังจริงในแง่ init แต่ **ตอนนี้มีตัวแปรกวนใหม่คือ alignment** ต้องเขียนในเล่มอย่างระวัง
+  4. ข้อสังเกต: nir_ss (ตรงกัน) − nir (raw เหลื่อม) = +0.009 แค่นั้น → การเหลื่อมภายใน RE–IR แทบไม่กระทบ (RE กับ IR ข้อมูลคล้ายกันมาก) แต่ระหว่าง visible–NIR ยังไม่รู้
+- **แนะนำ (= N5 ขยาย):** เทรน `visible_ss` และ `full_ss` บนภาพ SingleSpectra ที่ align แล้ว (3 seed × 5 fold, ~1.5 ชม.) — ถ้า full_ss ≥ nir_ss แปลว่า full < nir เดิมเป็นผลของ misregistration; ถ้ายัง < แปลว่า visible ไม่ช่วยจริงแม้ภาพตรงกัน
+
+**ข้อสรุปรวม "NIR ดีกว่า Visible จริงไหม และเพราะอะไร"**
+1. **จริง** — CNN: nir 0.843–0.849 (90.2–90.4%) vs visible 0.678–0.688 (79.3–80.3%) REAL 15/15 ใน seed สองชุดแยกกัน (0–2 และ 3–5), McNemar p < 1e-9; แบนด์เดี่ยว RE/IR > BL/GR ทุกคู่
+2. **ไม่ใช่ artifact ของ CNN** — classical ML ทั้ง 3 โมเดลทิศทางเดียวกัน (แรงน้อยกว่า), และ **ฟิสิกส์ของภาพดิบ** (N1) ให้ AUC NIR > visible โดยไม่ใช้โมเดลเลย
+3. **เพราะอะไร** — (ก) ผิวปกติใน NIR สม่ำเสมอกว่า ~5 เท่า (ไม่มีลายสีผิว) ตำหนิจึงโดดเด่นจากพื้นหลัง (ข) รอยช้ำใต้ผิวเห็นชัดใน NIR (AUC +0.084, recall +53 จุด) — ช่องว่าง F1 ใหญ่สุดที่ Internal_Defect (+0.27) มาจากตรงนี้
+4. **visible ไม่เพิ่มข้อมูล** เหนือ NIR (late fusion ≈ nir) ส่วนที่ full < nir อาจมาจาก misregistration ของภาพ raw — ยังพิสูจน์ไม่ได้จนกว่าจะทำ N5 (`full_ss`)
+5. ข้อจำกัด: visible = 450/500 nm (ไม่มีแดง), dataset เดียว, Internal ใน N1 ก้ำกึ่ง (CI แตะ 0), ตำหนิบางชนิด (Flesh_damage, Russet) visible เห็นพอๆ กัน
+
+### การตัดสินใจระหว่างทำ N1–N6 (2026-10-17/18 — เลือกเองตามคำสั่งผู้ใช้ "เลือกทางที่สมเหตุสมผลแล้วบันทึก")
+1. **UI demo:** ตามคำขอผู้ใช้ — % ความมั่นใจตัวใหญ่ (56px) + แถบ progress หนาขึ้น, เฉลยย้ายไปกล่องขวา: ✔ "ถูก" พื้นเขียว / ✘ "ผิด" พื้นแดง; **เปลี่ยนสีคลาสในการ์ดทำนายเป็น น้ำเงิน (ปกติ) / ส้ม (ตำหนิผิว) / ม่วง (ตำหนิภายใน)** เพื่อสงวนเขียว/แดงไว้สำหรับถูก/ผิดเท่านั้น (ไม่ให้สับสน) — ต้องปิดแล้วเปิด `run_demo.bat` ใหม่ถึงจะเห็น
+2. **N4 ต้องเทรนเพิ่ม** (แผนเขียนว่าไม่ต้อง): `multiseed_results.json` ไม่ได้เก็บ softmax probabilities จึงทำ late fusion ไม่ได้ → เทรน `visible` และ `full` seed 3–5 บนภาพ raw (`src/run_fusion_models.py`, 30 run) ให้จับคู่กับ `nir` ใน `confirm_results.json` (seed+fold เดียวกัน, ตรวจ test_idx ตรงกันด้วย assert) — ใส่ `full` ด้วยเพื่อเทียบ early fusion ใน seed เดียวกัน
+3. **N1 ใช้ภาพ SingleSpectra ความละเอียดเต็ม** (mask อยู่ใน geometry ของ SS); ใช้ค่าสัมบูรณ์ (ตำหนิเข้มหรือสว่างกว่าผิวก็เห็นได้ทั้งคู่); **เพิ่ม null baseline + AUC เป็นตัววัดหลัก** เพราะ contrast ดิบถูกกวนด้วยลายสีผิว (Jonagold สองสี) — รายงาน contrast ดิบไว้ด้วยตามจริง
+4. **N2:** CI ของ recall ต่อชนิดตำหนิใช้ bootstrap ข้ามลูก (recall ต่อลูกเฉลี่ย 3 seed ก่อน) เพราะ n ต่อชนิดน้อย; McNemar แยกต่อ seed (ไม่รวม seed เพราะไม่อิสระกัน)
+5. **N3:** แบ่ง feature ตามชื่อแบนด์ — NDI ข้ามกลุ่ม (เช่น BL/IR) ตัดออกจากทั้งสองชุดเพื่อไม่ให้ชุดใดได้ข้อมูลอีกกลุ่ม; scaler fit ใน fold; LightGBM `deterministic=True`
+6. **N4:** ไม่มี val probabilities ให้เลือก w แบบ inner rule → **w=0.5 เป็นผลหลัก** ค่าอื่นเป็น exploratory (w=0.4 สูงสุด 0.861 แต่ห้ามใช้เป็นผลหลักเพราะเลือกจาก test); TTA เป็นผลรอง
+7. alignment วัดบนภาพ gradient (ไม่ใช่ intensity) เพราะความสว่างแต่ละแบนด์ต่างกันมาก; สุ่ม 50 ลูกด้วย seed 42
+8. `outputs/logs/` อยู่ใน .gitignore → ใช้ `git add -f outputs/logs/nir_proof_report.txt` เฉพาะไฟล์นี้
+9. N5 ยังไม่ทำ (ผู้ใช้สั่ง) แต่ **แนะนำให้ทำเป็นลำดับถัดไป และขยายเป็น `visible_ss` + `full_ss`** เพราะข้อค้นพบ alignment
+
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 
 - [ ] เขียนเล่มวิทยานิพนธ์โดยใช้ผลลัพธ์ข้างต้น + รูป Grad-CAM + ตาราง SHAP + ผล k-fold (ปรับข้อสรุปเรื่อง SE block ตามผล k-fold ข้อ 2 ด้านบน) — **ห้ามเอาตัวเลข ensemble มาใช้เป็นผลหลัก เพราะมี data leakage (ดูหัวข้อ ensembling ด้านบน)**
@@ -962,4 +1132,8 @@ run_round2.bat
 - [x] ล็อกสูตรสุดท้ายแล้วยืนยันด้วย seed 3,4,5 — **ผล: `nir_ss − nir` = +0.009 ไม่ผ่านการยืนยัน; สูตร (SS+TTA) เทียบ baseline เดิม +0.020 ผ่านแบบพอดีขอบ (แนวโน้มบวกเล็กน้อย); ensemble 3 seed accuracy 92.6% / macro-F1 0.885**
 - [x] Confirmatory run (`nir_ss` vs `nir`, seed 3–5) + เซฟ checkpoint `nir_ss` (15 ไฟล์) + `fold_assignment.json` — เสร็จ ตรวจ checkpoint ผ่าน (ดูหัวข้อ "ผลยืนยัน")
 - [x] Demo app (Gradio) — เขียนและทดสอบกับโมเดลจริงผ่านทั้งหมด เปิดด้วย `run_demo.bat` (http://127.0.0.1:7860) ดูหัวข้อ "สถานะ Demo app"
+- [ ] Demo รอบ 2: ถัง "ไม่แน่ใจ → ส่งคนตรวจ" + สลับ/เทียบโมเดล + ภาพตัวอย่างพรีเซนต์ — ดูหัวข้อ "Demo app รอบ 2"
+- [x] Demo UI: % ความมั่นใจใหญ่ชัด + กล่องเฉลยขวา (✔ เขียว / ✘ แดง) — เสร็จ 2026-10-18
+- [x] พิสูจน์ NIR > Visible: N1 ฟิสิกส์ (AUC NIR−vis +0.036 REAL, Bruise +0.084), N2 per-class/tissue (Bruise recall +53 จุด, McNemar p<1e-9), N3 classical (ทิศทางเดียวกัน 3/3), N4 late fusion ≈ nir (visible ไม่เพิ่มข้อมูล) + **พบแบนด์ raw เหลื่อม ~15–22 px**, N6 รายงาน `outputs/logs/nir_proof_report.txt` — เสร็จ 2026-10-18 (ดู "ผล N1–N4 + N6")
+- [ ] N5 (ขยาย): เทรน `visible_ss` + `full_ss` บนภาพ SingleSpectra ที่ align แล้ว (~1.5 ชม.) เพื่อแยกว่า full < nir มาจาก misregistration หรือไม่
 - [ ] นำผลไปคุยกับอาจารย์ที่ปรึกษาตามที่ระบุไว้ในหัวข้อ "สถานะการคุยกับอาจารย์" — **ตัวเลขสุดท้ายพร้อมแล้ว — ใช้ตาราง "ผล multi-seed" (NIR 0.843±0.008, nir_SE 0.847±0.008, RE-only 0.853±0.007; SE ไม่ช่วย) ไม่ใช่ 0.862 แต่ต้องปรับ narrative ก่อน (นอกจากข้อ SE ที่แก้แล้ว): (1) Grad-CAM — วัดเทียบ mask แล้วดีกว่า null เฉพาะ Internal (Bruise/Flesh_damage) Surface ไม่ต่างจากสุ่ม (2) ตัด "RE สำคัญกว่า IR" และอย่าใช้ SE weight เป็นหลักฐานความสำคัญของแบนด์ (ผลแบนด์เดี่ยว: RE≈IR≈RE+IR) — เพิ่มข้อจำกัดว่าการรันซ้ำให้ F1 ต่อ fold ต่างกันได้ถึง ~0.06**
