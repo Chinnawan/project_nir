@@ -1,0 +1,54 @@
+45 confirmatory runs (seeds [3, 4, 5]) in D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\confirm_results.json
+
+=== 1) Per variant (mean +- std across seeds of the 5-fold mean) ===
+  variant     seeds       F1 plain     acc |         F1 TTA     acc | per-class F1 TTA (H / Int / Surf)
+  nir_ss          3 0.858 +- 0.003   91.0% | 0.869 +- 0.010   91.7% | 0.956 / 0.846 / 0.806
+  nir             3 0.849 +- 0.006   90.4% | 0.855 +- 0.002   90.9% | 0.951 / 0.812 / 0.802
+  nir_ss_ls*      3 0.868 +- 0.008   91.7% | 0.877 +- 0.011   92.2% | 0.960 / 0.858 / 0.814
+  (* exploratory, not part of the locked formula)
+
+=== 2) Paired comparisons (A - B in macro-F1; paired by seed+fold) ===
+  nir_ss - nir                                   mean +0.009  CI [-0.004,+0.025]  same sign 8/15  folds 4/5 same sign, fold-CI [-0.002,+0.021]  -> not larger than training noise
+  nir_ss[TTA] - nir[TTA]                         mean +0.014  CI [-0.004,+0.030]  same sign 11/15  folds 4/5 same sign, fold-CI [-0.002,+0.030]  -> not larger than training noise
+  nir[TTA] - nir                                 mean +0.006  CI [-0.003,+0.015]  same sign 10/15  folds 4/5 same sign, fold-CI [-0.000,+0.013]  -> not larger than training noise
+  nir_ss[TTA] - nir  (formula vs old baseline)   mean +0.020  CI [+0.005,+0.037]  same sign 12/15  folds 5/5 same sign, fold-CI [+0.004,+0.037]  -> REAL difference
+  nir_ss[TTA] - nir_ss                           mean +0.011  CI [+0.002,+0.020]  same sign 10/15  folds 3/5 same sign, fold-CI [-0.005,+0.027]  -> not larger than training noise
+  [exploratory] nir_ss_ls - nir_ss               mean +0.010  CI [-0.002,+0.024]  same sign 8/15  folds 3/5 same sign, fold-CI [-0.008,+0.028]  -> not larger than training noise
+  [exploratory] nir_ss_ls[TTA] - nir_ss[TTA]     mean +0.008  CI [-0.007,+0.024]  same sign 7/15  folds 3/5 same sign, fold-CI [-0.015,+0.031]  -> not larger than training noise
+
+=== 3) Numbers for the thesis: 3-seed ensembles inside a fold (members trained on the same training fold) ===
+  ensemble                                     F1 (mean over folds)     acc
+  nir_ss: 3-seed soft vote               0.877 +- 0.022 (folds)     92.1%
+  nir_ss[TTA]: 3-seed soft vote          0.885 +- 0.024 (folds)     92.6%
+  nir_ss: 3-seed hard vote               0.875 +- 0.017 (folds)     91.9%
+  nir: 3-seed soft vote                  0.864 +- 0.028 (folds)     91.5%
+  nir[TTA]: 3-seed soft vote             0.871 +- 0.031 (folds)     91.7%
+  nir: 3-seed hard vote                  0.860 +- 0.024 (folds)     91.2%
+  nir_ss_ls: 3-seed soft vote            0.874 +- 0.029 (folds)     92.1%
+  nir_ss_ls[TTA]: 3-seed soft vote       0.877 +- 0.022 (folds)     92.2%
+  nir_ss_ls: 3-seed hard vote            0.873 +- 0.018 (folds)     92.1%
+
+  FINAL FORMULA, pooled out-of-fold over 819 apples: accuracy 92.6%  macro-F1 0.885
+                     pred  Healthy pred Internal pred Surface_   precision recall   F1
+  true Healthy                 554             6            13   0.950     0.967  0.958
+  true Internal_Defect             8            82            12   0.921     0.804  0.859
+  true Surface_Defect            21             1           122   0.830     0.847  0.838
+  baseline nir[TTA] 3-seed soft vote, pooled: accuracy 91.7%  macro-F1 0.871;  per-fold F1 difference (nir_ss - nir): [0.006, -0.008, -0.002, 0.028, 0.05]  (3/5 folds favour nir_ss)
+
+=== 4) Error rate per tissue (plain predictions, mean over seeds) ===
+  tissue               n     nir_ss        nir  nir_ss_ls
+  Rot                 23      42.0%      46.4%      42.0%
+  Russet              42      25.4%      20.6%      26.2%
+  Hail_damage_perf    31      19.4%      21.5%       9.7%
+  Other               20      25.0%      31.7%      28.3%
+  Scald               17      15.7%      21.6%      17.6%
+  Frost_damage        11      36.4%      30.3%      27.3%
+  Hail_damage         16      18.8%      10.4%      20.8%
+  Limb_rub             7       9.5%       9.5%      14.3%
+  Bruise              55      10.9%      13.3%       9.7%
+  Flesh_damage        24      22.2%      22.2%      23.6%
+  Stem               148       7.0%       8.1%       4.7%
+  Calix              145       1.8%       1.4%       1.6%
+  Healthy            280       2.9%       3.6%       2.9%
+
+saved -> D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\confirm_summary.json

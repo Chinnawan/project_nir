@@ -1,0 +1,101 @@
+135 round-2 runs in D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\round2_results.json
+
+=== 1) Per variant (mean +- std across seeds of the 5-fold mean; plain | TTA) ===
+  variant      seeds       F1 plain     acc |         F1 TTA     acc | per-class F1 plain (H / Int / Surf)
+  full             3 0.754 +- 0.012   85.0% |     (baseline: no TTA) | 0.914 / 0.625 / 0.729
+  nir              3 0.843 +- 0.008   90.2% |     (baseline: no TTA) | 0.950 / 0.794 / 0.786
+  visible          3 0.688 +- 0.015   80.3% |     (baseline: no TTA) | 0.885 / 0.526 / 0.651
+  nir_5cls         3 0.848 +- 0.003   90.6% | 0.859 +- 0.010   91.1% | 0.951 / 0.791 / 0.799
+  nir_ls           3 0.861 +- 0.013   91.3% | 0.855 +- 0.005   90.8% | 0.954 / 0.820 / 0.810
+  full_fix         3 0.714 +- 0.014   82.2% | 0.732 +- 0.016   83.6% | 0.899 / 0.595 / 0.654
+  nir_fix          3 0.838 +- 0.010   89.7% | 0.852 +- 0.006   90.6% | 0.946 / 0.790 / 0.778
+  visible_fix      3 0.702 +- 0.016   80.6% | 0.708 +- 0.004   81.2% | 0.884 / 0.566 / 0.657
+  nir_ss           3 0.872 +- 0.012   91.9% | 0.880 +- 0.013   92.5% | 0.957 / 0.842 / 0.816
+  nir_ss_cp        3 0.859 +- 0.019   90.7% | 0.872 +- 0.015   91.7% | 0.950 / 0.838 / 0.785
+  nir_ss_plus      3 0.857 +- 0.009   90.9% | 0.861 +- 0.003   91.1% | 0.951 / 0.820 / 0.799
+  nir_320          3 0.830 +- 0.007   89.2% | 0.852 +- 0.013   90.5% | 0.942 / 0.779 / 0.768
+
+=== 2) Paired comparisons vs the variant's own baseline (A - B in macro-F1; paired by seed+fold) ===
+  'real' = CI excludes 0 AND >=12/15 same sign (needs all 15 pairs); fold-level = mean over seeds per fold, 5 folds
+  nir_5cls - nir               mean +0.004  CI [-0.013,+0.022]  same sign 7/15  folds 3/5 same sign, fold-CI [-0.029,+0.038]  -> not larger than training noise
+  nir_5cls[TTA] - nir          mean +0.015  CI [-0.001,+0.033]  same sign 9/15  folds 3/5 same sign, fold-CI [-0.012,+0.043]  -> not larger than training noise
+  nir_5cls[TTA] - nir_5cls     mean +0.011  CI [-0.000,+0.022]  same sign 11/15  folds 4/5 same sign, fold-CI [-0.010,+0.032]  -> not larger than training noise
+  nir_ls - nir                 mean +0.018  CI [-0.002,+0.040]  same sign 11/15  folds 4/5 same sign, fold-CI [-0.013,+0.049]  -> not larger than training noise
+  nir_ls[TTA] - nir            mean +0.012  CI [-0.003,+0.026]  same sign 11/15  folds 4/5 same sign, fold-CI [-0.012,+0.036]  -> not larger than training noise
+  nir_ls[TTA] - nir_ls         mean -0.006  CI [-0.018,+0.006]  same sign 9/15  folds 3/5 same sign, fold-CI [-0.027,+0.015]  -> not larger than training noise
+  full_fix - full              mean -0.041  CI [-0.060,-0.020]  same sign 11/15  folds 5/5 same sign, fold-CI [-0.069,-0.012]  -> not larger than training noise
+  full_fix[TTA] - full         mean -0.022  CI [-0.050,+0.004]  same sign 9/15  folds 4/5 same sign, fold-CI [-0.062,+0.018]  -> not larger than training noise
+  full_fix[TTA] - full_fix     mean +0.019  CI [+0.001,+0.036]  same sign 10/15  folds 3/5 same sign, fold-CI [-0.021,+0.058]  -> not larger than training noise
+  nir_fix - nir                mean -0.005  CI [-0.024,+0.015]  same sign 9/15  folds 3/5 same sign, fold-CI [-0.022,+0.011]  -> not larger than training noise
+  nir_fix[TTA] - nir           mean +0.009  CI [-0.013,+0.032]  same sign 9/15  folds 4/5 same sign, fold-CI [-0.015,+0.033]  -> not larger than training noise
+  nir_fix[TTA] - nir_fix       mean +0.014  CI [+0.001,+0.029]  same sign 9/15  folds 4/5 same sign, fold-CI [-0.006,+0.035]  -> not larger than training noise
+  visible_fix - visible        mean +0.014  CI [-0.008,+0.035]  same sign 9/15  folds 3/5 same sign, fold-CI [-0.023,+0.051]  -> not larger than training noise
+  visible_fix[TTA] - visible   mean +0.020  CI [-0.001,+0.040]  same sign 11/15  folds 5/5 same sign, fold-CI [-0.003,+0.043]  -> not larger than training noise
+  visible_fix[TTA] - visible_fix mean +0.006  CI [-0.009,+0.021]  same sign 10/15  folds 4/5 same sign, fold-CI [-0.022,+0.034]  -> not larger than training noise
+  nir_ss - nir                 mean +0.028  CI [+0.010,+0.046]  same sign 13/15  folds 4/5 same sign, fold-CI [-0.005,+0.061]  -> REAL difference
+  nir_ss[TTA] - nir            mean +0.037  CI [+0.017,+0.057]  same sign 14/15  folds 4/5 same sign, fold-CI [-0.002,+0.075]  -> REAL difference
+  nir_ss[TTA] - nir_ss         mean +0.009  CI [-0.000,+0.017]  same sign 10/15  folds 4/5 same sign, fold-CI [-0.007,+0.025]  -> not larger than training noise
+  nir_ss_cp - nir_ss           mean -0.013  CI [-0.026,+0.001]  same sign 10/15  folds 5/5 same sign, fold-CI [-0.026,+0.001]  -> not larger than training noise
+  nir_ss_cp[TTA] - nir_ss      mean +0.001  CI [-0.012,+0.015]  same sign 6/15  folds 3/5 same sign, fold-CI [-0.015,+0.017]  -> not larger than training noise
+  nir_ss_cp[TTA] - nir_ss_cp   mean +0.013  CI [+0.006,+0.020]  same sign 11/15  folds 4/5 same sign, fold-CI [-0.002,+0.028]  -> not larger than training noise
+  nir_ss_plus - nir            mean +0.013  CI [-0.002,+0.028]  same sign 10/15  folds 4/5 same sign, fold-CI [-0.016,+0.042]  -> not larger than training noise
+  nir_ss_plus[TTA] - nir       mean +0.017  CI [+0.002,+0.036]  same sign 9/15  folds 4/5 same sign, fold-CI [-0.007,+0.042]  -> not larger than training noise
+  nir_ss_plus[TTA] - nir_ss_plus mean +0.004  CI [-0.006,+0.016]  same sign 7/15  folds 4/5 same sign, fold-CI [-0.008,+0.017]  -> not larger than training noise
+  nir_320 - nir                mean -0.014  CI [-0.032,+0.002]  same sign 10/15  folds 3/5 same sign, fold-CI [-0.040,+0.012]  -> not larger than training noise
+  nir_320[TTA] - nir           mean +0.009  CI [-0.009,+0.026]  same sign 9/15  folds 4/5 same sign, fold-CI [-0.017,+0.035]  -> not larger than training noise
+  nir_320[TTA] - nir_320       mean +0.023  CI [+0.010,+0.035]  same sign 12/15  folds 5/5 same sign, fold-CI [-0.001,+0.046]  -> REAL difference
+
+=== 3) Error rate per tissue (plain predictions, mean over seeds; lower is better) ===
+  tissue               n        full         nir     visible    nir_5cls      nir_ls    full_fix     nir_fix visible_fix      nir_ss   nir_ss_cp nir_ss_plus     nir_320
+  Rot                 23       52.2%       50.7%       59.4%       49.3%       50.7%       56.5%       49.3%       56.5%       37.7%       39.1%       46.4%       50.7%
+  Russet              42       36.5%       22.2%       33.3%       23.8%       23.8%       47.6%       23.8%       34.9%       22.2%       24.6%       25.4%       27.8%
+  Hail_damage_perf    31       23.7%       26.9%       34.4%       25.8%       22.6%       26.9%       18.3%       33.3%       21.5%       15.1%       18.3%       18.3%
+  Other               20       48.3%       26.7%       51.7%       18.3%       25.0%       51.7%       25.0%       50.0%       18.3%       28.3%       26.7%       31.7%
+  Scald               17       23.5%       11.8%       25.5%       17.6%       15.7%       29.4%       15.7%       37.3%        7.8%       13.7%       15.7%       17.6%
+  Frost_damage        11       21.2%       21.2%       39.4%       30.3%       21.2%       42.4%       36.4%       30.3%       27.3%       24.2%       24.2%       27.3%
+  Hail_damage         16       31.2%       10.4%       31.2%       10.4%       14.6%       35.4%       16.7%       33.3%       16.7%       16.7%        8.3%       18.8%
+  Limb_rub             7       28.6%       19.0%       28.6%        9.5%        9.5%       42.9%       14.3%       33.3%        9.5%        9.5%       23.8%       19.0%
+  Bruise              55       46.7%        9.7%       63.0%       12.1%       10.9%       45.5%       14.5%       51.5%        9.1%        6.7%       10.3%       10.9%
+  Flesh_damage        24       19.4%       18.1%       18.1%       23.6%       16.7%       18.1%       19.4%       15.3%       20.8%       20.8%       20.8%       25.0%
+  Stem               148        7.2%        7.4%       12.4%        7.9%        6.5%        7.9%        8.8%       12.4%        5.9%        8.6%        6.3%        7.4%
+  Calix              145        3.0%        1.4%        3.0%        1.4%        0.9%        4.1%        0.9%        4.4%        1.4%        1.6%        0.7%        1.8%
+  Healthy            280        7.1%        5.7%       12.5%        3.5%        3.0%       10.4%        5.2%       13.2%        3.6%        5.1%        4.6%        6.2%
+
+=== 4) Ensembles within a fold (EXPLORATORY: groups chosen after seeing results; confirm with new seeds) ===
+  nir_5cls: 3-seed hard vote                     F1 0.867 +- 0.017 (over folds)  acc 91.8%  [3 members/fold]
+  nir_5cls: 3-seed soft vote                     F1 0.873 +- 0.018 (over folds)  acc 91.8%  [3 members/fold]
+  nir_5cls[TTA]: 3-seed soft vote                F1 0.868 +- 0.022 (over folds)  acc 91.8%  [3 members/fold]
+  nir_ls: 3-seed hard vote                       F1 0.881 +- 0.031 (over folds)  acc 92.4%  [3 members/fold]
+  nir_ls: 3-seed soft vote                       F1 0.868 +- 0.024 (over folds)  acc 91.7%  [3 members/fold]
+  nir_ls[TTA]: 3-seed soft vote                  F1 0.868 +- 0.023 (over folds)  acc 91.7%  [3 members/fold]
+  full_fix: 3-seed hard vote                     F1 0.729 +- 0.054 (over folds)  acc 83.6%  [3 members/fold]
+  full_fix: 3-seed soft vote                     F1 0.728 +- 0.044 (over folds)  acc 83.4%  [3 members/fold]
+  full_fix[TTA]: 3-seed soft vote                F1 0.772 +- 0.062 (over folds)  acc 86.1%  [3 members/fold]
+  nir_fix: 3-seed hard vote                      F1 0.856 +- 0.039 (over folds)  acc 90.8%  [3 members/fold]
+  nir_fix: 3-seed soft vote                      F1 0.846 +- 0.044 (over folds)  acc 90.4%  [3 members/fold]
+  nir_fix[TTA]: 3-seed soft vote                 F1 0.862 +- 0.048 (over folds)  acc 91.2%  [3 members/fold]
+  visible_fix: 3-seed hard vote                  F1 0.720 +- 0.057 (over folds)  acc 82.2%  [3 members/fold]
+  visible_fix: 3-seed soft vote                  F1 0.720 +- 0.042 (over folds)  acc 82.4%  [3 members/fold]
+  visible_fix[TTA]: 3-seed soft vote             F1 0.708 +- 0.056 (over folds)  acc 81.7%  [3 members/fold]
+  nir_ss: 3-seed hard vote                       F1 0.881 +- 0.035 (over folds)  acc 92.3%  [3 members/fold]
+  nir_ss: 3-seed soft vote                       F1 0.884 +- 0.027 (over folds)  acc 92.6%  [3 members/fold]
+  nir_ss[TTA]: 3-seed soft vote                  F1 0.894 +- 0.034 (over folds)  acc 93.3%  [3 members/fold]
+  nir_ss_cp: 3-seed hard vote                    F1 0.871 +- 0.048 (over folds)  acc 91.6%  [3 members/fold]
+  nir_ss_cp: 3-seed soft vote                    F1 0.875 +- 0.033 (over folds)  acc 91.9%  [3 members/fold]
+  nir_ss_cp[TTA]: 3-seed soft vote               F1 0.884 +- 0.039 (over folds)  acc 92.6%  [3 members/fold]
+  nir_ss_plus: 3-seed hard vote                  F1 0.869 +- 0.037 (over folds)  acc 91.8%  [3 members/fold]
+  nir_ss_plus: 3-seed soft vote                  F1 0.868 +- 0.032 (over folds)  acc 91.7%  [3 members/fold]
+  nir_ss_plus[TTA]: 3-seed soft vote             F1 0.874 +- 0.023 (over folds)  acc 92.1%  [3 members/fold]
+  nir_320: 3-seed hard vote                      F1 0.840 +- 0.042 (over folds)  acc 89.7%  [3 members/fold]
+  nir_320: 3-seed soft vote                      F1 0.844 +- 0.042 (over folds)  acc 90.0%  [3 members/fold]
+  nir_320[TTA]: 3-seed soft vote                 F1 0.856 +- 0.036 (over folds)  acc 91.0%  [3 members/fold]
+  nir: 3-seed hard vote                          F1 0.857 +- 0.038 (over folds)  acc 91.1%  [3 members/fold]
+  full: 3-seed hard vote                         F1 0.769 +- 0.046 (over folds)  acc 86.3%  [3 members/fold]
+  visible: 3-seed hard vote                      F1 0.695 +- 0.028 (over folds)  acc 81.1%  [3 members/fold]
+  group raw-NIR nir_5cls+nir_ls+nir_fix+nir_320+nir_ss_plus: soft F1 0.868 +- 0.025 (over folds)  acc 91.7%  [15 members/fold]
+  group raw-NIR + baseline nir: hard vote        F1 0.874 +- 0.034 (over folds)  acc 92.1%  [18 members/fold]
+  group raw-NIR [TTA]: soft                      F1 0.865 +- 0.034 (over folds)  acc 91.7%  [15 members/fold]
+  group SingleSpectra nir_ss+nir_ss_cp: soft     F1 0.879 +- 0.031 (over folds)  acc 92.2%  [6 members/fold]
+  (only one variant passed the 'real improvement' rule: ['nir_ss']; no group of passed variants)
+
+saved -> D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\round2_summary.json

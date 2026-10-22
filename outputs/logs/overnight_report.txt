@@ -1,0 +1,50 @@
+180 runs in D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\multiseed_results.json
+
+=== 1) Per variant (mean +- std across seeds of the 5-fold mean | std over all fold-level runs) ===
+  variant       seeds    Macro F1 (seed means)    Accuracy (seed means)    F1 all runs   per-class F1 pooled OOF (Healthy / Internal / Surface)
+  SVM               1 0.573 +-   n/a          66.9% +-   n/a       0.573 +- 0.063   0.771 / 0.530 / 0.417  (deterministic, 1 run)
+  RandomForest      1 0.589 +-   n/a          71.3% +-   n/a       0.589 +- 0.045   0.809 / 0.552 / 0.406  (deterministic, 1 run)
+  LightGBM          1 0.546 +-   n/a          72.3% +-   n/a       0.546 +- 0.049   0.826 / 0.524 / 0.290  (deterministic, 1 run)
+  nir               3 0.843 +- 0.008          90.2% +- 0.576       0.843 +- 0.044   0.950 / 0.794 / 0.786
+  nir_SE            3 0.847 +- 0.008          90.6% +- 0.680       0.847 +- 0.034   0.953 / 0.790 / 0.798
+  nir_no_aug        3 0.818 +- 0.011          88.9% +- 0.645       0.818 +- 0.050   0.940 / 0.751 / 0.769
+  re_only           3 0.853 +- 0.007          90.6% +- 0.648       0.853 +- 0.032   0.949 / 0.806 / 0.803
+  ir_only           3 0.843 +- 0.006          89.8% +- 0.373       0.843 +- 0.036   0.943 / 0.825 / 0.761
+  bl_only           3 0.752 +- 0.009          84.1% +- 0.680       0.752 +- 0.023   0.905 / 0.623 / 0.728
+  gr_only           3 0.752 +- 0.019          84.2% +- 0.969       0.752 +- 0.041   0.907 / 0.645 / 0.709
+  visible           3 0.688 +- 0.015          80.3% +- 0.634       0.688 +- 0.042   0.885 / 0.526 / 0.651
+  full              3 0.754 +- 0.012          85.0% +- 1.220       0.754 +- 0.043   0.914 / 0.625 / 0.729
+  full_SE           3 0.737 +- 0.026          83.2% +- 1.940       0.737 +- 0.031   0.903 / 0.614 / 0.699
+  gr_nir            3 0.810 +- 0.009          88.4% +- 0.353       0.810 +- 0.044   0.938 / 0.729 / 0.765
+
+=== 2) Paired comparisons (paired by seed+fold; A - B in macro-F1) ===
+  'real difference' = 95% bootstrap CI excludes 0 AND >= 12/15 pairs share the sign; otherwise:
+  'not larger than training noise'.  (Pairs share folds -> CI is approximate.)
+       nir_SE - nir          mean +0.003  CI [-0.012, +0.018]  same sign 7/15 (need 12)  -> not larger than training noise
+          nir - nir_no_aug   mean +0.025  CI [-0.000, +0.047]  same sign 12/15 (need 12)  -> not larger than training noise
+          nir - full         mean +0.089  CI [+0.066, +0.116]  same sign 15/15 (need 12)  -> REAL difference
+          nir - visible      mean +0.156  CI [+0.127, +0.182]  same sign 15/15 (need 12)  -> REAL difference
+      re_only - ir_only      mean +0.010  CI [-0.012, +0.030]  same sign 10/15 (need 12)  -> not larger than training noise
+       gr_nir - nir          mean -0.034  CI [-0.054, -0.012]  same sign 12/15 (need 12)  -> REAL difference
+      bl_only - gr_only      mean -0.000  CI [-0.020, +0.019]  same sign 5/15 (need 12)  -> not larger than training noise
+      bl_only - re_only      mean -0.101  CI [-0.113, -0.089]  same sign 15/15 (need 12)  -> REAL difference
+      bl_only - ir_only      mean -0.091  CI [-0.111, -0.072]  same sign 15/15 (need 12)  -> REAL difference
+      gr_only - re_only      mean -0.101  CI [-0.120, -0.081]  same sign 15/15 (need 12)  -> REAL difference
+      gr_only - ir_only      mean -0.091  CI [-0.118, -0.066]  same sign 14/15 (need 12)  -> REAL difference
+      re_only - RandomForest mean +0.264  CI [+0.239, +0.290]  same sign 15/15 (need 12)  -> REAL difference
+  (best DL = re_only, best classical = RandomForest, chosen by mean F1 over all runs)
+
+=== 3) Seed noise after locking the seed: std of F1 across seeds, per fold ===
+  nir           mean 0.025  max 0.047   per fold [0.047, 0.001, 0.006, 0.047, 0.023]
+  nir_SE        mean 0.023  max 0.037   per fold [0.018, 0.027, 0.037, 0.021, 0.013]
+  nir_no_aug    mean 0.030  max 0.050   per fold [0.05, 0.021, 0.018, 0.038, 0.025]
+  re_only       mean 0.020  max 0.035   per fold [0.035, 0.009, 0.006, 0.017, 0.033]
+  ir_only       mean 0.021  max 0.027   per fold [0.02, 0.018, 0.027, 0.024, 0.014]
+  bl_only       mean 0.020  max 0.035   per fold [0.035, 0.021, 0.015, 0.022, 0.008]
+  gr_only       mean 0.036  max 0.061   per fold [0.039, 0.02, 0.061, 0.046, 0.016]
+  visible       mean 0.025  max 0.043   per fold [0.043, 0.02, 0.016, 0.036, 0.011]
+  full          mean 0.030  max 0.058   per fold [0.015, 0.024, 0.041, 0.01, 0.058]
+  full_SE       mean 0.031  max 0.044   per fold [0.014, 0.024, 0.032, 0.044, 0.042]
+  gr_nir        mean 0.020  max 0.030   per fold [0.009, 0.021, 0.03, 0.019, 0.02]
+
+saved -> D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\outputs\dl\multiseed_summary.json
