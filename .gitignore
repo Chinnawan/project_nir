@@ -40,3 +40,6 @@ outputs/demo_cache/
 outputs/figures/private/
 outputs/kleynen_masks/
 outputs/severity_labels.csv
+
+# G1 Kleynen GUI models (pickles, derived from dataset histograms): local only
+models/

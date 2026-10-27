@@ -13,6 +13,7 @@ Mode 1 - CAPA image (out-of-fold, honest): the checkpoints of the 3 seeds of the
          automatically from the recorded out-of-fold predictions.
 Mode 2 - new image (upload): all 15 checkpoints (5 folds x 3 seeds).
 Belt   - N random CAPA images (mode 1 rule per image) sorted into sell fresh / processing / reject.
+G2/G3  - Kleynen 2005 (replicated) vs CNN NIR in 2 groups: step by step for one apple, and in batches (src/demo_kleynen.py).
 """
 import os
 
@@ -199,9 +200,9 @@ def overlay(ir_band, cam, mask=None, size=448):
     return out
 
 
-def load_upload(paths):
+def read_upload_bands(paths):
     """.npy (H,W,4) BL/GR/RE/IR, or 4 single-band images named *_BL / *_GR / *_RE / *_IR (tif/png/bmp).
-    Returns uint8 (224,224,4); non-square inputs are zero-padded to a square first (like the SingleSpectra images)."""
+    Returns the 4 bands as uint8 at their own resolution."""
     paths = [p if isinstance(p, str) else p.name for p in (paths or [])]
     if not paths:
         raise ValueError("ยังไม่ได้เลือกไฟล์")
@@ -235,6 +236,14 @@ def load_upload(paths):
             b = b.astype(np.float64)
             b = b * 255.0 if b.max() <= 1.0 else b * (255.0 / 65535.0) if b.max() > 255 else b
             b = np.clip(b, 0, 255).astype(np.uint8)
+        out.append(b)
+    return out
+
+
+def load_upload(paths):
+    """read_upload_bands -> uint8 (224,224,4); non-square inputs are zero-padded to a square first (like the SingleSpectra images)."""
+    out = []
+    for b in read_upload_bands(paths):
         if b.shape != (224, 224):
             b = pad_square_resize(b) if b.shape[0] != b.shape[1] else cv2.resize(b, (224, 224), interpolation=cv2.INTER_AREA)
         out.append(b)
@@ -425,9 +434,10 @@ def build_ui(demo):
     with gr.Blocks(title="Apple quality grading demo") as ui:
         gr.Markdown("## ระบบคัดคุณภาพแอปเปิลด้วยภาพ NIR (RE 750 nm + IR 800 nm)\n"
                     "สูตรที่ล็อกไว้: โมเดล EfficientNet-B0 บนภาพ SingleSpectra · TTA 6 มุมมอง × 3 seed → โหวตเฉลี่ยความน่าจะเป็น  \n"
-                    f"{final_formula_note()}  \nโหมด 1 สลับเป็นโมเดล Visible / 4 แบนด์ เพื่อเทียบได้ (ภาพเดียวกัน preprocessing เดียวกัน)  \n"
+                    f"{final_formula_note()}  \nโหมด 1 สลับเป็นโมเดล Visible / 4 แบนด์ เพื่อเทียบได้ (ภาพเดียวกัน preprocessing เดียวกัน) · "
+                    "แท็บ \"ทีละขั้น\" / \"คัดทีละชุด\" เทียบกับวิธีต้นฉบับของ dataset (Kleynen 2005) แบบ 2 กลุ่ม  \n"
                     "รันบนเครื่องนี้เท่านั้น (ข้อมูล CAPA มีลิขสิทธิ์ ULG)")
-        with gr.Tabs():
+        with gr.Tabs() as tabs:
             with gr.Tab("โหมด 1 — ภาพ CAPA (ซื่อสัตย์: โมเดลไม่เคยเห็นภาพนี้)"):
                 with gr.Row():
                     model_dd = gr.Dropdown(model_choices, value=variants[0], label="โมเดล", scale=2)
@@ -493,6 +503,8 @@ def build_ui(demo):
                                           label="ภาพที่ทายผิด", interactive=False)
                 go3.click(_guard(lambda n, s, progress=gr.Progress(): run_belt(demo, n, s, progress)), [n_in, seed_in],
                           [belt_html, belt_cm, belt_wrong], api_name="belt")
+            from .demo_kleynen import build_tabs
+            build_tabs(demo, tabs, _guard)
     return ui
 
 
@@ -500,6 +512,8 @@ def main():
     demo = Demo()
     for v in MODELS:
         print(f"{v}: checkpoints found {len(demo.available(v))}/15 in {demo.ckpt_dir}")
+    from .kleynen_models import MODEL_DIR, all_present
+    print(f"Kleynen GUI models in {MODEL_DIR}: {'all present' if all_present() else 'MISSING -> python -m src.kleynen_models'}")
     print(f"device: {DEVICE}")
     ui = build_ui(demo)
     ui.queue().launch(server_name="127.0.0.1", server_port=7860, share=False, inbrowser=True,

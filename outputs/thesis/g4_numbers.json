@@ -1,0 +1,193 @@
+{
+ "source": "outputs/dl/k5_summary.json, outputs/dl/k2_merged.json, kleynen.PAPER",
+ "severity_counts": {
+  "reject": 59,
+  "bruise": 56,
+  "serious": 55,
+  "slight": 76
+ },
+ "table_k5": {
+  "Kleynen 2005 (paper numbers)": {
+   "sound": 94.3,
+   "defective": 84.6,
+   "reject": 100.0,
+   "bruise": 98.2,
+   "serious": 94.5,
+   "slight": 55.0,
+   "acc_526": 89.8,
+   "stem_calyx": null,
+   "acc_819": null
+  },
+  "Kleynen replicated 450/750/800 [A: paper protocol]": {
+   "sound": 86.1,
+   "defective": 78.0,
+   "reject": 93.2,
+   "bruise": 92.9,
+   "serious": 83.6,
+   "slight": 51.3,
+   "acc_526": 82.3,
+   "stem_calyx": 25.6,
+   "acc_819": 62.0
+  },
+  "Kleynen replicated 750/800 (NIR) [A]": {
+   "sound": 89.3,
+   "defective": 80.5,
+   "reject": 91.5,
+   "bruise": 92.9,
+   "serious": 85.5,
+   "slight": 59.2,
+   "acc_526": 85.2,
+   "stem_calyx": 16.0,
+   "acc_819": 60.4
+  },
+  "Kleynen replicated 450/500 (Visible) [A]": {
+   "sound": 75.0,
+   "defective": 58.9,
+   "reject": 72.9,
+   "bruise": 67.9,
+   "serious": 54.5,
+   "slight": 44.7,
+   "acc_526": 67.5,
+   "stem_calyx": 23.2,
+   "acc_819": 51.6
+  },
+  "Kleynen replicated 450/750/800 [B: stem/calyx = sound]": {
+   "sound": 93.6,
+   "defective": 56.9,
+   "reject": 74.6,
+   "bruise": 87.5,
+   "serious": 43.6,
+   "slight": 30.3,
+   "acc_526": 76.4,
+   "stem_calyx": 91.1,
+   "acc_819": 81.7
+  },
+  "Kleynen replicated 450/750/800 [A, erosion 15 px: sensitivity]": {
+   "sound": 88.2,
+   "defective": 82.5,
+   "reject": 98.3,
+   "bruise": 94.6,
+   "serious": 90.9,
+   "slight": 55.3,
+   "acc_526": 85.6,
+   "stem_calyx": 8.5,
+   "acc_819": 58.0
+  },
+  "CNN merged NIR (nir_ss)": {
+   "sound": 96.8,
+   "defective": 89.0,
+   "reject": 94.9,
+   "bruise": 96.4,
+   "serious": 85.5,
+   "slight": 81.6,
+   "acc_526": 93.2,
+   "stem_calyx": 95.6,
+   "acc_819": 94.0
+  },
+  "CNN merged Visible (visible_ss)": {
+   "sound": 94.6,
+   "defective": 78.0,
+   "reject": 94.9,
+   "bruise": 69.6,
+   "serious": 74.5,
+   "slight": 73.7,
+   "acc_526": 86.9,
+   "stem_calyx": 96.6,
+   "acc_819": 90.4
+  },
+  "CNN 2-class NIR (nir_ss_2cls)": {
+   "sound": 96.4,
+   "defective": 88.6,
+   "reject": 94.9,
+   "bruise": 96.4,
+   "serious": 87.3,
+   "slight": 78.9,
+   "acc_526": 92.8,
+   "stem_calyx": 96.6,
+   "acc_819": 94.1
+  },
+  "CNN 2-class Visible (visible_ss_2cls)": {
+   "sound": 93.2,
+   "defective": 75.6,
+   "reject": 94.9,
+   "bruise": 57.1,
+   "serious": 74.5,
+   "slight": 75.0,
+   "acc_526": 85.0,
+   "stem_calyx": 94.9,
+   "acc_819": 88.5
+  }
+ },
+ "fig_severity_accuracy": {
+  "Kleynen 2005 (paper)": {
+   "reject": 100.0,
+   "bruise": 98.2,
+   "serious": 94.5,
+   "slight": 55.0
+  },
+  "Kleynen replicated (450/750/800)": {
+   "reject": 93.2,
+   "bruise": 92.9,
+   "serious": 83.6,
+   "slight": 51.3
+  },
+  "CNN NIR (nir_ss)": {
+   "reject": 94.9,
+   "bruise": 96.4,
+   "serious": 85.5,
+   "slight": 81.6
+  },
+  "CNN Visible (visible_ss)": {
+   "reject": 94.9,
+   "bruise": 69.6,
+   "serious": 74.5,
+   "slight": 73.7
+  }
+ },
+ "fig_nir_vs_visible": {
+  "kleynen": {
+   "nir": 85.2,
+   "visible": 67.5,
+   "mcnemar": {
+    "table": [
+     [
+      319,
+      129
+     ],
+     [
+      36,
+      42
+     ]
+    ],
+    "only_a_correct": 129,
+    "only_b_correct": 36,
+    "p_value": 7.939810365424692e-13,
+    "acc_a": 0.8517110266159695,
+    "acc_b": 0.6749049429657795,
+    "n": 526
+   }
+  },
+  "cnn": {
+   "nir": 93.2,
+   "visible": 86.9,
+   "mcnemar": {
+    "table": [
+     [
+      435,
+      55
+     ],
+     [
+      22,
+      14
+     ]
+    ],
+    "only_a_correct": 55,
+    "only_b_correct": 22,
+    "p_value": 0.00026559001939264044,
+    "acc_a": 0.9315589353612167,
+    "acc_b": 0.8688212927756654,
+    "n": 526
+   }
+  }
+ }
+}

@@ -13,6 +13,12 @@ Checks:
   5. model switch (N7): for every model with 15 checkpoints (nir_ss, visible_ss, full_ss), 30 random images:
      each seed's decision == tta_test_predictions recorded in the result json, and the 3-seed vote == recorded vote;
      "compare all models" agrees with those votes; presentation examples match their group definition
+  6. G1/G2 Kleynen vs CNN step by step: the 12 Kleynen GUI models (5 folds + all, 2 band sets) exist and each fold model
+     was tested on exactly the images of that fold; presentation examples cover sound/stem/calyx/bruise/russet/rot and
+     match their rule; on every example both methods use only the image's own fold, Kleynen decision/posterior == K3,
+     CNN 2-group decision == K2; band-set switch; upload path (all-data Kleynen model + 15 CNN models)
+  7. G3 batch: "all" reproduces K5 (526 apples: Kleynen 82.3 % / CNN 93.2 %; 750/800 85.2 %), every image's decisions
+     == K3 / K2, subsets (fold, severity) consistent, CSV export and disagreement gallery
 """
 import argparse
 import json
@@ -139,6 +145,11 @@ def main():
         check("API belt answers", r is not None and len(r) == 3)
         r = client.predict(samples["Bruise"], api_name="/compare_all")
         check("API compare_all answers", r is not None and len(r) == len(d.MODELS) + 2)
+        r = client.predict(samples["Bruise"], "450/750/800 (paper)", api_name="/kleynen_vs_cnn")
+        check("API kleynen_vs_cnn (G2) answers", r is not None and len(r) == 10)
+        r = client.predict("tissue:Rot", "450/750/800 (paper)", api_name="/batch_compare")
+        # gr.State outputs are not returned by the API: 9 outputs - 1 State = 8
+        check("API batch_compare (G3) answers", r is not None and len(r) == 8 and r[-1]["n"] == 23, f"(n = {r[-1]['n']})")
     finally:
         ui.close()
 
@@ -177,8 +188,99 @@ def main():
           {t[:3] for t, _ in ex} == set(rules) and all(rules[t[:3]](k) for t, k in ex), f"({len(ex)} examples)")
     for t, k in ex:
         print("   ", t)
+
+    g_sections(demo, pool_names)
     print("DEMO SELFTEST", "ALL PASSED" if ok else "HAD FAILURES")
     sys.exit(0 if ok else 1)
+
+
+def g_sections(demo, pool_names):
+    from . import demo_kleynen as G
+    from . import kleynen_models as KM
+    dl = os.path.join(OUTPUT_DIR, "dl")
+    k3 = json.load(open(os.path.join(dl, "k3_kleynen.json"), encoding="utf-8"))["predictions"]
+    k2 = json.load(open(os.path.join(dl, "k2_merged.json"), encoding="utf-8"))["predictions"]["nir_ss (NIR, SS)"]
+    rec_k = {bs: dict(zip(pool_names, k3[f"{bs}|A_paper"])) for bs in KM.GUI_SETS}
+    rec_kp = {bs: dict(zip(pool_names, k3[f"{bs}|A_paper|p_defect"])) for bs in KM.GUI_SETS}
+    rec_c = dict(zip(pool_names, k2))
+
+    print("6) G1/G2 Kleynen vs CNN step by step")
+    check("all 12 Kleynen GUI models present", KM.all_present())
+    fold_ok = True
+    for bs in KM.GUI_SETS:
+        for f in range(5):
+            m = KM.load_model(bs, f)
+            fold_ok &= sorted(m["test_images"]) == sorted(k for k, v in demo.images.items() if v["fold"] == f) and m["erode_px"] == 5
+        fold_ok &= KM.load_model(bs)["fold"] is None
+    check("each Kleynen fold model was tested on exactly the images of its fold (fold_assignment.json), erosion 5 px", fold_ok)
+    cmp = G.Compare(demo)
+    check("severity labels for all 246 defective images", len(cmp.severity) == 246 and
+          all((k in cmp.severity) == (v["defect_no"] is not None) for k, v in demo.images.items()))
+    ex = cmp.examples()
+    tissues = {demo.images[k]["tissue"] for _, k in ex}
+    check("examples cover sound / stem / calyx / bruise / russet / rot", tissues == set(G.EXAMPLE_TISSUES), f"({len(ex)} examples)")
+    grp = lambda k: int(demo.images[k]["label"] != "Healthy")
+    rule = {"ทั้งคู่ถูก": lambda k: rec_k[KM.DEFAULT_SET][k] == grp(k) and rec_c[k] == grp(k),
+            "CNN ถูก / Kleynen ผิด": lambda k: rec_c[k] == grp(k) and rec_k[KM.DEFAULT_SET][k] != grp(k),
+            "Kleynen ถูก / CNN ผิด": lambda k: rec_k[KM.DEFAULT_SET][k] == grp(k) and rec_c[k] != grp(k)}
+    check("every example matches its rule (recorded K3 / K2 decisions)", all(rule[t.split(" — ")[1]](k) for t, k in ex))
+    bad, folds_bad, form_bad, times = [], 0, 0, []
+    for _, rawid in ex:
+        demo._cache.clear()
+        cmp._models.clear()
+        out = G.step_known(cmp, rawid)
+        st = out[9]
+        f = demo.images[rawid]["fold"]
+        folds_bad += int({ff for (_, _, ff) in demo._cache} != {f} or {ff for (_, ff) in cmp._models} != {f}
+                         or st["kleynen"]["fold"] != f or st["cnn"]["folds"] != [f])
+        if (st["kleynen"]["pred"] != rec_k[KM.DEFAULT_SET][rawid] or abs(st["kleynen"]["p_defect"] - rec_kp[KM.DEFAULT_SET][rawid]) > 1e-5
+                or st["cnn"]["pred"] != rec_c[rawid]):
+            bad.append(rawid)
+        form_bad += int(not (out[2].shape == out[3].shape == (430, 560, 3) and out[6].shape == (448, 448, 3) and len(out[1]) == 4
+                             and abs(sum(out[7].values()) - 1) < 1e-6 and st["truth"]["severity"] == cmp.severity.get(rawid, "")))
+        times.append((st["kleynen"]["ms"], st["cnn"]["ms"]))
+        print(f"   {rawid} {demo.images[rawid]['tissue']:8s} Kleynen {st['kleynen']['pred']} ({st['kleynen']['ms']:.0f} ms)  "
+              f"CNN {st['cnn']['pred']} ({st['cnn']['ms']:.0f} ms)  truth {st['truth']['group']}")
+    check("G2: both methods use only the image's own test fold", folds_bad == 0)
+    check("G2: Kleynen decision + posterior == K3, CNN 2-group decision == K2 on every example", not bad, f"{bad}")
+    check("G2: outputs well-formed (4 bands, mask, defect map, Grad-CAM, 3-class probs, severity)", form_bad == 0)
+    check("G2: processing times measured", all(a > 0 and b > 0 for a, b in times),
+          f"| median Kleynen {np.median([a for a, _ in times]):.0f} ms, CNN {np.median([b for _, b in times]):.0f} ms")
+    rawid = ex[0][1]
+    st = G.step_known(cmp, rawid, "750/800 (NIR)")[9]
+    check("G2: band-set switch 750/800 == K3 750/800", st["kleynen"]["band_set"] == "750/800 (NIR)" and
+          st["kleynen"]["pred"] == rec_k["750/800 (NIR)"][rawid] and abs(st["kleynen"]["p_defect"] - rec_kp["750/800 (NIR)"][rawid]) < 1e-5)
+    npy = os.path.join(d._CACHE, "selftest_upload_full.npy")
+    np.save(npy, KM.load_ss_bands("RawA0004"))
+    out = G.step_upload(cmp, [npy])
+    check("G2 upload: all-data Kleynen model + 15 CNN models, no answer key",
+          out[9]["kleynen"]["fold"] is None and out[9]["cnn"]["n_models"] == 15 and out[9]["truth"] is None)
+    os.remove(npy)
+
+    print("7) G3 batch (all 819 images, out-of-fold; first run ~3-4 min)")
+    r = G.run_batch(cmp, "all")
+    stt = r[8]
+    check("G3 'all' == K5 on 526 apples (Kleynen 450/750/800 vs CNN NIR)", stt["k5_check"]["match"],
+          f"| Kleynen {stt['kleynen']['acc_526_subset'] * 100:.1f}% CNN {stt['cnn']['acc_526_subset'] * 100:.1f}% "
+          f"(K5 {stt['k5_check']['kleynen_k5'] * 100:.1f}% / {stt['k5_check']['cnn_k5'] * 100:.1f}%)")
+    km = sum(cmp._kle[(KM.DEFAULT_SET, k)]["pred"] != rec_k[KM.DEFAULT_SET][k] for k in demo.images)
+    cm_ = sum(cmp._cnn[k]["pred"] != rec_c[k] for k in demo.images)
+    check("G3: every image's Kleynen decision == K3 and CNN decision == K2", km == 0 and cm_ == 0, f"({km} / {cm_} of 819 differ)")
+    check("G3: 2x2 confusions sum to 819 and match K2 for the CNN",
+          np.sum(stt["kleynen"]["confusion_2x2"]) == 819 and stt["cnn"]["confusion_2x2"] == [[551, 22], [27, 219]])
+    check("G3: CSV export has one row per image", os.path.exists(r[7]) and sum(1 for _ in open(r[7], encoding="utf-8-sig")) == 820)
+    check("G3: gallery = disagreements only", len(r[4]) == min(stt["n_disagree"], G.GALLERY_MAX) and
+          all(cmp._kle[(KM.DEFAULT_SET, k)]["pred"] != cmp._cnn[k]["pred"] for k in r[6]))
+    r2 = G.run_batch(cmp, "all", "750/800 (NIR)")
+    check("G3 'all' 750/800 == K5", r2[8]["k5_check"]["match"], f"| {r2[8]['kleynen']['acc_526_subset'] * 100:.1f}%")
+    k5 = json.load(open(os.path.join(dl, "k5_summary.json"), encoding="utf-8"))["rows"]
+    rs = G.run_batch(cmp, "sev:slight")[8]
+    ref = lambda row: k5[row]["paper_subset_280_246"]["slight_pct"]
+    check("G3 subset severity slight: n = 76 and rates == K5",
+          rs["n"] == 76 and abs(rs["per_group"][G.SEV_TH["slight"]]["kleynen"] * 100 - ref(G.kleynen_row(KM.DEFAULT_SET))) < 1e-6
+          and abs(rs["per_group"][G.SEV_TH["slight"]]["cnn"] * 100 - ref("CNN merged NIR (nir_ss)")) < 1e-6)
+    rf = G.run_batch(cmp, "fold:2")[8]
+    check("G3 subset fold 2: n == images of fold 2", rf["n"] == sum(v["fold"] == 2 for v in demo.images.values()))
 
 
 if __name__ == "__main__":

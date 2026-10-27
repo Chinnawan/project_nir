@@ -1,0 +1,30 @@
+{
+ "purpose": "G1: Kleynen GUI models (display only; evaluation numbers = K3 cross-fitting)",
+ "erode_px": 5,
+ "files": [
+  "kleynen_450_750_800_all.pkl",
+  "kleynen_450_750_800_fold0.pkl",
+  "kleynen_450_750_800_fold1.pkl",
+  "kleynen_450_750_800_fold2.pkl",
+  "kleynen_450_750_800_fold3.pkl",
+  "kleynen_450_750_800_fold4.pkl",
+  "kleynen_750_800_all.pkl",
+  "kleynen_750_800_fold0.pkl",
+  "kleynen_750_800_fold1.pkl",
+  "kleynen_750_800_fold2.pkl",
+  "kleynen_750_800_fold3.pkl",
+  "kleynen_750_800_fold4.pkl"
+ ],
+ "band_sets": {
+  "450/750/800 (paper)": {
+   "fold_models_reproduce_k3_decisions": true,
+   "max_posterior_diff_vs_k3": 0.0,
+   "acc_526_from_fold_models": 0.8231939163498099
+  },
+  "750/800 (NIR)": {
+   "fold_models_reproduce_k3_decisions": true,
+   "max_posterior_diff_vs_k3": 0.0,
+   "acc_526_from_fold_models": 0.8517110266159695
+  }
+ }
+}
