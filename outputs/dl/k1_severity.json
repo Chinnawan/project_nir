@@ -1,0 +1,94 @@
+{
+ "found": true,
+ "source": "segmentations/KleynenDefectClasses_Simplified.txt (Class 1 reject, 2 bruises, 3 serious, 4 slight)",
+ "counts": {
+  "reject": 59,
+  "bruise": 56,
+  "serious": 55,
+  "slight": 76
+ },
+ "n": 246,
+ "agarla_2023_counts_as_given": [
+  55,
+  56,
+  76,
+  59
+ ],
+ "ours_in_order_serious_bruise_slight_reject": [
+  55,
+  56,
+  76,
+  59
+ ],
+ "matches_agarla": true,
+ "matches_in_given_order_if_order_is_serious_bruise_slight_reject": true,
+ "kleynen_2005_table2_check": {
+  "bruise 98.2% = 55/56": 98.2,
+  "serious 94.5% = 52/55": 94.5,
+  "slight 55% = 42/76": 55.3,
+  "global 84.6% = 208/246": 84.6
+ },
+ "tissue_x_severity": {
+  "Bruise": {
+   "reject": 0,
+   "bruise": 54,
+   "serious": 0,
+   "slight": 1
+  },
+  "Flesh_damage": {
+   "reject": 21,
+   "bruise": 0,
+   "serious": 3,
+   "slight": 0
+  },
+  "Rot": {
+   "reject": 16,
+   "bruise": 1,
+   "serious": 5,
+   "slight": 1
+  },
+  "Russet": {
+   "reject": 1,
+   "bruise": 0,
+   "serious": 7,
+   "slight": 34
+  },
+  "Scald": {
+   "reject": 0,
+   "bruise": 0,
+   "serious": 5,
+   "slight": 12
+  },
+  "Hail_damage": {
+   "reject": 0,
+   "bruise": 0,
+   "serious": 3,
+   "slight": 13
+  },
+  "Hail_damage_perf": {
+   "reject": 14,
+   "bruise": 0,
+   "serious": 12,
+   "slight": 5
+  },
+  "Frost_damage": {
+   "reject": 1,
+   "bruise": 0,
+   "serious": 8,
+   "slight": 2
+  },
+  "Limb_rub": {
+   "reject": 2,
+   "bruise": 0,
+   "serious": 5,
+   "slight": 0
+  },
+  "Other": {
+   "reject": 4,
+   "bruise": 1,
+   "serious": 7,
+   "slight": 8
+  }
+ },
+ "csv": "outputs/severity_labels.csv (local only, not committed)"
+}

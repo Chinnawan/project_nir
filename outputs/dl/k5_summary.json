@@ -1,0 +1,1875 @@
+{
+ "paper": {
+  "sound": 94.3,
+  "defective": 84.6,
+  "reject": 100.0,
+  "bruise": 98.2,
+  "serious": 94.5,
+  "slight": 55.0,
+  "defective_450_750_only": 80.1,
+  "n_sound": 280,
+  "n_defective": 246,
+  "source": "Kleynen et al. 2005, Sect. 3 + Table 2"
+ },
+ "rows": {
+  "Kleynen replicated 450/750/800 (paper) [A: paper protocol]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 241,
+     "pct": 86.07142857142858
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 75,
+     "pct": 25.597269624573375
+    },
+    "stem": {
+     "n": 148,
+     "correct": 24,
+     "pct": 16.216216216216218
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 51,
+     "pct": 35.172413793103445
+    },
+    "defective": {
+     "n": 246,
+     "correct": 192,
+     "pct": 78.04878048780488
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 51,
+     "pct": 92.72727272727272
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 23,
+     "pct": 95.83333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 20,
+     "pct": 86.95652173913044
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 22,
+     "pct": 52.38095238095239
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 11,
+     "pct": 64.70588235294117
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 9,
+     "pct": 56.25
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 24,
+     "pct": 77.41935483870968
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 10,
+     "pct": 90.9090909090909
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 7,
+     "pct": 100.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 15,
+     "pct": 75.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 24,
+     "pct": 16.216216216216218
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 51,
+     "pct": 35.172413793103445
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 241,
+     "pct": 86.07142857142858
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 55,
+     "pct": 93.22033898305084
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 52,
+     "pct": 92.85714285714286
+    },
+    "serious": {
+     "n": 55,
+     "correct": 46,
+     "pct": 83.63636363636363
+    },
+    "slight": {
+     "n": 76,
+     "correct": 39,
+     "pct": 51.31578947368421
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      316,
+      257
+     ],
+     [
+      54,
+      192
+     ]
+    ]
+   },
+   "accuracy": 0.6202686202686203,
+   "f1_defective": 0.5525179856115108,
+   "paper_subset_280_246": {
+    "accuracy": 0.8231939163498099,
+    "sound_pct": 86.07142857142858,
+    "defective_pct": 78.04878048780488,
+    "reject_pct": 93.22033898305084,
+    "bruise_pct": 92.85714285714286,
+    "serious_pct": 83.63636363636363,
+    "slight_pct": 51.31578947368421
+   }
+  },
+  "Kleynen replicated 750/800 (NIR) [A: paper protocol]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 250,
+     "pct": 89.28571428571429
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 47,
+     "pct": 16.040955631399317
+    },
+    "stem": {
+     "n": 148,
+     "correct": 18,
+     "pct": 12.162162162162163
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 29,
+     "pct": 20.0
+    },
+    "defective": {
+     "n": 246,
+     "correct": 198,
+     "pct": 80.48780487804879
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 51,
+     "pct": 92.72727272727272
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 20,
+     "pct": 83.33333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 20,
+     "pct": 86.95652173913044
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 25,
+     "pct": 59.523809523809526
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 13,
+     "pct": 76.47058823529412
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 9,
+     "pct": 56.25
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 26,
+     "pct": 83.87096774193549
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 10,
+     "pct": 90.9090909090909
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 7,
+     "pct": 100.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 17,
+     "pct": 85.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 18,
+     "pct": 12.162162162162163
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 29,
+     "pct": 20.0
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 250,
+     "pct": 89.28571428571429
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 54,
+     "pct": 91.52542372881356
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 52,
+     "pct": 92.85714285714286
+    },
+    "serious": {
+     "n": 55,
+     "correct": 47,
+     "pct": 85.45454545454545
+    },
+    "slight": {
+     "n": 76,
+     "correct": 45,
+     "pct": 59.210526315789465
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      297,
+      276
+     ],
+     [
+      48,
+      198
+     ]
+    ]
+   },
+   "accuracy": 0.6043956043956044,
+   "f1_defective": 0.55,
+   "paper_subset_280_246": {
+    "accuracy": 0.8517110266159695,
+    "sound_pct": 89.28571428571429,
+    "defective_pct": 80.48780487804879,
+    "reject_pct": 91.52542372881356,
+    "bruise_pct": 92.85714285714286,
+    "serious_pct": 85.45454545454545,
+    "slight_pct": 59.210526315789465
+   }
+  },
+  "Kleynen replicated 450/500 (Visible) [A: paper protocol]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 210,
+     "pct": 75.0
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 68,
+     "pct": 23.208191126279864
+    },
+    "stem": {
+     "n": 148,
+     "correct": 27,
+     "pct": 18.243243243243242
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 41,
+     "pct": 28.27586206896552
+    },
+    "defective": {
+     "n": 246,
+     "correct": 145,
+     "pct": 58.94308943089431
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 37,
+     "pct": 67.27272727272727
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 21,
+     "pct": 87.5
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 12,
+     "pct": 52.17391304347826
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 18,
+     "pct": 42.857142857142854
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 4,
+     "pct": 23.52941176470588
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 9,
+     "pct": 56.25
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 20,
+     "pct": 64.51612903225806
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 11,
+     "pct": 100.0
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 6,
+     "pct": 85.71428571428571
+    },
+    "Other": {
+     "n": 20,
+     "correct": 7,
+     "pct": 35.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 27,
+     "pct": 18.243243243243242
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 41,
+     "pct": 28.27586206896552
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 210,
+     "pct": 75.0
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 43,
+     "pct": 72.88135593220339
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 38,
+     "pct": 67.85714285714286
+    },
+    "serious": {
+     "n": 55,
+     "correct": 30,
+     "pct": 54.54545454545454
+    },
+    "slight": {
+     "n": 76,
+     "correct": 34,
+     "pct": 44.73684210526316
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      278,
+      295
+     ],
+     [
+      101,
+      145
+     ]
+    ]
+   },
+   "accuracy": 0.5164835164835165,
+   "f1_defective": 0.4227405247813411,
+   "paper_subset_280_246": {
+    "accuracy": 0.6749049429657795,
+    "sound_pct": 75.0,
+    "defective_pct": 58.94308943089431,
+    "reject_pct": 72.88135593220339,
+    "bruise_pct": 67.85714285714286,
+    "serious_pct": 54.54545454545454,
+    "slight_pct": 44.73684210526316
+   }
+  },
+  "Kleynen replicated 450/750/800 (paper) [B: stem/calyx = sound]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 262,
+     "pct": 93.57142857142857
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 267,
+     "pct": 91.12627986348123
+    },
+    "stem": {
+     "n": 148,
+     "correct": 125,
+     "pct": 84.45945945945947
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "defective": {
+     "n": 246,
+     "correct": 140,
+     "pct": 56.91056910569105
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 48,
+     "pct": 87.27272727272727
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 23,
+     "pct": 95.83333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 18,
+     "pct": 78.26086956521739
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 17,
+     "pct": 40.476190476190474
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 7,
+     "pct": 41.17647058823529
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 7,
+     "pct": 43.75
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 8,
+     "pct": 25.806451612903224
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 0,
+     "pct": 0.0
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 4,
+     "pct": 57.14285714285714
+    },
+    "Other": {
+     "n": 20,
+     "correct": 8,
+     "pct": 40.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 125,
+     "pct": 84.45945945945947
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 262,
+     "pct": 93.57142857142857
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 44,
+     "pct": 74.57627118644068
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 49,
+     "pct": 87.5
+    },
+    "serious": {
+     "n": 55,
+     "correct": 24,
+     "pct": 43.63636363636363
+    },
+    "slight": {
+     "n": 76,
+     "correct": 23,
+     "pct": 30.263157894736842
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      529,
+      44
+     ],
+     [
+      106,
+      140
+     ]
+    ]
+   },
+   "accuracy": 0.8168498168498168,
+   "f1_defective": 0.6511627906976745,
+   "paper_subset_280_246": {
+    "accuracy": 0.7642585551330798,
+    "sound_pct": 93.57142857142857,
+    "defective_pct": 56.91056910569105,
+    "reject_pct": 74.57627118644068,
+    "bruise_pct": 87.5,
+    "serious_pct": 43.63636363636363,
+    "slight_pct": 30.263157894736842
+   }
+  },
+  "Kleynen replicated 750/800 (NIR) [B: stem/calyx = sound]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 264,
+     "pct": 94.28571428571428
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 269,
+     "pct": 91.80887372013652
+    },
+    "stem": {
+     "n": 148,
+     "correct": 128,
+     "pct": 86.48648648648648
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 141,
+     "pct": 97.24137931034483
+    },
+    "defective": {
+     "n": 246,
+     "correct": 128,
+     "pct": 52.03252032520326
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 49,
+     "pct": 89.0909090909091
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 18,
+     "pct": 75.0
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 16,
+     "pct": 69.56521739130434
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 13,
+     "pct": 30.952380952380953
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 9,
+     "pct": 52.94117647058824
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 4,
+     "pct": 25.0
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 6,
+     "pct": 19.35483870967742
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 1,
+     "pct": 9.090909090909092
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 5,
+     "pct": 71.42857142857143
+    },
+    "Other": {
+     "n": 20,
+     "correct": 7,
+     "pct": 35.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 128,
+     "pct": 86.48648648648648
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 141,
+     "pct": 97.24137931034483
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 264,
+     "pct": 94.28571428571428
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 38,
+     "pct": 64.40677966101694
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 49,
+     "pct": 87.5
+    },
+    "serious": {
+     "n": 55,
+     "correct": 19,
+     "pct": 34.54545454545455
+    },
+    "slight": {
+     "n": 76,
+     "correct": 22,
+     "pct": 28.947368421052634
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      533,
+      40
+     ],
+     [
+      118,
+      128
+     ]
+    ]
+   },
+   "accuracy": 0.8070818070818071,
+   "f1_defective": 0.6183574879227053,
+   "paper_subset_280_246": {
+    "accuracy": 0.7452471482889734,
+    "sound_pct": 94.28571428571428,
+    "defective_pct": 52.03252032520326,
+    "reject_pct": 64.40677966101694,
+    "bruise_pct": 87.5,
+    "serious_pct": 34.54545454545455,
+    "slight_pct": 28.947368421052634
+   }
+  },
+  "Kleynen replicated 450/500 (Visible) [B: stem/calyx = sound]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 272,
+     "pct": 97.14285714285714
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 287,
+     "pct": 97.95221843003414
+    },
+    "stem": {
+     "n": 148,
+     "correct": 145,
+     "pct": 97.97297297297297
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "defective": {
+     "n": 246,
+     "correct": 29,
+     "pct": 11.788617886178862
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 4,
+     "pct": 7.2727272727272725
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 15,
+     "pct": 62.5
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 5,
+     "pct": 21.73913043478261
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 3,
+     "pct": 7.142857142857142
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 0,
+     "pct": 0.0
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 0,
+     "pct": 0.0
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 1,
+     "pct": 3.225806451612903
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 1,
+     "pct": 9.090909090909092
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 0,
+     "pct": 0.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 0,
+     "pct": 0.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 145,
+     "pct": 97.97297297297297
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 272,
+     "pct": 97.14285714285714
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 20,
+     "pct": 33.89830508474576
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 4,
+     "pct": 7.142857142857142
+    },
+    "serious": {
+     "n": 55,
+     "correct": 2,
+     "pct": 3.6363636363636362
+    },
+    "slight": {
+     "n": 76,
+     "correct": 3,
+     "pct": 3.9473684210526314
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      559,
+      14
+     ],
+     [
+      217,
+      29
+     ]
+    ]
+   },
+   "accuracy": 0.717948717948718,
+   "f1_defective": 0.20069204152249134,
+   "paper_subset_280_246": {
+    "accuracy": 0.5722433460076045,
+    "sound_pct": 97.14285714285714,
+    "defective_pct": 11.788617886178862,
+    "reject_pct": 33.89830508474576,
+    "bruise_pct": 7.142857142857142,
+    "serious_pct": 3.6363636363636362,
+    "slight_pct": 3.9473684210526314
+   }
+  },
+  "Kleynen replicated 450/750/800 (paper) [A, erosion 15px: sensitivity]": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 247,
+     "pct": 88.21428571428571
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 25,
+     "pct": 8.532423208191126
+    },
+    "stem": {
+     "n": 148,
+     "correct": 7,
+     "pct": 4.72972972972973
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 18,
+     "pct": 12.413793103448276
+    },
+    "defective": {
+     "n": 246,
+     "correct": 203,
+     "pct": 82.52032520325203
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 52,
+     "pct": 94.54545454545455
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 24,
+     "pct": 100.0
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 21,
+     "pct": 91.30434782608695
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 23,
+     "pct": 54.761904761904766
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 12,
+     "pct": 70.58823529411765
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 7,
+     "pct": 43.75
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 29,
+     "pct": 93.54838709677419
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 11,
+     "pct": 100.0
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 7,
+     "pct": 100.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 17,
+     "pct": 85.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 7,
+     "pct": 4.72972972972973
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 18,
+     "pct": 12.413793103448276
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 247,
+     "pct": 88.21428571428571
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 58,
+     "pct": 98.30508474576271
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 53,
+     "pct": 94.64285714285714
+    },
+    "serious": {
+     "n": 55,
+     "correct": 50,
+     "pct": 90.9090909090909
+    },
+    "slight": {
+     "n": 76,
+     "correct": 42,
+     "pct": 55.26315789473685
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      272,
+      301
+     ],
+     [
+      43,
+      203
+     ]
+    ]
+   },
+   "accuracy": 0.57997557997558,
+   "f1_defective": 0.5413333333333333,
+   "paper_subset_280_246": {
+    "accuracy": 0.8555133079847909,
+    "sound_pct": 88.21428571428571,
+    "defective_pct": 82.52032520325203,
+    "reject_pct": 98.30508474576271,
+    "bruise_pct": 94.64285714285714,
+    "serious_pct": 90.9090909090909,
+    "slight_pct": 55.26315789473685
+   }
+  },
+  "CNN merged NIR (nir_ss)": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 271,
+     "pct": 96.78571428571429
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 280,
+     "pct": 95.56313993174061
+    },
+    "stem": {
+     "n": 148,
+     "correct": 137,
+     "pct": 92.56756756756756
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 143,
+     "pct": 98.62068965517241
+    },
+    "defective": {
+     "n": 246,
+     "correct": 219,
+     "pct": 89.02439024390245
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 53,
+     "pct": 96.36363636363636
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 23,
+     "pct": 95.83333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 20,
+     "pct": 86.95652173913044
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 35,
+     "pct": 83.33333333333334
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 15,
+     "pct": 88.23529411764706
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 13,
+     "pct": 81.25
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 29,
+     "pct": 93.54838709677419
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 8,
+     "pct": 72.72727272727273
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 7,
+     "pct": 100.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 16,
+     "pct": 80.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 137,
+     "pct": 92.56756756756756
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 143,
+     "pct": 98.62068965517241
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 271,
+     "pct": 96.78571428571429
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 56,
+     "pct": 94.91525423728814
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 54,
+     "pct": 96.42857142857143
+    },
+    "serious": {
+     "n": 55,
+     "correct": 47,
+     "pct": 85.45454545454545
+    },
+    "slight": {
+     "n": 76,
+     "correct": 62,
+     "pct": 81.57894736842105
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      551,
+      22
+     ],
+     [
+      27,
+      219
+     ]
+    ]
+   },
+   "accuracy": 0.9401709401709402,
+   "f1_defective": 0.8993839835728953,
+   "paper_subset_280_246": {
+    "accuracy": 0.9315589353612167,
+    "sound_pct": 96.78571428571429,
+    "defective_pct": 89.02439024390245,
+    "reject_pct": 94.91525423728814,
+    "bruise_pct": 96.42857142857143,
+    "serious_pct": 85.45454545454545,
+    "slight_pct": 81.57894736842105
+   }
+  },
+  "CNN merged Visible (visible_ss)": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 265,
+     "pct": 94.64285714285714
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 283,
+     "pct": 96.58703071672356
+    },
+    "stem": {
+     "n": 148,
+     "correct": 141,
+     "pct": 95.27027027027027
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "defective": {
+     "n": 246,
+     "correct": 192,
+     "pct": 78.04878048780488
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 38,
+     "pct": 69.0909090909091
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 24,
+     "pct": 100.0
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 21,
+     "pct": 91.30434782608695
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 34,
+     "pct": 80.95238095238095
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 11,
+     "pct": 64.70588235294117
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 12,
+     "pct": 75.0
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 24,
+     "pct": 77.41935483870968
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 8,
+     "pct": 72.72727272727273
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 6,
+     "pct": 85.71428571428571
+    },
+    "Other": {
+     "n": 20,
+     "correct": 14,
+     "pct": 70.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 141,
+     "pct": 95.27027027027027
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 142,
+     "pct": 97.93103448275862
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 265,
+     "pct": 94.64285714285714
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 56,
+     "pct": 94.91525423728814
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 39,
+     "pct": 69.64285714285714
+    },
+    "serious": {
+     "n": 55,
+     "correct": 41,
+     "pct": 74.54545454545455
+    },
+    "slight": {
+     "n": 76,
+     "correct": 56,
+     "pct": 73.68421052631578
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      548,
+      25
+     ],
+     [
+      54,
+      192
+     ]
+    ]
+   },
+   "accuracy": 0.9035409035409036,
+   "f1_defective": 0.8293736501079914,
+   "paper_subset_280_246": {
+    "accuracy": 0.8688212927756654,
+    "sound_pct": 94.64285714285714,
+    "defective_pct": 78.04878048780488,
+    "reject_pct": 94.91525423728814,
+    "bruise_pct": 69.64285714285714,
+    "serious_pct": 74.54545454545455,
+    "slight_pct": 73.68421052631578
+   }
+  },
+  "CNN 2-class NIR (nir_ss_2cls)": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 270,
+     "pct": 96.42857142857143
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 283,
+     "pct": 96.58703071672356
+    },
+    "stem": {
+     "n": 148,
+     "correct": 139,
+     "pct": 93.91891891891892
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 144,
+     "pct": 99.3103448275862
+    },
+    "defective": {
+     "n": 246,
+     "correct": 218,
+     "pct": 88.6178861788618
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 53,
+     "pct": 96.36363636363636
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 23,
+     "pct": 95.83333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 20,
+     "pct": 86.95652173913044
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 33,
+     "pct": 78.57142857142857
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 15,
+     "pct": 88.23529411764706
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 14,
+     "pct": 87.5
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 29,
+     "pct": 93.54838709677419
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 8,
+     "pct": 72.72727272727273
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 7,
+     "pct": 100.0
+    },
+    "Other": {
+     "n": 20,
+     "correct": 16,
+     "pct": 80.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 139,
+     "pct": 93.91891891891892
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 144,
+     "pct": 99.3103448275862
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 270,
+     "pct": 96.42857142857143
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 56,
+     "pct": 94.91525423728814
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 54,
+     "pct": 96.42857142857143
+    },
+    "serious": {
+     "n": 55,
+     "correct": 48,
+     "pct": 87.27272727272727
+    },
+    "slight": {
+     "n": 76,
+     "correct": 60,
+     "pct": 78.94736842105263
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      553,
+      20
+     ],
+     [
+      28,
+      218
+     ]
+    ]
+   },
+   "accuracy": 0.9413919413919414,
+   "f1_defective": 0.9008264462809917,
+   "paper_subset_280_246": {
+    "accuracy": 0.9277566539923955,
+    "sound_pct": 96.42857142857143,
+    "defective_pct": 88.6178861788618,
+    "reject_pct": 94.91525423728814,
+    "bruise_pct": 96.42857142857143,
+    "serious_pct": 87.27272727272727,
+    "slight_pct": 78.94736842105263
+   }
+  },
+  "CNN 2-class Visible (visible_ss_2cls)": {
+   "groups": {
+    "healthy (sound fruit)": {
+     "n": 280,
+     "correct": 261,
+     "pct": 93.21428571428572
+    },
+    "stem+calyx": {
+     "n": 293,
+     "correct": 278,
+     "pct": 94.88054607508532
+    },
+    "stem": {
+     "n": 148,
+     "correct": 135,
+     "pct": 91.21621621621621
+    },
+    "calyx": {
+     "n": 145,
+     "correct": 143,
+     "pct": 98.62068965517241
+    },
+    "defective": {
+     "n": 246,
+     "correct": 186,
+     "pct": 75.60975609756098
+    }
+   },
+   "per_tissue": {
+    "Bruise": {
+     "n": 55,
+     "correct": 31,
+     "pct": 56.36363636363636
+    },
+    "Flesh_damage": {
+     "n": 24,
+     "correct": 23,
+     "pct": 95.83333333333334
+    },
+    "Rot": {
+     "n": 23,
+     "correct": 21,
+     "pct": 91.30434782608695
+    },
+    "Russet": {
+     "n": 42,
+     "correct": 33,
+     "pct": 78.57142857142857
+    },
+    "Scald": {
+     "n": 17,
+     "correct": 11,
+     "pct": 64.70588235294117
+    },
+    "Hail_damage": {
+     "n": 16,
+     "correct": 12,
+     "pct": 75.0
+    },
+    "Hail_damage_perf": {
+     "n": 31,
+     "correct": 24,
+     "pct": 77.41935483870968
+    },
+    "Frost_damage": {
+     "n": 11,
+     "correct": 9,
+     "pct": 81.81818181818183
+    },
+    "Limb_rub": {
+     "n": 7,
+     "correct": 6,
+     "pct": 85.71428571428571
+    },
+    "Other": {
+     "n": 20,
+     "correct": 16,
+     "pct": 80.0
+    },
+    "Stem": {
+     "n": 148,
+     "correct": 135,
+     "pct": 91.21621621621621
+    },
+    "Calix": {
+     "n": 145,
+     "correct": 143,
+     "pct": 98.62068965517241
+    },
+    "Healthy": {
+     "n": 280,
+     "correct": 261,
+     "pct": 93.21428571428572
+    }
+   },
+   "per_severity": {
+    "reject": {
+     "n": 59,
+     "correct": 56,
+     "pct": 94.91525423728814
+    },
+    "bruise": {
+     "n": 56,
+     "correct": 32,
+     "pct": 57.14285714285714
+    },
+    "serious": {
+     "n": 55,
+     "correct": 41,
+     "pct": 74.54545454545455
+    },
+    "slight": {
+     "n": 76,
+     "correct": 57,
+     "pct": 75.0
+    }
+   },
+   "confusion_2x2": {
+    "rows": "true sound(all healthy-class), true defective",
+    "cols": "pred sound, pred defective",
+    "matrix": [
+     [
+      539,
+      34
+     ],
+     [
+      60,
+      186
+     ]
+    ]
+   },
+   "accuracy": 0.8852258852258852,
+   "f1_defective": 0.7982832618025751,
+   "paper_subset_280_246": {
+    "accuracy": 0.8498098859315589,
+    "sound_pct": 93.21428571428572,
+    "defective_pct": 75.60975609756098,
+    "reject_pct": 94.91525423728814,
+    "bruise_pct": 57.14285714285714,
+    "serious_pct": 74.54545454545455,
+    "slight_pct": 75.0
+   }
+  }
+ },
+ "mcnemar": {
+  "Kleynen replicated 450/750/800 (paper) [A: paper protocol] vs CNN merged NIR (nir_ss) [paper_526]": {
+   "table": [
+    [
+     409,
+     24
+    ],
+    [
+     81,
+     12
+    ]
+   ],
+   "only_a_correct": 24,
+   "only_b_correct": 81,
+   "p_value": 4.628013658842412e-08,
+   "acc_a": 0.8231939163498099,
+   "acc_b": 0.9315589353612167,
+   "n": 526
+  },
+  "Kleynen replicated 450/750/800 (paper) [B: stem/calyx = sound] vs CNN merged NIR (nir_ss) [all_819]": {
+   "table": [
+    [
+     644,
+     25
+    ],
+    [
+     126,
+     24
+    ]
+   ],
+   "only_a_correct": 25,
+   "only_b_correct": 126,
+   "p_value": 4.022440011933253e-16,
+   "acc_a": 0.8168498168498168,
+   "acc_b": 0.9401709401709402,
+   "n": 819
+  },
+  "Kleynen replicated 450/750/800 (paper) [A: paper protocol] vs Kleynen replicated 750/800 (NIR) [A: paper protocol] [paper_526]": {
+   "table": [
+    [
+     412,
+     21
+    ],
+    [
+     36,
+     57
+    ]
+   ],
+   "only_a_correct": 21,
+   "only_b_correct": 36,
+   "p_value": 0.06368977513662877,
+   "acc_a": 0.8231939163498099,
+   "acc_b": 0.8517110266159695,
+   "n": 526
+  },
+  "Kleynen replicated 750/800 (NIR) [A: paper protocol] vs Kleynen replicated 450/500 (Visible) [A: paper protocol] [paper_526]": {
+   "table": [
+    [
+     319,
+     129
+    ],
+    [
+     36,
+     42
+    ]
+   ],
+   "only_a_correct": 129,
+   "only_b_correct": 36,
+   "p_value": 7.939810365424692e-13,
+   "acc_a": 0.8517110266159695,
+   "acc_b": 0.6749049429657795,
+   "n": 526
+  },
+  "CNN merged NIR (nir_ss) vs CNN merged Visible (visible_ss) [all_819]": {
+   "table": [
+    [
+     710,
+     60
+    ],
+    [
+     30,
+     19
+    ]
+   ],
+   "only_a_correct": 60,
+   "only_b_correct": 30,
+   "p_value": 0.0022366244452098703,
+   "acc_a": 0.9401709401709402,
+   "acc_b": 0.9035409035409036,
+   "n": 819
+  },
+  "Kleynen replicated 450/750/800 (paper) [A, erosion 15px: sensitivity] vs CNN merged NIR (nir_ss) [paper_526]": {
+   "table": [
+    [
+     428,
+     22
+    ],
+    [
+     62,
+     14
+    ]
+   ],
+   "only_a_correct": 22,
+   "only_b_correct": 62,
+   "p_value": 2.0881663011151384e-05,
+   "acc_a": 0.8555133079847909,
+   "acc_b": 0.9315589353612167,
+   "n": 526
+  },
+  "Kleynen replicated 450/750/800 (paper) [A: paper protocol] vs CNN 2-class NIR (nir_ss_2cls) [paper_526]": {
+   "table": [
+    [
+     411,
+     22
+    ],
+    [
+     77,
+     16
+    ]
+   ],
+   "only_a_correct": 22,
+   "only_b_correct": 77,
+   "p_value": 5.724362426739109e-08,
+   "acc_a": 0.8231939163498099,
+   "acc_b": 0.9277566539923955,
+   "n": 526
+  },
+  "CNN 2-class NIR (nir_ss_2cls) vs CNN merged NIR (nir_ss) [all_819]": {
+   "table": [
+    [
+     763,
+     8
+    ],
+    [
+     7,
+     41
+    ]
+   ],
+   "only_a_correct": 8,
+   "only_b_correct": 7,
+   "p_value": 1.0,
+   "acc_a": 0.9413919413919414,
+   "acc_b": 0.9401709401709402,
+   "n": 819
+  },
+  "CNN 2-class NIR (nir_ss_2cls) vs CNN 2-class Visible (visible_ss_2cls) [all_819]": {
+   "table": [
+    [
+     700,
+     71
+    ],
+    [
+     25,
+     23
+    ]
+   ],
+   "only_a_correct": 71,
+   "only_b_correct": 25,
+   "p_value": 4.373522667890802e-06,
+   "acc_a": 0.9413919413919414,
+   "acc_b": 0.8852258852258852,
+   "n": 819
+  }
+ },
+ "paired_runs": {
+  "nir: 2-class - merged 3-class|accuracy": {
+   "n_pairs": 15,
+   "mean_diff": 0.0012020549653348977,
+   "ci95": [
+    -0.0057284652601127545,
+    0.007718651803082422
+   ],
+   "same_sign_pairs": 9,
+   "same_sign_needed": 12,
+   "real_difference": false,
+   "complete": true,
+   "diffs": [
+    -0.012195121951219523,
+    0.012195121951219412,
+    0.012195121951219412,
+    -0.024390243902439046,
+    -0.018404907975460127,
+    0.0,
+    0.0060975609756096505,
+    0.0060975609756097615,
+    0.024390243902439046,
+    -0.00613496932515345,
+    0.012195121951219523,
+    0.0060975609756096505,
+    0.012195121951219523,
+    0.0060975609756097615,
+    -0.018404907975460127
+   ],
+   "verdict": "not larger than training noise"
+  },
+  "nir: 2-class - merged 3-class|f1": {
+   "n_pairs": 15,
+   "mean_diff": 7.453126308162675e-05,
+   "ci95": [
+    -0.011569962215175351,
+    0.010635151914742104
+   ],
+   "same_sign_pairs": 10,
+   "same_sign_needed": 12,
+   "real_difference": false,
+   "complete": true,
+   "diffs": [
+    -0.02777777777777779,
+    0.01764705882352946,
+    0.014174048983845777,
+    -0.037696553160470714,
+    -0.03247480403135494,
+    0.0018501387604070718,
+    0.006870074762578282,
+    0.012038834951456301,
+    0.024857886116196215,
+    -0.011687704534829368,
+    0.021739130434782594,
+    0.010871675402834402,
+    0.022108843537415046,
+    0.0148544266191325,
+    -0.03625730994152043
+   ],
+   "verdict": "not larger than training noise"
+  },
+  "visible: 2-class - merged 3-class|accuracy": {
+   "n_pairs": 15,
+   "mean_diff": -0.015873609656341978,
+   "ci95": [
+    -0.026437727567459747,
+    -0.00529945383809666
+   ],
+   "same_sign_pairs": 12,
+   "same_sign_needed": 12,
+   "real_difference": true,
+   "complete": true,
+   "diffs": [
+    0.018292682926829285,
+    -0.018292682926829285,
+    -0.024390243902439046,
+    -0.03658536585365857,
+    -0.024539877300613577,
+    -0.024390243902439046,
+    -0.060975609756097615,
+    -0.030487804878048808,
+    0.012195121951219523,
+    -0.018404907975460127,
+    -0.0060975609756097615,
+    0.018292682926829285,
+    -0.030487804878048808,
+    -0.0060975609756097615,
+    -0.006134969325153339
+   ],
+   "verdict": "REAL"
+  },
+  "visible: 2-class - merged 3-class|f1": {
+   "n_pairs": 15,
+   "mean_diff": -0.02605446598502022,
+   "ci95": [
+    -0.04585299157380194,
+    -0.007440482267594099
+   ],
+   "same_sign_pairs": 10,
+   "same_sign_needed": 12,
+   "real_difference": false,
+   "complete": true,
+   "diffs": [
+    0.022950035859431117,
+    0.006462984723854315,
+    -0.04210526315789476,
+    -0.05437352245862881,
+    -0.030041395623891187,
+    -0.03766791303143602,
+    -0.1133038782523319,
+    -0.05881006864988558,
+    0.010000000000000009,
+    -0.05730040757612076,
+    0.000511116790186561,
+    0.03685018644439575,
+    -0.05792759051186014,
+    -0.0018939393939393367,
+    -0.014167334937182585
+   ],
+   "verdict": "not larger than training noise"
+  }
+ }
+}

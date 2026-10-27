@@ -150,7 +150,7 @@ def make_fold_data(ctx, variant, fold, spec):
                                       stratify=ctx.labels[tv], random_state=SEED_SPLIT)
     tr_idx, va_idx = tv[tr_rel], tv[va_rel]
     pool = ctx.pool(spec["source"])
-    lab = ctx.labels5 if spec["n_classes"] == 5 else ctx.labels
+    lab = ctx.labels5 if spec["n_classes"] == 5 else (ctx.labels != 0).astype(int) if spec["n_classes"] == 2 else ctx.labels
 
     train_idx = list(tr_idx)
     train_items = [pool[i] for i in train_idx]
@@ -167,7 +167,8 @@ def make_fold_data(ctx, variant, fold, spec):
     train_ds = Round2Dataset(train_items, train_lab, spec["channels"], True, mean, std,
                              healthy_tissue=[ctx.tissue[i] == "Healthy" for i in train_idx], paster=paster)
     val_ds = Round2Dataset([pool[i] for i in va_idx], [lab[i] for i in va_idx], spec["channels"], False, mean, std)
-    test_ds = Round2Dataset([pool[i] for i in te], [ctx.labels[i] for i in te], spec["channels"], False, mean, std)
+    test_ds = Round2Dataset([pool[i] for i in te], [lab[i] if spec["n_classes"] == 2 else ctx.labels[i] for i in te],
+                            spec["channels"], False, mean, std)
 
     w3 = 1.0 / np.bincount(ctx.labels[tr_idx], minlength=3)  # class-balanced on the 3 real classes, as the baseline
     weights = [float(w3[ctx.labels[i]]) for i in train_idx]
@@ -177,9 +178,9 @@ def make_fold_data(ctx, variant, fold, spec):
             "paster": paster, "donors": donors}
 
 
-def per_class_and_cm(y_true, y_pred):
-    pc = f1_score(y_true, y_pred, average=None, labels=[0, 1, 2], zero_division=0).tolist()
-    return pc, confusion_matrix(y_true, y_pred, labels=[0, 1, 2]).tolist()
+def per_class_and_cm(y_true, y_pred, labels=(0, 1, 2)):
+    pc = f1_score(y_true, y_pred, average=None, labels=list(labels), zero_division=0).tolist()
+    return pc, confusion_matrix(y_true, y_pred, labels=list(labels)).tolist()
 
 
 def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None, variants=None, ckpt_path=None):
@@ -233,7 +234,9 @@ def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None, varia
     raw5 = (p_plain, p_tta) if spec["n_classes"] == 5 else None
     if spec["n_classes"] == 5:
         p_plain, p_tta = merge_to_3(p_plain), merge_to_3(p_tta)
-    y = ctx.labels[d["te_idx"]]
+    # n_classes == 2 (K4): Healthy (0) vs Defect (1 = Internal or Surface); metrics on the 2 classes
+    y = (ctx.labels[d["te_idx"]] != 0).astype(int) if spec["n_classes"] == 2 else ctx.labels[d["te_idx"]]
+    cls_labels = (0, 1) if spec["n_classes"] == 2 else (0, 1, 2)
     rec = {"variant": variant, "seed": seed, "fold": fold, "kind": "dl", "test_idx": d["te_idx"].tolist(),
            "best_val_loss": float(best_val), "epochs_trained": n_ep, "batch_size": bs, "source": spec["source"],
            "elapsed_sec": round(time.time() - t0, 1),
@@ -241,7 +244,7 @@ def run_round2_fold(ctx, variant, seed, fold, epochs=100, batch_size=None, varia
            "finished_at": time.strftime("%Y-%m-%dT%H:%M:%S")}
     for tag, p in (("", p_plain), ("tta_", p_tta)):
         pred = p.argmax(1)
-        pc, cm = per_class_and_cm(y, pred)
+        pc, cm = per_class_and_cm(y, pred, cls_labels)
         rec.update({f"{tag}test_macro_f1": float(f1_score(y, pred, average="macro")),
                     f"{tag}test_accuracy": float(accuracy_score(y, pred)), f"{tag}per_class_f1": pc,
                     f"{tag}confusion_matrix": cm, f"{tag}test_predictions": pred.tolist(),
