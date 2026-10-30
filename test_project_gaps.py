@@ -73,7 +73,7 @@ class FeatureReportTests(unittest.TestCase):
             [sys.executable, "-c", "from src.config import PROJECT_ROOT; print(PROJECT_ROOT)"],
             env=env, text=True,
         )
-        self.assertEqual(output.strip(), "/tmp/capa_data")
+        self.assertEqual(output.strip(), os.path.abspath("/tmp/capa_data"))
 
     def test_preprocessing_does_not_remove_existing_data(self):
         with open("preprocess_pipeline.py", encoding="utf-8") as f:

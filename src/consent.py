@@ -17,7 +17,11 @@ def require_consent():
         )
     path = os.path.realpath(os.path.expanduser(path))
     repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if os.path.commonpath((repo, path)) == repo:
+    try:
+        inside_repo = os.path.commonpath((repo, path)) == repo
+    except ValueError:  # different drives on Windows: the file is outside the repository
+        inside_repo = False
+    if inside_repo:
         raise ConsentRequiredError("Store the written CAPA permission outside the project repository.")
     try:
         valid = os.path.isfile(path) and os.path.getsize(path) > 0
