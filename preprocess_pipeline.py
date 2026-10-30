@@ -2,12 +2,12 @@ import os
 import re
 import cv2
 import numpy as np
-import shutil
 from sklearn.model_selection import train_test_split
+from src.config import DATA_DIR, PROJECT_ROOT
+from src.consent import require_consent
 
-# กำหนด Path ตามข้อมูลจริง
-RAW_DIR = r"D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\images\RawImages"
-OUT_DIR = r"D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase\Processed_Dataset"
+RAW_DIR = os.path.join(PROJECT_ROOT, "images", "RawImages")
+OUT_DIR = DATA_DIR
 
 # ฐานข้อมูลจาก lookup.py (คัดลอกมาทั้ง 819 รายการ)
 rawfile_map = {
@@ -288,8 +288,8 @@ def get_label(filename):
     return plan_b.get(defect_type, "Unknown")
 
 def setup_directories():
-    if os.path.exists(OUT_DIR):
-        shutil.rmtree(OUT_DIR)
+    if os.path.exists(OUT_DIR) and os.listdir(OUT_DIR):
+        raise FileExistsError(f"{OUT_DIR} already contains data; back it up and use an empty output directory")
     for split in ["train", "val", "test"]:
         for cls in ["Healthy", "Internal_Defect", "Surface_Defect"]:
             os.makedirs(os.path.join(OUT_DIR, split, cls), exist_ok=True)
@@ -301,6 +301,7 @@ def crop_and_resize(quadrant):
     return cv2.resize(cropped, (224, 224), interpolation=cv2.INTER_AREA)
 
 def process_and_stack(filepath):
+    require_consent()
     img = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
     if img is None: return None
 
@@ -320,6 +321,7 @@ def process_and_stack(filepath):
     return np.stack([bl_224, gr_224, re_224, ir_224], axis=-1)
 
 def main():
+    require_consent()
     print("กำลังจัดเตรียมโครงสร้างโฟลเดอร์...")
     setup_directories()
     

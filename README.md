@@ -37,6 +37,10 @@
 
 ฐานข้อมูล **CAPA Apple Quality Grading Image Database เป็นลิขสิทธิ์ของ ULG (Gembloux Agro-Bio Tech), Belgium** และห้ามใช้โดยไม่ได้รับอนุญาตจาก ULG (รายละเอียดและช่องทางติดต่อขออนุญาตอยู่ใน `ReadMe.txt`) repo นี้จึง **ไม่มี** ภาพต้นฉบับ, ภาพที่แปลงแล้ว (`Processed_Dataset*`), mask, ภาพ Grad-CAM หรือภาพใดๆ ที่มีพิกเซลจากข้อมูลนี้ และไม่มีไฟล์โมเดล `.pt` — มีเฉพาะโค้ดและผลเชิงตัวเลข
 
+ข้อมูลต้นทาง: [Zenodo record 1313615](https://zenodo.org/records/1313615), DOI `10.5281/zenodo.1313615` ระบุภาพ 450/500/750/800 nm, mask ตำหนิ และการประเมินคุณภาพ 4 หมวดโดยผู้เชี่ยวชาญ แต่ **3 คลาส Healthy/Internal/Surface ของ CNN ในโปรเจกต์เป็นโจทย์ที่นิยามใหม่** ไม่ใช่ 4 หมวดจาก Zenodo; การเทียบกับ Kleynen (2005) ใช้ 2 กลุ่ม sound/defective และรายงานระดับความรุนแรงแยก ห้ามเขียนว่าทั้งสามชุดป้ายเป็นโจทย์เดียวกัน หน้า Zenodo แสดง CC BY 4.0 ขณะที่คำอธิบายและ `ReadMe.txt` ขอ consent จาก ULG: ต้องขอเจ้าของข้อมูลชี้แจงก่อนใช้/เผยแพร่ภาพ
+
+**ก่อนรันงานที่อ่านข้อมูล CAPA:** โค้ดจะหยุดและขอให้ตั้ง `CAPA_CONSENT_FILE` เป็น path ของไฟล์คำอนุญาตเป็นลายลักษณ์อักษรจากเจ้าของข้อมูลที่เก็บ **นอก repo** หลังได้รับจริงเท่านั้น (Windows `set CAPA_CONSENT_FILE=C:\path\to\permission.pdf`; macOS `export CAPA_CONSENT_FILE="/absolute/path/to/permission.pdf"`). ระบบตรวจได้เพียงว่าไฟล์นั้นอ่านได้และไม่ว่าง **ไม่ได้ตรวจว่าผู้ลงนามมีอำนาจหรืออนุญาตครอบคลุมการใช้งานของคุณ**; การตอบ yes หรือไฟล์ที่เขียนยืนยันเองไม่ใช่ consent. หากยังไม่ได้รับคำอนุญาต ใช้ได้เฉพาะคำสั่งตรวจโค้ด/ผลตัวเลขเดิม เช่น `python -m src.audit_recorded` และ `python -m src.preflight`; ห้ามแตก RAR เพื่อทดลองหรือใช้ภาพ
+
 งานที่ใช้ข้อมูลนี้ต้องระบุว่าข้อมูลได้มาจาก ULG (Gembloux Agro-Bio Tech), Belgium และอ้างอิง:
 
 > Kleynen, O., Leemans, V., & Destain, M.-F. (2005). Development of a multi-spectral vision system for the detection of defects on apples. *Journal of Food Engineering, 69*(1), 41–49. https://doi.org/10.1016/j.jfoodeng.2004.07.008
@@ -75,8 +79,8 @@
 
 ทดสอบบน Windows + NVIDIA GPU (CUDA 12.1), Python venv ที่ `.venv`
 
-1. **ขอข้อมูล CAPA จาก ULG** แล้ววางใน `images/` (RawImages, SingleSpectraImages) และ `segmentations/`
-2. แก้ `PROJECT_ROOT` ใน `src/config.py` และ path ใน `preprocess_pipeline.py` / `run_*.bat` ให้ตรงเครื่อง (ตอนนี้ตั้งเป็น `D:\nir+rgb_project\...`)
+1. **ขอ consent ใช้ข้อมูล CAPA จาก ULG ก่อน** ฐานข้อมูล RAR ที่วางในโฟลเดอร์นี้ตรวจ MD5 ตรงกับ Zenodo แล้ว แต่ยังไม่ถูกแตกไฟล์: ภายในมีโฟลเดอร์ `CAPA_AppleQualityGradingImageDatabase/` ครอบ `images/` และ `segmentations/` อีกชั้น อย่าแตกทับ repo โดยไม่ตรวจ path และพื้นที่ว่าง; หลังได้รับอนุญาตจึงเตรียม `images/` (RawImages, SingleSpectraImages) กับ `segmentations/` ใน `PROJECT_ROOT`
+2. ค่าเริ่มต้น `PROJECT_ROOT` คือโฟลเดอร์ที่มี repo นี้; หากเก็บข้อมูลไว้อีกที่ให้ตั้ง `CAPA_PROJECT_ROOT` ก่อนรัน ไฟล์ `run_*.bat` เปิดจากโฟลเดอร์ที่ตั้งอยู่ (แต่ยังใช้ `.venv` ในโฟลเดอร์นั้น) `preprocess_pipeline.py` จะไม่เขียนทับ `Processed_Dataset` ที่มีข้อมูลแล้ว; ต้องเตรียมโฟลเดอร์ว่างก่อนสร้างข้อมูลใหม่
 3. ติดตั้ง
    ```
    python -m venv .venv
@@ -94,6 +98,8 @@
    - `run_n5.bat` — visible_ss / full_ss บนภาพที่ซ้อนตรง (seeds 3–5) + checkpoint
 6. รายงาน: `.venv\Scripts\python -m src.nir_proof_report` → `outputs/logs/nir_proof_report.txt`
 7. Demo (เปิดได้เฉพาะเครื่องตัวเอง `127.0.0.1:7860` เพราะแสดงภาพ CAPA): `run_demo.bat`
+
+ตรวจผลตัวเลขที่บันทึกไว้โดยไม่ต้องมีภาพ/โมเดล: `python -m src.audit_recorded` (ตรวจความสอดคล้อง K1/K2/K3/K5 และบันทึกการตรวจ GUI; **ไม่ใช่การรันโมเดลซ้ำ**). ตรวจสิ่งที่เครื่องเดโมต้องมี: `python -m src.preflight`
 
 ทุกการเทรนตั้ง seed และ deterministic kernel (`src/repro.py`, `CUBLAS_WORKSPACE_CONFIG`) รันซ้ำบนเครื่องเดิมได้ผลเท่าเดิมทุกบิต
 

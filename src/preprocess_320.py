@@ -16,6 +16,7 @@ import cv2
 import numpy as np
 
 from .config import CLASSES, DATA_DIR, PROJECT_ROOT
+from .consent import require_consent
 
 RAW_DIR = os.path.join(PROJECT_ROOT, "images", "RawImages")
 OUT_DIR = os.path.join(PROJECT_ROOT, "Processed_Dataset_320")
@@ -28,6 +29,7 @@ def crop_and_resize(quadrant, size=SIZE):
 
 
 def process(filepath, size=SIZE):
+    require_consent()
     img = cv2.imread(filepath, cv2.IMREAD_GRAYSCALE)
     assert img is not None and img.shape == (1024, 1280), filepath
     ir = crop_and_resize(img[0:512, 0:640], size)
@@ -38,6 +40,7 @@ def process(filepath, size=SIZE):
 
 
 def main():
+    require_consent()
     t0 = time.time()
     n = 0
     for split in ("train", "val", "test"):

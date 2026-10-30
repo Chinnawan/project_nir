@@ -29,6 +29,7 @@ import cv2
 import numpy as np
 
 from .config import CLASSES, DATA_DIR, OUTPUT_DIR, PROJECT_ROOT
+from .consent import require_consent
 
 SS_DIR = os.path.join(PROJECT_ROOT, "images", "SingleSpectraImages")
 RAW_DIR = os.path.join(PROJECT_ROOT, "images", "RawImages")
@@ -55,6 +56,7 @@ NOTES_ANCHORS = [
 
 
 def parse_rawfile():
+    require_consent()
     with open(os.path.join(RAW_DIR, "RawFile.txt"), encoding="latin-1") as f:
         txt = f.read()
     rows = [(int(a), b, int(c)) for a, b, c in re.findall(r"RawFile\s+(\d+)\s+(\w+)\s+(\d+)", txt)]
@@ -87,6 +89,7 @@ def build_mapping():
 
 
 def read_bands(ss_name):
+    require_consent()
     bands = []
     for b in BANDS:
         img = cv2.imread(os.path.join(SS_DIR, f"{ss_name}_{b}.tif"), cv2.IMREAD_GRAYSCALE)
@@ -108,6 +111,7 @@ def pad_square_resize(img, size=224, interpolation=cv2.INTER_AREA):
 
 def build_dataset(mapping):
     """Mirror every file of Processed_Dataset/{split}/{cls}/RawA####.npy."""
+    require_consent()
     n_written = 0
     for split in ("train", "val", "test"):
         for cls in CLASSES:
@@ -128,6 +132,7 @@ def verify_content(mapping, n_distractors=10, seed=42):
     """Independent check of the RawA<->SingleSpectra pairing: the corrected SS IR
     image is a shifted crop of the raw IR quadrant, so normalized cross-correlation
     of SS IR against the raw IR quadrant should be highest for the mapped RawA."""
+    require_consent()
     rng = np.random.RandomState(seed)
     scores_mapped, wins = [], 0
     worst = []

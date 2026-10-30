@@ -944,7 +944,7 @@ run_round2.bat
 **วิธีเปิด**: ดับเบิลคลิก `run_demo.bat` (หรือ `.venv\Scripts\python.exe -m src.demo_app`) → เบราว์เซอร์เปิด **http://127.0.0.1:7860** เอง; ครั้งแรกถ้ายังไม่มี `models\kleynen_*.pkl` bat จะสร้างให้ (~1.5 นาที); ปิดด้วยการปิดหน้าต่าง cmd · **รันในเครื่องเท่านั้น** (`server_name="127.0.0.1"`, `share=False` — ห้ามเปลี่ยน เพราะลิขสิทธิ์ CAPA)
 - แท็บ: โหมด 1 (ภาพ CAPA out-of-fold + สลับโมเดล + เทียบทุกโมเดล) · โหมด 2 (อัปโหลด) · โหมดสายพาน · **ทีละขั้น: Kleynen vs CNN** (G2) · **คัดทีละชุด** (G3)
 - ต้องมี: checkpoint CNN ใน `outputs\dl\confirm_ckpt\` (nir_ss / visible_ss / full_ss) + `models\kleynen_*.pkl` + `outputs\severity_labels.csv` (ถ้าไม่มีจะอ่านจากไฟล์ txt ของ dataset แทน)
-- selftest: `python -m src.demo_selftest` (GPU, ~10 นาที) ข้อ 1–7 รวมเซิร์ฟเวอร์จริงบน 127.0.0.1 และ API ของแท็บใหม่ (`/kleynen_vs_cnn`, `/batch_compare`) → **ALL PASSED** (55 ข้อ; ข้อที่ตกรอบแรก 1 ข้อเป็นบั๊กของตัวทดสอบเอง — API ของ Gradio ไม่ส่งค่า `gr.State` คืน จึงได้ 8 ค่าไม่ใช่ 9 แก้ตัวทดสอบแล้วรันใหม่ทั้งชุด)
+- selftest: `python -m src.demo_selftest` (GPU, ~10 นาที) ข้อ 1–7 รวมเซิร์ฟเวอร์จริงบน 127.0.0.1 และ API ของแท็บใหม่ (`/kleynen_vs_cnn`, `/batch_compare`) → **ALL PASSED** (54 ข้อ — แก้จาก 55 ที่นับบรรทัดสรุปซ้ำ; ข้อที่ตกรอบแรก 1 ข้อเป็นบั๊กของตัวทดสอบเอง — API ของ Gradio ไม่ส่งค่า `gr.State` คืน จึงได้ 8 ค่าไม่ใช่ 9 แก้ตัวทดสอบแล้วรันใหม่ทั้งชุด)
 - ทดสอบในเบราว์เซอร์จริง (2026-10-28): เซิร์ฟเวอร์ LISTENING ที่ 127.0.0.1:7860 เท่านั้น; แท็บ G2 เลือกตัวอย่าง "รอยช้ำ — CNN ถูก / Kleynen ผิด" (RawA0647) แสดงครบทุกขั้น (4 แบนด์, mask, พิกเซลตำหนิ + ขอบเฉลย, ฟีเจอร์, LDA ✘, Grad-CAM, 3 คลาส, 2 กลุ่ม ✔, เวลา); แท็บ G3 ชุด Rot (23) ได้การ์ด/2×2/ตารางความรุนแรง/แกลเลอรี และกดภาพในแกลเลอรี (RawA0332) แล้วสลับไปแท็บ G2 วิเคราะห์ภาพนั้นให้อัตโนมัติ
 
 ## (พักไว้ 2026-10-17 — ไม่ต้องทำ) — Demo app รอบ 2: สลับโมเดล + ถัง "ไม่แน่ใจ" (โฟกัสโหมด 1) (2026-10-17)
@@ -1337,6 +1337,39 @@ run_round2.bat
 4. ตัวอย่างพรีเซนต์ G2 คัดจากผลที่บันทึกไว้ (K3 450/750/800 แบบ A + CNN nir_ss) — ต่อชนิด เลือกภาพที่มั่นใจที่สุดของแต่ละกรณี (ทั้งคู่ถูก / CNN ถูก Kleynen ผิด / Kleynen ถูก CNN ผิด) ขั้ว/ก้นไม่มีกรณี "Kleynen ถูก / CNN ผิด" จึงได้ 16 ภาพ
 5. G3 รันสดจริง (ไม่อ่านผลที่บันทึก) เพื่อให้ตรวจได้ว่า GUI = K5 และจำผลไว้ใน memory; แกลเลอรีจำกัด 120 ภาพ (ทั้งหมดอยู่ใน CSV); CSV เขียนใน `outputs/demo_cache/` (gitignore) เพราะมีป้ายรายภาพของ dataset
 6. G4 รูปใช้ข้อความภาษาอังกฤษ (ฟอนต์ไทยใน matplotlib เสี่ยงแสดงผลผิด และรูปในเล่มวิทยาศาสตร์มักเป็นอังกฤษ); สีตาม palette มาตรฐานที่ผ่านตัวตรวจ colorblind (ช่องสี 1–4 ตามลำดับ) + ป้ายตัวเลขบนทุกแท่ง (aqua/yellow คอนทราสต์ < 3:1 จึงต้องมีป้าย) + ไฟล์ .svg สำหรับเล่ม; McNemar CNN NIR vs Visible คำนวณบน 526 เพิ่ม (ฐานเดียวกับฝั่ง Kleynen) — ไม่แก้ผล K5
+
+## ผลของ k3_features_only — โค้ดที่ที่ปรึกษาแก้ (branch `advisor-edits`, 2026-10-30)
+
+> **หมายเหตุ: รันตามคำขอของที่ปรึกษา ก่อนได้รับหนังสืออนุญาตจาก ULG โดยข้ามตัวล็อก consent เฉพาะรอบนี้**
+> วิธีข้าม: แทน `src.consent.require_consent` ด้วยฟังก์ชันว่างใน process เดียวกันก่อน import โมดูลอื่น (`python -c "import src.consent as c; c.require_consent=lambda: None; ... runpy.run_module(...)"`) เฉพาะ `src.kleynen k3_features_only` และ `src.demo_selftest` — **ไม่ได้สร้างไฟล์ consent, ไม่ได้ตั้ง `CAPA_CONSENT_FILE`, ไม่ได้แก้ `consent.py`**; คำสั่งอื่นรันปกติ (ตัวล็อกยังทำงาน)
+> **ตัวเลข K3/K5 เดิมไม่ได้แก้ — ยังเป็นผลหลักของการเทียบ Kleynen** (รุ่นนี้เป็น ablation สำรวจ ตามที่ `kleynen_feature_report` ระบุเอง)
+
+**ที่มา**: `C:\Users\chino\Downloads\project_nir-main_edit.zip` — คัดลอกเฉพาะโค้ดที่ต่างจาก main: `src/` 10 ไฟล์ที่แก้ (config, copy_paste, dataset, demo_app, demo_kleynen, features, gradcam_mask_eval, kleynen, preprocess_320, preprocess_ss) + ใหม่ 4 ไฟล์ (consent, preflight, audit_recorded, kleynen_feature_report), `preprocess_pipeline.py`, `run_*.bat` 5 ไฟล์, `README.md`, `.gitignore`, `test_project_gaps.py`, `PROJECT_CHANGE_AND_TEST_GUIDE.md`; ไม่แตก .rar, ไม่คัดลอก `outputs/` และ `__MACOSX` (PROJECT_PLAN.md / requirements.txt / ReadMe.txt ใน zip เหมือนของเดิม)
+- อ่านโค้ดทั้งหมดก่อนรัน: ไม่มีการส่งข้อมูลออกนอกเครื่อง; การแก้ `kleynen.py` เพิ่ม `include_region_features` (ค่าเริ่ม True → ฟีเจอร์และลำดับเหมือน K3 เดิมทุกตัว) และคำสั่ง `k3_features_only` ที่ตัด 2 ฟีเจอร์บริเวณ (จำนวนบริเวณ ≥10 px, บริเวณใหญ่สุด) ออก เหลือเฉพาะฟีเจอร์ที่เปเปอร์บรรยาย (mean/median/std ต่อแบนด์บนเนื้อดี/เนื้อตำหนิ + สัดส่วนตำหนิ); ไม่เขียนภาพ mask
+
+**ผลตรวจ (ข้อ 3, รันปกติ ไม่ข้ามตัวล็อก)**
+- `python -m unittest test_project_gaps`: **ผ่าน 5/7** — ไม่ผ่าน 2 ข้อเพราะ path แบบ Windows (ไม่ได้แก้ไฟล์ของที่ปรึกษา แจ้งกลับไป):
+  1. `test_capa_run_requires_a_nonempty_local_consent_record` ERROR: `consent.py` เรียก `os.path.commonpath((repo, path))` แล้ว Python บน Windows โยน `ValueError: Paths don't have the same drive` เมื่อไฟล์ทดสอบอยู่ไดรฟ์ C: (temp) แต่ repo อยู่ D: — เป็นบั๊กของ `consent.py` บน Windows (ควรถือว่าอยู่นอก repo)
+  2. `test_config_root_override` FAIL: คาดหวัง `/tmp/capa_data` แต่ `os.path.abspath` บน Windows ให้ `D:\tmp\capa_data` — ตัวทดสอบเขียนสำหรับ macOS/Linux
+- `python -m src.audit_recorded`: **PASS** (K1/K2/K3/K5, fold, การตรวจโมเดล GUI สอดคล้องกัน)
+- `python -m src.preflight`: **OK ครบ 9 ข้อ** (ภาพ, mask, processed raw/SS, SS mapping, K3, checkpoint NIR 15, โมเดล Kleynen GUI 12, dependency)
+
+**รัน (ข้อ 5–6)**: `k3_features_only` ใช้เวลา 2 นาที 25 วินาที (CPU) → `outputs/dl/k3_kleynen_features_only.json`; `kleynen_feature_report` (ไม่อ่านภาพ รันปกติ) → `outputs/thesis/k3_feature_ablation.md`; `demo_selftest` (ข้ามตัวล็อก) → **ALL PASSED** (54 ข้อ ครบทุกแท็บ ใช้เวลา 6 นาที 40 วินาที; G3 ชุดทั้งหมดยังตรง K5: Kleynen 82.3% / CNN 93.2%) — แปลว่าโค้ดที่ที่ปรึกษาแก้ไม่เปลี่ยนพฤติกรรม demo
+
+**ผล k3_features_only เทียบ K3 เดิม** (450/750/800, แบบ A ตามเปเปอร์, 526 ลูก = 280 ดี + 246 ตำหนิ, out-of-fold fold เดิม; ระดับพิกเซลเหมือนเดิมทุกตัวเพราะ LUT เดิม)
+
+| | ผลดี | ตำหนิ | reject | bruise | serious | slight | acc 526 | ขั้ว/ก้น | acc 819 |
+|---|---|---|---|---|---|---|---|---|---|
+| Kleynen 2005 (เปเปอร์) | 94.3 | 84.6 | 100 | 98.2 | 94.5 | 55 | 89.8 | (ตัวตรวจแยก) | – |
+| K3 เดิม (ฟีเจอร์เพิ่ม 2 ตัว) — **ผลหลัก** | 86.1 | 78.0 | 93.2 | 92.9 | 83.6 | 51.3 | **82.3** | 25.6 | 62.0 |
+| k3_features_only (ฟีเจอร์ตามเปเปอร์) | 87.9 | 79.7 | 94.9 | 91.1 | 85.5 | 55.3 | **84.0** | 21.8 | 61.8 |
+
+- 2×2 (819): เดิม [[316,257],[54,192]] → ใหม่ [[310,263],[50,196]]
+- **McNemar เดิม vs ใหม่ บน 526 ลูก: ตัดสินต่างกัน 21 ลูก — เดิมถูกคนเดียว 6, ใหม่ถูกคนเดียว 15, p = 0.078 (exact) → ไม่ต่างอย่างมีนัยสำคัญ**
+- ชุดแบนด์อื่น (แบบ A, 526): 750/800 85.2 → 83.3% (เดิม 25 / ใหม่ 15, p = 0.155); 450/500 67.5 → 62.7% (เดิม 43 / ใหม่ 18, p = 0.002 — ฟีเจอร์บริเวณช่วยฝั่ง Visible); แบบ B (819): 450/750/800 81.7 → 80.6% (p = 0.188), 750/800 80.7 → 79.9% (p = 0.324), 450/500 71.8 → 71.2% (p = 0.405)
+- McNemar คำนวณจาก JSON ที่บันทึกไว้เท่านั้น (ลำดับภาพสร้างจาก `fold_assignment.json` + `test_idx` ใน `confirm_results.json`) ไม่ได้อ่านภาพหรือ list โฟลเดอร์ dataset
+
+**สรุป**: การตัด 2 ฟีเจอร์ที่เราเพิ่มเอง ทำให้ 450/750/800 ดีขึ้นเล็กน้อย (+1.7 จุด, slight 51.3 → 55.3 = เท่าเปเปอร์ 55) แต่ไม่มีนัยสำคัญ และในชุดแบนด์อื่นกลับแย่ลง → ฟีเจอร์ที่เพิ่มไม่ใช่สาเหตุที่ผลทำซ้ำต่ำกว่าเปเปอร์ ~6–8 จุด (ส่วนใหญ่น่าจะมาจาก erosion/การเลือกพิกเซลตำหนิ/cross-fitting ตามที่บันทึกใน K); ข้อสรุปหลักไม่เปลี่ยน: CNN NIR 93.2% ยังสูงกว่า Kleynen ทุกรุ่น (82.3% / 84.0%) และสูงกว่าตัวเลขเปเปอร์ 89.8%
 
 ## สิ่งที่ยังไม่ได้ทำ (Phase 6)
 

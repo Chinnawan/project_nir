@@ -248,7 +248,7 @@ def step_known(cmp, rawid, band_set=KM.DEFAULT_SET):
 
 
 def step_upload(cmp, files, band_set=KM.DEFAULT_SET):
-    """image outside the dataset: all-data Kleynen model + all 15 CNN checkpoints; no answer key"""
+    """Upload demo: all-data Kleynen model + all 15 CNN checkpoints; not an evaluation."""
     bands = np.stack(d.read_upload_bands(files), axis=-1)
     cube = d.load_upload(files)
     kmodel = cmp.kmodel(band_set, None)
@@ -257,7 +257,7 @@ def step_upload(cmp, files, band_set=KM.DEFAULT_SET):
     cres = cmp.cnn(cube, keys)
     cam = cmp.demo.cam(cube, keys, cres["pred3"])
     head = (f"<div style='font-size:18px'>ภาพอัปโหลด {bands.shape[1]}×{bands.shape[0]} · Kleynen: โมเดลที่ fit บนข้อมูลทั้งหมด (280+246) · "
-            f"CNN: ensemble {len(keys)} โมเดล · ไม่มีคำตอบจริง</div><div style='font-size:14px;opacity:0.85'>{d.DOMAIN_NOTE} "
+            f"CNN: ensemble {len(keys)} โมเดล · ไม่มีคำตอบจริง</div><div style='font-size:14px;opacity:0.85'>{d.UPLOAD_NOTE} {d.DOMAIN_NOTE} "
             "Kleynen ตั้งค่า (erosion 5 px, closing 15 px) สำหรับภาพ SingleSpectra 430×560 — ภาพความละเอียดอื่นอาจแบ่งผลได้ไม่ดี</div>")
     return step_outputs(cmp, bands, cube, kmodel, kres, cres, cam, head=head)
 

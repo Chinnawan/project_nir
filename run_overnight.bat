@@ -2,7 +2,9 @@
 rem Overnight multi-seed run (resumable). Safe to close and re-run: finished (variant,seed,fold) are skipped.
 rem   run_overnight.bat            full batch, then prints the summary report
 rem   run_overnight.bat --smoke    tiny test (2 variants, 1 fold, 2 epochs) into a separate json
-cd /d "D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase"
+cd /d "%~dp0"
+.venv\Scripts\python.exe -m src.consent
+if errorlevel 1 exit /b 1
 set PYTHONHASHSEED=0
 set PYTHONUNBUFFERED=1
 set CUBLAS_WORKSPACE_CONFIG=:4096:8

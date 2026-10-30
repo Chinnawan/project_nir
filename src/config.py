@@ -1,6 +1,6 @@
 import os
 
-PROJECT_ROOT = r"D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase"
+PROJECT_ROOT = os.path.abspath(os.environ.get("CAPA_PROJECT_ROOT", os.path.dirname(os.path.dirname(__file__))))
 DATA_DIR = os.path.join(PROJECT_ROOT, "Processed_Dataset")
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "outputs")
 

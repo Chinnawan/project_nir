@@ -3,7 +3,9 @@ rem N5: visible_ss + full_ss (aligned SingleSpectra images), seeds 3,4,5 x 5 fol
 rem Resumable: finished (variant,seed,fold) are skipped.
 rem   run_n5.bat            full run + checkpoint verification, then the N5 analysis
 rem   run_n5.bat --smoke    tiny test into separate files
-cd /d "D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase"
+cd /d "%~dp0"
+.venv\Scripts\python.exe -m src.consent
+if errorlevel 1 exit /b 1
 set PYTHONHASHSEED=0
 set PYTHONUNBUFFERED=1
 set CUBLAS_WORKSPACE_CONFIG=:4096:8

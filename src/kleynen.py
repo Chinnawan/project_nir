@@ -11,6 +11,8 @@ The 3-class nir_ss result stays the main result of the thesis; everything here i
                              features, LDA sound/defective; 3 band sets; same 5 folds  -> outputs/dl/k3_kleynen.json
                              (+ 20 example masks in outputs/kleynen_masks/, gitignored: dataset pixels)
   python -m src.kleynen k3 15 sensitivity run with a 15 px erosion of the fruit border -> outputs/dl/k3_kleynen_erode15.json
+  python -m src.kleynen k3_features_only  -> outputs/dl/k3_kleynen_features_only.json
+                             Paper-described fruit features only; other approximations remain unchanged.
   python -m src.kleynen k5   summary table (paper | replication | CNN merged | CNN 2-class) + McNemar
                              -> outputs/dl/k5_summary.json   (K4 = src/run_k4.py -> outputs/dl/k4_results.json)
 
@@ -38,6 +40,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
 from .config import OUTPUT_DIR, PROJECT_ROOT
+from .consent import require_consent
 
 DL = os.path.join(OUTPUT_DIR, "dl")
 SEVERITY_TXT = os.path.join(PROJECT_ROOT, "segmentations", "KleynenDefectClasses_Simplified.txt")
@@ -71,6 +74,7 @@ def context():
 
 
 def load_severity():
+    require_consent()
     rows = [l.split() for l in open(SEVERITY_TXT, encoding="latin-1") if l.startswith("Defect0")]
     return {int(r[0][len("Defect"):]): SEV_NAMES[int(r[1])] for r in rows}
 
@@ -213,6 +217,7 @@ def fruit_mask(ir):
 
 
 def load_cache(ctx, names):
+    require_consent()
     from .preprocess_ss import read_bands
     mapping = json.load(open(os.path.join(OUTPUT_DIR, "ss_mapping.json")))
     ker = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * ERODE_PX + 1, 2 * ERODE_PX + 1))
@@ -267,7 +272,7 @@ def lut_from(images, sound, defect, n_cells):
     return np.where(den > 0, ps / np.where(den > 0, den, 1), 0.0)
 
 
-def fruit_features(rec, bands, lut):
+def fruit_features(rec, bands, lut, include_region_features=True):
     c = codes(rec["vals"], bands)
     d = lut[c] <= 0.5
     feats = []
@@ -278,21 +283,25 @@ def fruit_features(rec, bands, lut):
             v = sel[:, b].astype(np.float64)
             feats += [v.mean(), np.median(v), v.std()]
     ratio = d.mean()
-    full = np.zeros(rec["shape"][0] * rec["shape"][1], np.uint8)
-    full[rec["idx"][d]] = 1
-    n, _, stats, _ = cv2.connectedComponentsWithStats(full.reshape(rec["shape"]), connectivity=8)
-    areas = stats[1:, cv2.CC_STAT_AREA] if n > 1 else np.array([0])
-    big = areas[areas >= MIN_REGION_PX]
-    feats += [ratio, len(big), (areas.max() if len(areas) else 0) / len(rec["idx"])]
+    feats.append(ratio)
+    if include_region_features:
+        full = np.zeros(rec["shape"][0] * rec["shape"][1], np.uint8)
+        full[rec["idx"][d]] = 1
+        n, _, stats, _ = cv2.connectedComponentsWithStats(full.reshape(rec["shape"]), connectivity=8)
+        areas = stats[1:, cv2.CC_STAT_AREA] if n > 1 else np.array([0])
+        big = areas[areas >= MIN_REGION_PX]
+        feats += [len(big), (areas.max() if len(areas) else 0) / len(rec["idx"])]
     return np.array(feats), d
 
 
-def k3(erode=None):
+def k3(erode=None, features_only=False):
     """erode: optional erosion size for a sensitivity run (primary run = ERODE_PX, fixed before seeing any result);
     writes k3_kleynen_erode{N}.json and no example images"""
     global ERODE_PX
-    tag = ""
+    tag = "_features_only" if features_only else ""
     if erode is not None:
+        if features_only:
+            raise ValueError("features_only and erosion sensitivity must be separate experiments")
         ERODE_PX, tag = int(erode), f"_erode{int(erode)}"
     ctx, names, fold = context()
     sev = severity_per_image(ctx)
@@ -306,8 +315,13 @@ def k3(erode=None):
     out = {"method": {"fruit_mask": f"Otsu threshold of 800 nm + fill holes + closing {CLOSE_PX}px + largest component; erosion {ERODE_PX}px",
                       "pixel_classifier": f"Bayes, equal priors, histograms {LEVELS} bins/band; sound pixels = eroded fruit of Healthy-tissue "
                                           "fruits, defect pixels = SBW_Defect masks inside the eroded fruit; train folds only",
-                      "features": "mean/median/std of each band on sound and on defect tissue + defect ratio + n regions (>= "
-                                  f"{MIN_REGION_PX}px) + largest region / fruit area",
+                      "features": ("mean/median/std of each band on sound and on defect tissue + defect ratio"
+                                   if features_only else "mean/median/std of each band on sound and on defect tissue + defect ratio "
+                                   f"+ n regions (>= {MIN_REGION_PX}px) + largest region / fruit area"),
+                      "feature_variant": "paper_described_only" if features_only else "enriched_original",
+                      "paper_faithful": False,
+                      "remaining_differences": "64-bin histogram, Otsu threshold, 5px erosion, whole SBW masks, "
+                                               "cross-fitted evaluation; stem/calyx template matcher not replicated",
                       "classifier": "StandardScaler + LDA (priors = training class frequencies)",
                       "cross_fitting": "LDA training features of a train-fold fruit come from histograms that exclude the outer test "
                                        "fold AND the fruit's own fold (out-of-sample, like the test fruits)",
@@ -326,7 +340,7 @@ def k3(erode=None):
     for bs_name, bands in BAND_SETS.items():
         n_cells = LEVELS ** len(bands)
         sound, defect = per_image_hist(cache, ctx, bands)
-        feats_test = np.zeros((n, 3 * 2 * len(bands) + 3))
+        feats_test = np.zeros((n, 3 * 2 * len(bands) + (1 if features_only else 3)))
         pred = {"A_paper": np.full(n, -1), "B_all": np.full(n, -1)}
         post = {"A_paper": np.zeros(n), "B_all": np.zeros(n)}
         px = {"defect_px_recall": [], "sound_px_flagged_healthy_fruit": [], "sound_px_flagged_stem_calyx": []}
@@ -335,9 +349,11 @@ def k3(erode=None):
             te = np.where(fold == f)[0]
             lut_te = lut_from(tr, sound, defect, n_cells)
             luts_in = {g: lut_from(tr[fold[tr] != g], sound, defect, n_cells) for g in range(5) if g != f}
-            Xtr = np.array([fruit_features(cache[i], bands, luts_in[fold[i]])[0] for i in tr])
+            Xtr = np.array([fruit_features(cache[i], bands, luts_in[fold[i]],
+                                           include_region_features=not features_only)[0] for i in tr])
             for i in te:
-                feats_test[i], d = fruit_features(cache[i], bands, lut_te)
+                feats_test[i], d = fruit_features(cache[i], bands, lut_te,
+                                                 include_region_features=not features_only)
                 if cache[i]["defect"] is not None:
                     px["defect_px_recall"].append(float(d[cache[i]["defect"]].mean()) if cache[i]["defect"].any() else np.nan)
                 elif tissue[i] == "Healthy":
@@ -483,4 +499,5 @@ def k5():
 
 
 if __name__ == "__main__":
-    {"k1": k1, "k2": k2, "k3": k3, "k5": k5}[sys.argv[1]](*sys.argv[2:])
+    commands = {"k1": k1, "k2": k2, "k3": k3, "k3_features_only": lambda: k3(features_only=True), "k5": k5}
+    commands[sys.argv[1]](*sys.argv[2:])

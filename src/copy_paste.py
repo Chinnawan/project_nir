@@ -22,6 +22,7 @@ import cv2
 import numpy as np
 
 from .config import PROJECT_ROOT
+from .consent import require_consent
 from .preprocess_ss import pad_square_resize
 
 MASK_DIR = os.path.join(PROJECT_ROOT, "segmentations", "Segmented_defects", "jona", "im", "segmentedBW")
@@ -30,6 +31,7 @@ APPLE_IR_THRESHOLD = 50
 
 
 def load_defect_mask(defect_no):
+    require_consent()
     m = cv2.imread(os.path.join(MASK_DIR, f"SBW_Defect{defect_no:04d}.bmp"), cv2.IMREAD_UNCHANGED)
     assert m is not None, defect_no
     m = m[..., 0] if m.ndim == 3 else m

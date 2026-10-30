@@ -11,7 +11,7 @@ Mode 1 - CAPA image (out-of-fold, honest): the checkpoints of the 3 seeds of the
          all trained on the same SingleSpectra images (visible_ss, full_ss from run_n5); "compare all models"
          shows every model on the same apple with its Grad-CAM; presentation examples are picked
          automatically from the recorded out-of-fold predictions.
-Mode 2 - new image (upload): all 15 checkpoints (5 folds x 3 seeds).
+Mode 2 - upload demo: all 15 checkpoints (5 folds x 3 seeds); not an evaluation mode.
 Belt   - N random CAPA images (mode 1 rule per image) sorted into sell fresh / processing / reject.
 G2/G3  - Kleynen 2005 (replicated) vs CNN NIR in 2 groups: step by step for one apple, and in batches (src/demo_kleynen.py).
 """
@@ -33,6 +33,7 @@ from pytorch_grad_cam import GradCAM  # noqa: E402
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget  # noqa: E402
 
 from .config import CLASSES, OUTPUT_DIR  # noqa: E402
+from .consent import require_consent  # noqa: E402
 from .copy_paste import load_defect_mask  # noqa: E402
 from .dataset import list_files  # noqa: E402
 from .infer import DEVICE, load_checkpoint, predict_probs, preprocess  # noqa: E402
@@ -60,12 +61,15 @@ MODELS = {
                 "bands": [(1, "แบนด์ GR (500 nm)"), (3, "แบนด์ IR (800 nm)")], "cam_band": (3, "IR")},
 }
 DEFAULT_MODEL = "nir_ss"
-DOMAIN_NOTE = ("ภาพที่อัปโหลดจากกล้อง/แสง/สายพันธุ์อื่นอาจให้ผลต่างจากที่วัดบน CAPA (domain shift) — "
+DOMAIN_NOTE = ("ภาพจากกล้อง/แสง/สายพันธุ์อื่นอาจให้ผลต่างจากที่วัดบน CAPA (domain shift) — "
                "ผลนี้ไม่ใช่การรับรองความแม่นยำบนภาพของคุณ")
+UPLOAD_NOTE = ("โหมดอัปโหลดใช้สาธิตภาพใหม่เท่านั้น ไม่ใช่การประเมินความแม่นยำ: ระบบตรวจไม่ได้ว่าไฟล์นี้เคยอยู่ใน CAPA "
+               "หรือไม่ ถ้าเป็นภาพ CAPA ให้เลือกภาพในโหมด out-of-fold แทน มิฉะนั้นโมเดลบาง fold อาจเคยเห็นภาพแล้ว")
 
 
 class Demo:
     def __init__(self, ckpt_dir=CKPT_DIR):
+        require_consent()
         self.ckpt_dir = ckpt_dir
         with open(FOLD_ASSIGN, encoding="utf-8") as f:
             self.images = json.load(f)["images"]  # "RawA0001" -> {fold, tissue, label, defect_no}
@@ -203,6 +207,7 @@ def overlay(ir_band, cam, mask=None, size=448):
 def read_upload_bands(paths):
     """.npy (H,W,4) BL/GR/RE/IR, or 4 single-band images named *_BL / *_GR / *_RE / *_IR (tif/png/bmp).
     Returns the 4 bands as uint8 at their own resolution."""
+    require_consent()
     paths = [p if isinstance(p, str) else p.name for p in (paths or [])]
     if not paths:
         raise ValueError("ยังไม่ได้เลือกไฟล์")
@@ -354,10 +359,10 @@ def classify_upload(demo, files):
     rows, p, pred = demo.predict_new(cube)
     keys = [(r["seed"], r["fold"]) for r in rows]
     cam = demo.cam(cube, keys, pred)
-    note = f"ใช้ ensemble {len(keys)} โมเดล (ทุก fold × seed) — ภาพนี้ไม่อยู่ใน CAPA จึงไม่มีปัญหา leakage"
+    note = f"ใช้ ensemble {len(keys)} โมเดล (ทุก fold × seed) — {UPLOAD_NOTE}"
     return (to_gray_rgb(cube[..., 2]), to_gray_rgb(cube[..., 3]), result_card(p, pred),
             {TH[c]: float(p[i]) for i, c in enumerate(CLASSES)}, prob_table(rows, p, note),
-            overlay(cube[..., 3], cam), CAM_NOTE + "  " + DOMAIN_NOTE)
+            overlay(cube[..., 3], cam), CAM_NOTE + "  " + DOMAIN_NOTE + "  " + UPLOAD_NOTE)
 
 
 def run_belt(demo, n, seed, progress=None):
@@ -476,7 +481,7 @@ def build_ui(demo):
                     _guard(lambda r: compare_all(demo, r) if r else [gr.skip()] * (len(MODELS) + 2)), dd,
                     [cmp_html, *cmp_cams, cmp_state], api_name=False)
             with gr.Tab("โหมด 2 — อัปโหลดภาพใหม่"):
-                gr.Markdown(f"อัปโหลด `.npy` (H×W×4: BL,GR,RE,IR) หรือภาพแบนด์เดี่ยว 4 ไฟล์ที่ชื่อลงท้าย `_BL _GR _RE _IR`  \n**{DOMAIN_NOTE}**")
+                gr.Markdown(f"อัปโหลด `.npy` (H×W×4: BL,GR,RE,IR) หรือภาพแบนด์เดี่ยว 4 ไฟล์ที่ชื่อลงท้าย `_BL _GR _RE _IR`  \n**{UPLOAD_NOTE}**  \n{DOMAIN_NOTE}")
                 up = gr.File(file_count="multiple", label="ไฟล์ภาพ")
                 go2 = gr.Button("ทำนาย", variant="primary")
                 card2 = gr.HTML()
@@ -509,6 +514,7 @@ def build_ui(demo):
 
 
 def main():
+    require_consent()
     demo = Demo()
     for v in MODELS:
         print(f"{v}: checkpoints found {len(demo.available(v))}/15 in {demo.ckpt_dir}")

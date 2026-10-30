@@ -3,6 +3,8 @@ Processed_Dataset/
 Processed_Dataset_SS/
 images/
 segmentations/
+CAPA_AppleQualityGradingImageDatabase.rar
+consent/
 outputs/features/
 outputs/dl/gradcam/
 outputs/dl/gradcam_mask/

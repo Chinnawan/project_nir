@@ -8,12 +8,14 @@ import torch
 from torch.utils.data import DataLoader, Dataset, WeightedRandomSampler
 
 from .config import CHANNEL_GROUPS, CLASS_TO_IDX, CLASSES, DATA_DIR, OUTPUT_DIR, SEED
+from .consent import require_consent
 from .repro import make_generator, seed_worker
 
 
 def list_files(split, root=None):
     """Return [(filepath, label_idx), ...] for a split, sorted for reproducibility.
     `root` selects another dataset tree with the same layout (e.g. Processed_Dataset_SS)."""
+    require_consent()
     items = []
     for cls in CLASSES:
         pattern = os.path.join(root or DATA_DIR, split, cls, "*.npy")
@@ -30,6 +32,7 @@ def compute_stats_for_files(files):
     """Per-channel mean/std (all 4 bands) computed over an arbitrary list of
     (filepath, label) items. Not cached — used for e.g. k-fold splits where the
     train pool changes per fold."""
+    require_consent()
     sums = np.zeros(4, dtype=np.float64)
     sq_sums = np.zeros(4, dtype=np.float64)
     n_pixels = 0
@@ -95,6 +98,7 @@ class ApplesDataset(Dataset):
         return np.ascontiguousarray(arr)
 
     def __getitem__(self, idx):
+        require_consent()
         fp, label = self.items[idx]
         arr = np.load(fp).astype(np.float32) / 255.0  # (H,W,4)
         arr = np.transpose(arr, (2, 0, 1))  # (4,H,W)

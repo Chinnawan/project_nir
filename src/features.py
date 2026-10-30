@@ -16,6 +16,7 @@ from scipy import stats as sstats
 from skimage.feature import graycomatrix, graycoprops
 
 from .config import CHANNEL_NAMES, CLASS_TO_IDX, CLASSES, OUTPUT_DIR
+from .consent import require_consent
 from .dataset import list_files
 
 GLCM_PROPS = ["contrast", "dissimilarity", "homogeneity", "energy", "correlation", "ASM"]
@@ -72,6 +73,7 @@ def _cache_path(split):
 
 
 def build_feature_dataset(split, force=False):
+    require_consent()
     cache = _cache_path(split)
     if os.path.exists(cache) and not force:
         data = np.load(cache, allow_pickle=True)

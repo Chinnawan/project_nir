@@ -32,6 +32,7 @@ from pytorch_grad_cam import GradCAM
 from pytorch_grad_cam.utils.model_targets import ClassifierOutputTarget
 
 from .config import CLASSES, OUTPUT_DIR, PROJECT_ROOT, SEED
+from .consent import require_consent
 from .dataset import ApplesDataset
 from .models import build_model
 from .preprocess_ss import MAPPING_PATH, pad_square_resize
@@ -49,11 +50,13 @@ KLEYNEN_NAMES = {1: "rejection", 2: "bruise", 3: "serious", 4: "slight"}
 
 
 def load_kleynen():
+    require_consent()
     with open(KLEYNEN_PATH, encoding="latin-1") as f:
         return {int(a): int(b) for a, b in re.findall(r"Defect(\d+)\s+(\d)", f.read())}
 
 
 def load_mask(defect_no):
+    require_consent()
     m = cv2.imread(os.path.join(MASK_DIR, f"SBW_Defect{defect_no:04d}.bmp"), cv2.IMREAD_UNCHANGED)
     assert m is not None, defect_no
     m = m[..., 0] if m.ndim == 3 else m

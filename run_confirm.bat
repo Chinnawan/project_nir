@@ -3,7 +3,9 @@ rem Confirmatory run: seeds 3,4,5 for nir_ss (locked formula) and nir (baseline)
 rem Resumable: finished (variant,seed,fold) are skipped.
 rem   run_confirm.bat            full run, then the report
 rem   run_confirm.bat --smoke    tiny test into separate files
-cd /d "D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase"
+cd /d "%~dp0"
+.venv\Scripts\python.exe -m src.consent
+if errorlevel 1 exit /b 1
 set PYTHONHASHSEED=0
 set PYTHONUNBUFFERED=1
 set CUBLAS_WORKSPACE_CONFIG=:4096:8

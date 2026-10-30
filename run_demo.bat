@@ -4,7 +4,9 @@ rem Tabs: mode 1 (CAPA, out-of-fold) / mode 2 (upload) / belt / "step by step: K
 rem Needs the CNN checkpoints (outputs\dl\confirm_ckpt\, from run_confirm.bat + run_n5.bat) and the Kleynen GUI models
 rem (models\kleynen_*.pkl) -- the latter are built here automatically the first time (~1.5 min, CPU).
 rem Set CUDA_VISIBLE_DEVICES=-1 to force CPU.
-cd /d "D:\nir+rgb_project\project\CAPA_AppleQualityGradingImageDatabase"
+cd /d "%~dp0"
+.venv\Scripts\python.exe -m src.consent
+if errorlevel 1 exit /b 1
 set PYTHONUNBUFFERED=1
 set PYTHONIOENCODING=utf-8
 if not exist "models\kleynen_750_800_all.pkl" (
